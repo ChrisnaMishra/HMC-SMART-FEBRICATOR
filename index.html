@@ -22,7 +22,7 @@ h1,h2,h3,h4{margin:0}button{font:inherit;cursor:pointer;border:none;max-width:10
 .val{background:var(--st);border-radius:16px;padding:13px 15px;margin-bottom:9px}.val h3{font-size:14px;line-height:1.2}.val p{margin:3px 0 0;font-size:12px;line-height:1.25;color:var(--muted)}
 .stack{display:flex;flex-direction:column;gap:8px}.stack .cta{padding:13px 0;border-radius:12px}
 .form{padding:18px 24px 24px;overflow-y:auto;overflow-x:hidden;justify-content:flex-start}.form .back{width:34px;height:34px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:10px;cursor:pointer;flex:0 0 auto}.form h2{font-size:21px;line-height:1.2}.form p{margin-top:6px;margin-bottom:10px}
-.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}
+.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}\n#login{height:100svh;min-height:0;max-height:100svh;overflow:hidden!important;padding:14px 22px 12px;justify-content:center!important}\n#login .back{width:30px;height:30px;margin-bottom:7px}\n#login h2{font-size:21px}\n#login p{margin:4px 0 7px;font-size:12px;line-height:1.25}\n#login label{margin:8px 0 4px;font-size:11px}\n#login input{padding:10px 12px;font-size:13.5px}\n#login .rem{margin:8px 0;font-size:11.5px}\n#login .cta{padding:11px 0;border-radius:11px}\n#login .err{margin-top:7px;padding:8px 10px;font-size:12px}\n#login p[style*="text-align:center"]{margin-top:7px!important;margin-bottom:0}\n@media(max-height:700px){#login{padding-top:8px;padding-bottom:8px}#login .back{margin-bottom:4px}#login p{margin:2px 0 5px}#login label{margin:6px 0 3px}#login .rem{margin:6px 0}#login .cta{padding:10px 0}#login p[style*="text-align:center"]{margin-top:5px!important}}
 label,.fl{font-size:12px;font-weight:600;display:block;margin:14px 0 6px;color:var(--muted)}
 input,select{width:100%;max-width:100%;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:14.5px;color:var(--ink)}
 input:focus,select:focus{outline:2px solid var(--red)}
@@ -80,7 +80,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div class="val"><h3>Earn as you build</h3><p>1 kg = 1 point. Redeem for real rewards.</p></div></div>
 <div class="stack"><button class="cta" onclick="go('register')">CREATE ACCOUNT</button><button class="cta ghost" onclick="go('login')">LOG IN</button></div></section>
 
-<section id="login" class="screen form" style="justify-content:center"><div class="back" onclick="go('welcome')">←</div>
+<section id="login" class="screen form"><div class="back" onclick="go('welcome')">←</div>
 <h2>Welcome back</h2><p>Log in with your registered mobile number and password.</p>
 <label>Mobile Number</label><input id="l-mob" type="tel" inputmode="numeric" placeholder="98XXXXXXXX" autocomplete="username">
 <label>Password</label><input id="l-pw" type="password" placeholder="Enter password" autocomplete="current-password">
