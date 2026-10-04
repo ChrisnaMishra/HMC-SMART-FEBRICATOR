@@ -250,8 +250,23 @@ function Picker(id,s,o={}){const el=$(id),grade=o.grade!==false;
    All phone numbers are stored in one canonical format so +977/98... cannot
    accidentally create a second identity on the same browser. */
 const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
-st=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+st=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
 function canonicalMobile(v){let m=(v||'').replace(/\D/g,'');if(m.startsWith('977')&&m.length===13)m=m.slice(3);return m}
+function storageReady(){
+ try{
+   const k='hmc_storage_test',v='ok-'+Date.now();
+   localStorage.setItem(k,v);const good=localStorage.getItem(k)===v;localStorage.removeItem(k);return good;
+ }catch(e){return false}
+}
+function saveAccounts(){
+ const payload=JSON.stringify(ACC);
+ try{
+   localStorage.setItem('hmc_accounts_v2',payload);
+   localStorage.setItem('hmc_accounts',payload);
+   const check=JSON.parse(localStorage.getItem('hmc_accounts_v2')||'{}');
+   return !!check && !!check[Object.keys(ACC).find(k=>check[k]?.mobile===k)];
+ }catch(e){return false}
+}
 function loadAccounts(){
  const out={};
  try{
@@ -264,7 +279,7 @@ function loadAccounts(){
    const v2=raw?JSON.parse(raw):{};
    Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m))out[m]={...a,mobile:m}})
  }catch(e){}
- st('hmc_accounts_v2',out); return out
+ return out
 }
 let ACC=loadAccounts(),ME=null,POINTS=0,ORDER=[],CD=3;const WA='9779845656595';
 function hash(t){let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^a>>>16,2246822507)^Math.imul(b^b>>>13,3266489909);b=Math.imul(b^b>>>16,2246822507)^Math.imul(a^a>>>13,3266489909);return(4294967296*(2097151&b)+(a>>>0)).toString(36)}
@@ -277,20 +292,24 @@ async function doRegister(){
  if(!/^9[678]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 96XXXXXXXX, 97XXXXXXXX or 98XXXXXXXX.');
  if(p.length<6)return err('r-err','Password must be at least 6 characters.');
  if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
- if(ACC[m])return err('r-err','This number is already registered. Please use LOG IN.');
+ if(!storageReady())return err('r-err','This browser is blocking app storage. Please use normal Chrome/Safari mode, not private/incognito mode.');
+ ACC=loadAccounts();
+ if(ACC[m])return err('r-err','This number is already registered on this device. Please use LOG IN.');
  const salt=Math.random().toString(36).slice(2)+Date.now();
  ACC[m]={mobile:m,name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};
- st('hmc_accounts_v2',ACC); st('hmc_accounts',ACC);
+ if(!saveAccounts() || !loadAccounts()[m])return err('r-err','Account could not be saved on this device. Please turn off private browsing/site-data blocking and try again.');
  err('r-err',''); $('l-mob').value=m; ME={mobile:m,...ACC[m]}; POINTS=0; renderAll(); go('home')
 }
 async function doLogin(){
  const m=cm($('l-mob').value),p=$('l-pw').value;
  if(!/^9[678]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
- const a=ACC[m] || loadAccounts()[m];
- if(!a)return err('l-err','We could not find this account on this browser. Please register again on this device.');
+ if(!storageReady())return err('l-err','Browser storage is unavailable. Use normal Chrome/Safari mode and allow site data.');
+ ACC=loadAccounts();
+ const a=ACC[m];
+ if(!a)return err('l-err','No account for this number is stored on this device. If you created it on another phone/browser, register on this device or connect the Hulas server login.');
  const good=await pwHash(a.salt,p)===a.hash;
- if(!good)return err('l-err','Wrong password. Please use the password you created during registration.');
+ if(!good)return err('l-err','Wrong password. Use the exact password you created during registration.');
  err('l-err','');$('l-pw').value='';
  if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
  ME={mobile:m,...a};POINTS=a.points||0;renderAll();go('home')
