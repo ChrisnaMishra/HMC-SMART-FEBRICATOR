@@ -6,28 +6,28 @@
 <link rel="manifest" href="manifest.json"><meta name="theme-color" content="#D42F2F">
 <link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{--red:#D42F2F;--navy:#12203D;--navy2:#233868;--nt:#12203D;--bg:#F4F5F7;--white:#fff;--card:#fff;--st:#EDEFF1;--ink:#1D2230;--muted:#6B7280;--line:#E4E6EA;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--red:#D42F2F;--navy:#12203D;--navy2:#233868;--nt:#12203D;--bg:#F4F5F7;--white:#fff;--card:#fff;--st:#EDEFF1;--ink:#1D2230;--muted:#6B7280;--line:#E4E6EA;box-sizing:border-box}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161A;--white:#1E2027;--card:#262933;--st:#2C303B;--ink:#EDEEF0;--muted:#9BA0AA;--line:#3A3F4B;--nt:#C9D3F0}}
 :root[data-theme="dark"]{--bg:#15161A;--white:#1E2027;--card:#262933;--st:#2C303B;--ink:#EDEEF0;--muted:#9BA0AA;--line:#3A3F4B;--nt:#C9D3F0}
-*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
-.phone{max-width:430px;margin:0 auto;min-height:100vh;background:var(--white);overflow-x:clip}
-h1,h2,h3,h4{margin:0}button{font:inherit;cursor:pointer;border:none}
-.screen{display:none;min-height:100vh;flex-direction:column}.screen.active{display:flex}
+*{box-sizing:border-box}html{width:100%;min-width:0;scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:hidden}
+body{margin:0;width:100%;min-width:0;min-height:100%;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+.phone{width:100%;max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4{margin:0}button{font:inherit;cursor:pointer;border:none;max-width:100%}
+.screen{display:none;width:100%;min-height:100vh;min-height:100dvh;flex-direction:column;overflow-x:hidden}.screen.active{display:flex}
 .cta{background:var(--red);color:#fff;font-weight:600;font-size:15px;padding:15px 0;width:100%;border-radius:14px}
 .cta.outline{background:none;border:1.5px solid rgba(255,255,255,.5)}.cta.ghost{background:var(--card);color:var(--nt);border:1.5px solid var(--line)}.cta.navy{background:var(--navy)}
 #splash{background:linear-gradient(160deg,#12203D,#1B2C52 55%,#0d1730);color:#fff;align-items:center;justify-content:center;text-align:center;padding:40px 28px}
 .badge{background:#fff;border-radius:20px;padding:18px 26px;margin-bottom:22px}.badge b{display:block;font-size:34px;font-weight:800;color:var(--red)}.badge span{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:2px}
-#welcome{padding:36px 26px;justify-content:space-between}
-.val{background:var(--st);border-radius:16px;padding:18px;margin-bottom:12px}.val h3{font-size:15px}.val p{margin:4px 0 0;font-size:13px;color:var(--muted)}
-.stack{display:flex;flex-direction:column;gap:10px}
-.form{padding:28px 24px}.back{width:36px;height:36px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:16px;cursor:pointer}
-.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}
+#welcome{height:100svh;min-height:0;max-height:100svh;overflow:hidden;padding:18px 20px 14px;justify-content:space-between}\n#welcome .stack{position:absolute;left:20px;right:20px;bottom:10px;margin:0;gap:7px}
+.val{background:var(--st);border-radius:16px;padding:13px 15px;margin-bottom:9px}.val h3{font-size:14px;line-height:1.2}.val p{margin:3px 0 0;font-size:12px;line-height:1.25;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:8px}.stack .cta{padding:13px 0;border-radius:12px}
+.form{padding:18px 24px 24px;overflow-y:auto;overflow-x:hidden;justify-content:flex-start}.form .back{width:34px;height:34px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:10px;cursor:pointer;flex:0 0 auto}.form h2{font-size:21px;line-height:1.2}.form p{margin-top:6px;margin-bottom:10px}
+.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}\n#login{height:100svh;min-height:0;max-height:100svh;overflow:hidden!important;padding:14px 22px 12px;justify-content:center!important}\n#login .back{width:30px;height:30px;margin-bottom:7px}\n#login h2{font-size:21px}\n#login p{margin:4px 0 7px;font-size:12px;line-height:1.25}\n#login label{margin:8px 0 4px;font-size:11px}\n#login input{padding:10px 12px;font-size:13.5px}\n#login .rem{margin:8px 0;font-size:11.5px}\n#login .cta{padding:11px 0;border-radius:11px}\n#login .err{margin-top:7px;padding:8px 10px;font-size:12px}\n#login p[style*="text-align:center"]{margin-top:7px!important;margin-bottom:0}\n@media(max-height:700px){#login{padding-top:8px;padding-bottom:8px}#login .back{margin-bottom:4px}#login p{margin:2px 0 5px}#login label{margin:6px 0 3px}#login .rem{margin:6px 0}#login .cta{padding:10px 0}#login p[style*="text-align:center"]{margin-top:5px!important}}
 label,.fl{font-size:12px;font-weight:600;display:block;margin:14px 0 6px;color:var(--muted)}
-input,select{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:14.5px;color:var(--ink)}
+input,select{width:100%;max-width:100%;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:14.5px;color:var(--ink)}
 input:focus,select:focus{outline:2px solid var(--red)}
 .sec{font-size:11px;letter-spacing:1.5px;color:var(--red);font-weight:700;margin:20px 0 0}
-.row2{display:flex;gap:10px}.row2>div{flex:1}
+.row2{display:flex;gap:10px;min-width:0}.row2>div{flex:1;min-width:0}
 .err{background:#FDECEC;border:1px solid #F5C2C2;color:#A81F1F;border-radius:12px;padding:11px 14px;margin-top:12px;font-size:13px;font-weight:600;display:none}
 .rem{display:flex;align-items:center;gap:8px;margin:14px 0;font-size:13px;color:var(--muted)}.rem input{width:auto}
 .hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:22px 20px 44px}
@@ -42,7 +42,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 .shape{background-size:cover;background-position:center;aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#C7CBD1,#EDEFF1);color:var(--navy);display:flex;align-items:flex-end;padding:8px;font-size:11px;font-weight:700;cursor:pointer}
 .next{margin:0 18px 18px;background:#FDECEC;color:#1D2230;border-radius:14px;padding:14px 16px;font-size:12.5px;cursor:pointer}
 .bar{height:7px;background:#F5D0D0;border-radius:5px;margin:8px 0 6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--red)}
-.nav{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom,0px));margin-top:auto}
+.nav{position:sticky;bottom:0;width:100%;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom,0px));margin-top:auto;z-index:20}
 .nav button{background:none;color:var(--muted);font-size:11px}.nav .on{color:var(--red);font-weight:700}
 .head{padding:20px 20px 14px;background:var(--white);position:sticky;top:env(safe-area-inset-top,0px);z-index:5;border-bottom:1px solid var(--line)}
 .tabs{display:flex;gap:6px;margin-top:12px;background:var(--st);padding:4px;border-radius:12px}
@@ -54,10 +54,10 @@ input:focus,select:focus{outline:2px solid var(--red)}
 .res{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:18px;margin:16px 18px;color:#fff}
 .res div{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:#DCE2F0}.res .t{border-top:1px solid rgba(255,255,255,.2);margin-top:6px;padding-top:12px;font-size:16px;font-weight:700;color:#fff}.res .p{color:#FFD27A;font-weight:700}
 .warn{background:#FFF3E0;color:#8A5A00;border-radius:12px;padding:12px 14px;margin:14px 18px;font-size:12.5px}
-.btns{display:flex;gap:10px;padding:0 18px 18px}.btns .cta{padding:14px 0;font-size:13.5px;border-radius:12px}
+.btns{display:flex;gap:10px;padding:0 18px 18px;min-width:0}.btns .cta{padding:14px 0;font-size:13.5px;border-radius:12px;min-width:0}
 .cut{display:flex;gap:8px;margin-bottom:8px}.cut button{width:38px;border-radius:9px;background:#FDECEC;color:var(--red);font-weight:700}
 .pat{background:var(--st);border-radius:12px;padding:12px;margin-bottom:8px;font-size:12.5px;font-weight:700}.pat span{display:inline-block;background:var(--red);color:#fff;font-size:11px;padding:4px 9px;border-radius:8px;margin:6px 6px 0 0}.pat span.w{background:none;color:var(--muted);border:1px dashed var(--muted)}
-.ol{background:var(--card);border-radius:12px;padding:12px 14px;margin:0 18px 10px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 10px rgba(20,30,60,.06)}
+.ol{background:var(--card);border-radius:12px;padding:12px 14px;margin:0 18px 10px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 10px rgba(20,30,60,.06);min-width:0}.ol>div:first-child{min-width:0;overflow-wrap:anywhere}
 .ol small{display:block;color:var(--muted);font-size:11px}.ol .rm{color:var(--red);font-size:11px;font-weight:700;cursor:pointer;text-align:right}
 .tot div{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;color:var(--muted)}.tot .g{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-size:16px;font-weight:700;color:var(--ink)}
 .tot input{width:80px;padding:7px 10px}
@@ -74,7 +74,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div style="font-size:14px;color:#DCE2F0;margin:22px 0 34px">Measure • Estimate • Quote • Build • Order</div>
 <button class="cta" onclick="go('welcome')">GET STARTED</button></section>
 
-<section id="welcome" class="screen"><div><h2 style="color:var(--red);margin-bottom:24px">HULAS <small style="font-size:11px;color:var(--muted);font-weight:400">Smart Fabricator</small></h2>
+<section id="welcome" class="screen"><div><h2 style="color:var(--red);margin-bottom:14px;font-size:22px">HULAS <small style="font-size:11px;color:var(--muted);font-weight:400">Smart Fabricator</small></h2>
 <div class="val"><h3>Calculate instantly</h3><p>Official Hulas weight chart — pipe weight, price &amp; VAT in seconds.</p></div>
 <div class="val"><h3>Order in one tap</h3><p>Build your material list and send it to Hulas on WhatsApp.</p></div>
 <div class="val"><h3>Earn as you build</h3><p>1 kg = 1 point. Redeem for real rewards.</p></div></div>
@@ -133,9 +133,16 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div id="cut-warn"></div><div class="card" id="cut-pat" style="display:none"></div><div class="res" id="cut-res" style="display:none"></div>
 <div class="btns"><button class="cta" onclick="addCut()">ADD CUTTING PLAN TO ORDER</button></div></div></section>
 
-<section id="order" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>My Order</h2></div>
-<div style="flex:1;padding-top:14px" id="o-body"></div><div class="card tot" id="o-tot"></div>
-<div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">CLEAR</button><button class="cta" onclick="sendOrder()">SEND ORDER TO HULAS</button></div><div class="nav" data-nav="order"></div></section>
+<section id="order" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>My Order</h2><p style="margin:5px 0 0;color:var(--muted);font-size:12px">Review, edit or add pipe requirements before sending.</p></div>
+<div style="flex:1;padding-top:14px" id="o-body"></div>
+<div class="card" style="margin-top:4px"><div class="sec" style="margin-top:0">ADD / EDIT PIPE</div>
+<label>Pipe specification</label><input id="op-spec" placeholder="Example: 202 Grade 1&quot; Light Round">
+<div class="row2"><div><label>Quantity (pcs)</label><input id="op-qty" type="number" min="1" step="1" value="1"></div><div><label>Length / pipe (m)</label><input id="op-len" type="number" min="0.1" step="0.01" value="6"></div></div>
+<div class="row2"><div><label>Weight / pipe (kg)</label><input id="op-wt" type="number" min="0" step="0.001" placeholder="e.g. 5.100"></div><div><label>Rate / kg (Rs.)</label><input id="op-rate" type="number" min="0" step="0.01" placeholder="e.g. 290"></div></div>
+<div class="btns" style="padding:12px 0 0"><button class="cta ghost" onclick="clearPipeEditor()">CLEAR</button><button class="cta" onclick="addManualPipe()">ADD PIPE TO ORDER</button></div>
+<small style="color:var(--muted);font-size:11px">You can enter any approved Hulas pipe specification. Weight and rate should be verified before sending.</small></div>
+<div class="card tot" id="o-tot"></div>
+<div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">CLEAR ORDER</button><button class="cta" onclick="sendOrder()">SEND ORDER TO HULAS</button></div><div class="nav" data-nav="order"></div></section>
 
 <section id="rewards" class="screen"><div style="flex:1"><div class="pts"><b id="w-pts">0</b><small>MY HULAS POINTS · 1 KG = 1 POINT</small></div>
 <div class="rg" id="w-grid"></div><div class="warn">Reward values are Hulas' reference catalogue and may be updated by management.</div></div><div class="nav" data-nav="rewards"></div></section>
@@ -222,12 +229,16 @@ function runCut(){const toM=v=>cunit==='ft'?v/FT:v,disp=m=>(cunit==='ft'?m*FT:m)
 function addCut(){if(!clast){alert('Tap Optimize Cutting Plan first.');return}addLine({...clast,spec:clast.spec+' — cutting plan'});go('order')}
 /* ===== order: cash discount is applied LAST, on the bill total (basic + VAT) ===== */
 function orderTotals(){const wt=ORDER.reduce((s,l)=>s+l.weight,0),b=ORDER.reduce((s,l)=>s+l.amount,0),v=vatOf(b),bill=b+v,cd=bill*CD/100;return{wt,b,v,bill,cd,pay:bill-cd}}
-function renderOrder(){const t=orderTotals();$('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>`<div class="ol"><div><b style="font-size:12.5px">${l.spec}</b><small>${l.qty} × 6m · ${kg(l.weight)}</small></div><div style="text-align:right"><b>${money(l.amount)}</b><div class="rm" onclick="ORDER.splice(${i},1);renderOrder()">Remove</div></div></div>`).join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result to build your order.</div>';
+function renderOrder(){const t=orderTotals();$('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>`<div class="ol"><div style="flex:1"><b style="font-size:12.5px">${l.spec}</b><small>${l.qty} × ${l.len||6}m · ${kg(l.weight)}</small><small>Rate: ${money(l.rate||0)}/kg · Amount: ${money(l.amount)}</small></div><div style="text-align:right"><b>${money(l.amount)}</b><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:5px"><span class="rm" onclick="editPipe(${i})">Edit</span><span class="rm" onclick="ORDER.splice(${i},1);renderOrder()">Remove</span></div></div></div>`).join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result, or enter a pipe manually below.</div>';
  $('o-tot').style.display=ORDER.length?'block':'none';if(!ORDER.length)return;
  if(document.activeElement&&document.activeElement.id==='cd')return;
  $('o-tot').innerHTML=`<div><span>Total weight</span><span>${kg(t.wt)}</span></div><div><span>Basic amount</span><span>${money(t.b)}</span></div><div><span>VAT (${R.vat}%)</span><span>${money(t.v)}</span></div><div><span>Bill total</span><span>${money(t.bill)}</span></div><div><span>Cash discount (%)</span><span><input id="cd" type="number" min="0" max="100" step="0.5" value="${CD}" onchange="CD=Math.min(100,Math.max(0,+this.value||0));renderOrder()"></span></div><div><span>Discount amount</span><span>− ${money(t.cd)}</span></div><div class="g"><span>Payable</span><span>${money(t.pay)}</span></div>`}
+function clearPipeEditor(){['op-spec','op-wt','op-rate'].forEach(id=>$(id).value='');$('op-qty').value=1;$('op-len').value=6;$('op-spec').focus()}
+function addManualPipe(){const spec=$('op-spec').value.trim(),qty=Math.max(1,Math.floor(+$('op-qty').value||0)),len=Math.max(.1,+$('op-len').value||0),wt=Math.max(0,+$('op-wt').value||0),rate=Math.max(0,+$('op-rate').value||0);if(!spec)return alert('Enter the pipe specification.');if(!wt)return alert('Enter weight per pipe in kg.');if(!rate)return alert('Enter the rate per kg.');ORDER.push({spec,qty,len,weight:wt*qty,amount:wt*qty*rate,rate});clearPipeEditor();renderOrder()}
+function editPipe(i){const l=ORDER[i];$('op-spec').value=l.spec||'';$('op-qty').value=l.qty||1;$('op-len').value=l.len||6;$('op-wt').value=(l.weight/(l.qty||1)).toFixed(3);$('op-rate').value=l.rate||0;ORDER.splice(i,1);$('op-spec').focus();renderOrder()}
+
 function sendOrder(){if(!ORDER.length)return alert('Add at least one item first.');const t=orderTotals();
- let m=`*HULAS ORDER REQUEST*\n\nFabricator: ${ME.name}\nFirm: ${ME.firm||'-'}\nMobile: ${ME.mobile}\n\n`;ORDER.forEach(l=>m+=`• ${l.spec} — ${l.qty} pcs × 6m — ${kg(l.weight)} — ${money(l.amount)}\n`);
+ let m=`*HULAS ORDER REQUEST*\n\nFabricator: ${ME.name}\nFirm: ${ME.firm||'-'}\nMobile: ${ME.mobile}\n\n`;ORDER.forEach(l=>m+=`• ${l.spec} — ${l.qty} pcs × ${l.len||6}m — ${kg(l.weight)} — Rate ${money(l.rate||0)}/kg — ${money(l.amount)}\n`);
  m+=`\nTotal weight: ${kg(t.wt)}\nBasic amount: ${money(t.b)}\nVAT (${R.vat}%): ${money(t.v)}\nBill total: ${money(t.bill)}\nCash discount (${CD}%): -${money(t.cd)}\n*Payable: ${money(t.pay)}*`;
  if(!window.open(`https://wa.me/${WA}?text=${encodeURIComponent(m)}`,'_blank'))return alert('Please allow pop-ups so WhatsApp can open, then press Send again.');
  addPts(t.wt);ORDER=[];alert(`Order sent to Hulas on WhatsApp. +${fp(t.wt)} points added.`);go('home')}
@@ -245,7 +256,7 @@ function renderHome(){if(!ME)return;$('h-greet').textContent='Namaste, '+ME.name
 function renderAll(){renderHome();renderRewards();renderOrder();if(ME){$('p-pts').textContent=fp(POINTS);$('p-name').textContent=ME.name;$('p-mob').textContent=ME.mobile;$('p-firm').textContent=ME.firm||'-'}}
 /* ===== init: nobody is ever logged in on load — mobile + password are required every time ===== */
 Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
-Picker('pk-calc',cs,{cb:runCalc});estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');
+estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');
 {const m=ld('hmc_mobile','');if(m){$('l-mob').value=m;$('l-rem').checked=true}}
 if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script></body></html>

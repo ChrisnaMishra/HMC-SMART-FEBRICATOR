@@ -1,0 +1,13 @@
+{
+  "name": "Hulas Smart Fabricator",
+  "short_name": "Hulas Fabricator",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F4F5F7",
+  "theme_color": "#D42F2F",
+  "description": "Hulas Metal Crafts Smart Fabricator",
+  "icons": [
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
