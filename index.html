@@ -21,7 +21,7 @@ h1,h2,h3,h4{margin:0}button{font:inherit;cursor:pointer;border:none;max-width:10
 #welcome{padding:36px 26px;justify-content:space-between}
 .val{background:var(--st);border-radius:16px;padding:18px;margin-bottom:12px}.val h3{font-size:15px}.val p{margin:4px 0 0;font-size:13px;color:var(--muted)}
 .stack{display:flex;flex-direction:column;gap:10px}
-.form{padding:28px 24px 34px}.back{width:36px;height:36px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:16px;cursor:pointer;flex:0 0 auto}
+.form{padding:18px 24px 24px;overflow-y:auto;overflow-x:hidden;justify-content:flex-start}.form .back{width:34px;height:34px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:10px;cursor:pointer;flex:0 0 auto}.form h2{font-size:21px;line-height:1.2}.form p{margin-top:6px;margin-bottom:10px}
 .form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}
 label,.fl{font-size:12px;font-weight:600;display:block;margin:14px 0 6px;color:var(--muted)}
 input,select{width:100%;max-width:100%;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:14.5px;color:var(--ink)}
@@ -80,7 +80,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div class="val"><h3>Earn as you build</h3><p>1 kg = 1 point. Redeem for real rewards.</p></div></div>
 <div class="stack"><button class="cta" onclick="go('register')">CREATE ACCOUNT</button><button class="cta ghost" onclick="go('login')">LOG IN</button></div></section>
 
-<section id="login" class="screen form"><div class="back" onclick="go('welcome')">←</div>
+<section id="login" class="screen form" style="justify-content:center"><div class="back" onclick="go('welcome')">←</div>
 <h2>Welcome back</h2><p>Log in with your registered mobile number and password.</p>
 <label>Mobile Number</label><input id="l-mob" type="tel" inputmode="numeric" placeholder="98XXXXXXXX" autocomplete="username">
 <label>Password</label><input id="l-pw" type="password" placeholder="Enter password" autocomplete="current-password">
