@@ -2,529 +2,642 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>Hulas Smart Fabricator</title>
-<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#D42F2F">
-<link rel="icon" href="icon-192.svg"><link rel="apple-touch-icon" href="icon-192.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#C8102E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<script>function logoFail(i){i.style.display='none';var n=i.nextElementSibling;if(n)n.style.display='block'}</script>
 <style>
-:root{--red:#D42F2F;--navy:#12203D;--navy2:#233868;--nt:#12203D;--bg:#F4F5F7;--white:#fff;--card:#fff;--st:#EDEFF1;--ink:#1D2230;--muted:#6B7280;--line:#E4E6EA;box-sizing:border-box}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161A;--white:#1E2027;--card:#262933;--st:#2C303B;--ink:#EDEEF0;--muted:#9BA0AA;--line:#3A3F4B;--nt:#C9D3F0}}
-:root[data-theme="dark"]{--bg:#15161A;--white:#1E2027;--card:#262933;--st:#2C303B;--ink:#EDEEF0;--muted:#9BA0AA;--line:#3A3F4B;--nt:#C9D3F0}
-*{box-sizing:border-box}html{width:100%;min-width:0;scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:hidden}
-body{margin:0;width:100%;min-width:0;min-height:100%;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
-.phone{width:100%;max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--white);overflow-x:hidden}
-h1,h2,h3,h4{margin:0}button{font:inherit;cursor:pointer;border:none;max-width:100%}
-.screen{display:none;width:100%;min-height:100vh;min-height:100dvh;flex-direction:column;overflow-x:hidden}.screen.active{display:flex}
-.cta{background:var(--red);color:#fff;font-weight:600;font-size:15px;padding:15px 0;width:100%;border-radius:14px}
-.cta.outline{background:none;border:1.5px solid rgba(255,255,255,.5)}.cta.ghost{background:var(--card);color:var(--nt);border:1.5px solid var(--line)}.cta.navy{background:var(--navy)}
-#splash{background:linear-gradient(160deg,#12203D,#1B2C52 55%,#0d1730);color:#fff;align-items:center;justify-content:center;text-align:center;padding:40px 28px}
-.badge{background:#fff;border-radius:20px;padding:18px 26px;margin-bottom:22px}.badge b{display:block;font-size:34px;font-weight:800;color:var(--red)}.badge span{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:2px}
-#welcome{height:100svh;min-height:0;max-height:100svh;overflow:hidden;padding:18px 20px 14px;justify-content:space-between}
-#welcome .stack{position:absolute;left:20px;right:20px;bottom:10px;margin:0;gap:7px}
-.val{background:var(--st);border-radius:16px;padding:13px 15px;margin-bottom:9px}.val h3{font-size:14px;line-height:1.2}.val p{margin:3px 0 0;font-size:12px;line-height:1.25;color:var(--muted)}
-.stack{display:flex;flex-direction:column;gap:8px}.stack .cta{padding:13px 0;border-radius:12px}
-.form{padding:18px 24px 24px;overflow-y:auto;overflow-x:hidden;justify-content:flex-start}.form .back{width:34px;height:34px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:10px;cursor:pointer;flex:0 0 auto}.form h2{font-size:21px;line-height:1.2}.form p{margin-top:6px;margin-bottom:10px}
-.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}
-#login{min-height:100dvh;height:auto;max-height:none;overflow-y:auto!important;overflow-x:hidden!important;padding:14px 22px calc(20px + env(safe-area-inset-bottom,0px));justify-content:flex-start!important}
-#login .back{width:30px;height:30px;margin-bottom:7px}
-#login h2{font-size:21px}
-#login p{margin:4px 0 7px;font-size:12px;line-height:1.25}
-#login label{margin:8px 0 4px;font-size:11px}
-#login input{padding:10px 12px;font-size:13.5px}
-#login .rem{margin:8px 0;font-size:11.5px}
-#login .cta{padding:11px 0;border-radius:11px}
-#login .err{margin-top:7px;padding:8px 10px;font-size:12px}
-#login p[style*="text-align:center"]{margin-top:7px!important;margin-bottom:0}
-@media(max-height:700px){#login{min-height:100dvh;padding-top:8px;padding-bottom:12px}#login .back{margin-bottom:4px}#login p{margin:2px 0 5px}#login label{margin:6px 0 3px}#login .rem{margin:6px 0}#login .cta{padding:10px 0}#login p[style*="text-align:center"]{margin-top:5px!important}}
-label,.fl{font-size:12px;font-weight:600;display:block;margin:14px 0 6px;color:var(--muted)}
-input,select{width:100%;max-width:100%;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:14.5px;color:var(--ink)}
-input:focus,select:focus{outline:2px solid var(--red)}
-.sec{font-size:11px;letter-spacing:1.5px;color:var(--red);font-weight:700;margin:20px 0 0}
+:root{--red:#C8102E;--red2:#E3283E;--reddk:#A30D25;--navy:#0F1B33;--navy2:#1D3159;--bg:#F3F4F7;--white:#fff;--st:#EEF0F4;--ink:#161A24;--muted:#677084;--line:#E3E6EC;--gold:#F5B82E;--pink:#FDECEF;color-scheme:light}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+.phone{width:100%;max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--white);overflow-x:clip;position:relative}
+h1,h2,h3,h4,p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.screen{display:none;width:100%;min-height:100vh;min-height:100dvh;flex-direction:column}
+.screen.active{display:flex}
+.hasnav{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-weight:700;font-size:15px;padding:15px 16px;width:100%;border-radius:14px;box-shadow:0 6px 16px rgba(200,16,46,.22);min-width:0}
+.cta:active{transform:translateY(1px)}
+.cta.ghost{background:var(--white);color:var(--navy);border:1.5px solid var(--line);box-shadow:none}
+.cta.navy{background:var(--navy);box-shadow:none}
+.cta:disabled{opacity:.6}
+.stack{display:flex;flex-direction:column;gap:10px}
+/* splash + welcome */
+#splash{background:linear-gradient(160deg,#0F1B33,#1D3159 60%,#0A1226);color:#fff;align-items:center;justify-content:center;text-align:center;padding:40px 28px}
+.sp-in{width:100%;max-width:320px}
+.badge{background:#fff;border-radius:22px;padding:18px 26px;margin:0 auto 22px;display:inline-block}
+.badge b{display:block;font-size:36px;font-weight:900;color:var(--red);letter-spacing:-.5px}
+.badge span{font-size:12px;font-weight:800;color:var(--navy);letter-spacing:2px}
+.sp-a{font-size:13px;letter-spacing:2.5px;color:#B9C2DA;text-transform:uppercase}
+.sp-b{font-size:14px;color:#DCE2F0;margin:18px 0 32px}
+#welcome{padding:calc(24px + env(safe-area-inset-top,0px)) 22px calc(22px + env(safe-area-inset-bottom,0px));justify-content:space-between;gap:18px}
+.wl-logo{display:flex;justify-content:center;margin-bottom:10px}
+.wl-logo img{height:64px;max-width:70%;object-fit:contain}
+.wordmark{font-weight:900;font-size:30px;letter-spacing:-.5px;color:var(--red);line-height:1;text-align:center}
+.wordmark small{display:block;font-size:9px;letter-spacing:2px;color:var(--navy);font-weight:800;margin-top:3px}
+#welcome h1{font-size:28px;font-weight:900;letter-spacing:-.4px;text-align:center;color:var(--navy)}
+#welcome .lead{text-align:center;color:var(--muted);font-size:14px;margin:6px 0 20px}
+.val{display:flex;gap:13px;align-items:flex-start;background:var(--st);border-radius:18px;padding:14px 15px;margin-bottom:10px}
+.val .vi{width:42px;height:42px;border-radius:13px;background:#fff;color:var(--red);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 2px 8px rgba(15,27,51,.08)}
+.val h3{font-size:15px;line-height:1.2}.val p{margin-top:3px;font-size:12.5px;line-height:1.35;color:var(--muted)}
+/* forms */
+.form{padding:calc(18px + env(safe-area-inset-top,0px)) 22px calc(26px + env(safe-area-inset-bottom,0px));justify-content:flex-start}
+.back{width:40px;height:40px;border-radius:12px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex:0 0 auto}
+.form h2{font-size:25px;line-height:1.2;font-weight:800;letter-spacing:-.3px}
+.form>p{color:var(--muted);font-size:14px;margin:6px 0 8px;line-height:1.4}
+label,.fl{font-size:12.5px;font-weight:700;display:block;margin:14px 0 6px;color:var(--muted)}
+input,select{width:100%;max-width:100%;min-width:0;padding:13px 14px;border-radius:13px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:15px;color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;background:#fff}
+.sec{font-size:12px;letter-spacing:.4px;color:var(--red);font-weight:800;margin:22px 0 0}
 .row2{display:flex;gap:10px;min-width:0}.row2>div{flex:1;min-width:0}
-.err{background:#FDECEC;border:1px solid #F5C2C2;color:#A81F1F;border-radius:12px;padding:11px 14px;margin-top:12px;font-size:13px;font-weight:600;display:none}
-.rem{display:flex;align-items:center;gap:8px;margin:14px 0;font-size:13px;color:var(--muted)}.rem input{width:auto}
-/* ===== HOME — approved Hulas Smart Fabricator design ===== */
-#home{background:#f7f8fa;color:#17191f;overflow-y:auto}
-.home-top{background:#fff;padding:8px 16px 7px;position:sticky;top:0;z-index:30;border-bottom:1px solid #eee}
-.home-topbar{height:52px;display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px}
-.home-iconbtn{width:40px;height:40px;border-radius:12px;background:#f4f5f7;color:#17191f;display:flex;align-items:center;justify-content:center;font-size:23px;border:0}
-.home-logo-img{height:46px;max-width:190px;width:auto;object-fit:contain;justify-self:center;display:block}
-.home-bell{position:relative}
-.home-badge{position:absolute;right:-2px;top:-3px;background:#df202b;color:#fff;border-radius:99px;min-width:20px;height:20px;padding:2px 5px;font-size:10px;font-weight:800}
-.home-hero{margin:0 0 0;position:relative;overflow:hidden;background:#fff;border-bottom:5px solid var(--red);min-height:300px}
-.home-hero-grid{display:grid;grid-template-columns:39% 61%;min-height:255px;align-items:stretch}
-.home-hero-worker{width:100%;height:255px;object-fit:cover;object-position:center top;display:block}
-.home-hero-pipes{width:100%;height:255px;object-fit:cover;object-position:center center;display:block}
-.home-hero-copy{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:56%;text-align:center;z-index:3;pointer-events:none}
-.home-hero-kicker{font-size:10px;font-weight:800;letter-spacing:1.6px;color:#17191f;margin-bottom:3px}
-.home-hero-title{font-size:21px;line-height:1.03;font-weight:900;color:#17191f}
-.home-hero-title span{color:var(--red)}
-.home-hero-copy p{font-size:10px;line-height:1.25;color:#505762;margin:5px 0 8px}
-.home-hero-pills{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}.home-hero-pills span{background:#17191f;color:#fff;border-radius:99px;padding:4px 7px;font-size:7.5px;font-weight:800}
-.home-product-band{background:linear-gradient(100deg,#bd101c,#e51b2a);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 18px}
-.home-product-band h3{font-size:15px;margin:0;font-weight:900}.home-product-band p{font-size:9px;margin:2px 0 0}.home-industries{display:flex;gap:8px;flex:0 0 auto}.home-industry{font-size:7px;text-align:center;font-weight:800;min-width:42px}.home-industry i{display:block;font-size:17px;font-style:normal;line-height:1.1;margin-bottom:2px}
-.home-welcome{margin:-1px 18px 12px;background:#fff;border:1px solid #e6e7e9;border-radius:18px;padding:13px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 7px 22px rgba(25,31,40,.08);position:relative;z-index:2}
-.home-avatar{width:46px;height:46px;border-radius:50%;background:#f2f3f5;display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 auto}
-.home-welcome-main{min-width:0;flex:1}.home-welcome-main h3{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.home-welcome-main p{margin:3px 0 0;color:#727780;font-size:11px}
-.home-points{padding-left:13px;border-left:1px solid #e2e3e5;text-align:right;min-width:92px}.home-points small{display:block;color:#727780;font-size:9px;font-weight:700}.home-points b{display:block;color:var(--red);font-size:20px;line-height:1.1}
-.home-section-title{padding:4px 18px 8px;font-size:13px;font-weight:900;color:#17191f}
-.home-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:0 18px 12px}
-.home-action{min-height:88px;background:#fff;border:1px solid #e6e7e9;border-radius:15px;padding:11px;box-shadow:0 5px 15px rgba(25,31,40,.06);text-align:left;display:flex;flex-direction:column;justify-content:space-between}
-.home-action.primary{background:linear-gradient(135deg,#d71928,#b90f1c);color:#fff;border:none}
-.home-action .ico{width:32px;height:32px;border-radius:10px;background:#f2f3f5;color:var(--red);display:flex;align-items:center;justify-content:center;font-size:19px}
-.home-action.primary .ico{background:rgba(255,255,255,.16);color:#fff}
-.home-action h4{font-size:12.5px;margin-top:6px}.home-action p{font-size:9.5px;color:#747a83;margin:2px 0 0}.home-action.primary p{color:#ffe7e9}
-.home-products{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:0 0 12px}
-.home-product-tile{height:145px;position:relative;overflow:hidden;background:#ddd;cursor:pointer}
-.home-product-tile img{width:100%;height:100%;object-fit:cover;display:block}
-.home-product-tile:after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(transparent,rgba(0,0,0,.72))}
-.home-product-tile .ptxt{position:absolute;left:10px;right:5px;bottom:8px;z-index:2;color:#fff;font-size:12px;font-weight:900}
-.home-product-tile .ptxt small{display:block;font-size:7px;font-weight:700;margin-top:2px}
-.home-reward{margin:0 18px 14px;background:#fff;border:1px solid #e6e7e9;border-radius:17px;padding:10px;box-shadow:0 5px 15px rgba(25,31,40,.05)}
-.home-reward-inner{background:#fff0f2;border-radius:12px;padding:10px;display:grid;grid-template-columns:27% 35% 38%;align-items:center;gap:8px}
-.home-reward-img{width:100%;height:90px;object-fit:contain;display:block}
-.home-reward-top{border-right:1px solid #ddd;padding-right:8px}.home-reward small{color:#747a83;font-size:9px}.home-reward h3{font-size:15px;margin-top:2px}.home-reward b{color:var(--red);font-size:13px}
-.home-reward-right{padding-left:4px}.home-reward .bar{height:9px;background:#d9dadd;margin:9px 0 6px}.home-reward .bar i{background:linear-gradient(90deg,#d71928,#ef4a54)}
-.home-reward-foot{display:flex;justify-content:space-between;color:#727780;font-size:9px}
-#home .nav{background:#fff;padding-top:9px}
-#home .nav button{font-size:10px;min-width:52px;display:flex;flex-direction:column;align-items:center;gap:4px}
-#home .nav button:before{font-size:21px;line-height:1}
-#home .nav button:nth-child(1):before{content:"⌂"}#home .nav button:nth-child(2):before{content:"⌗"}#home .nav button:nth-child(3):before{content:"▣"}#home .nav button:nth-child(4):before{content:"★"}#home .nav button:nth-child(5):before{content:"🛒"}#home .nav button:nth-child(6):before{content:"●"}
-#home .nav .on{color:var(--red)}
-@media(max-width:520px){
- .home-hero-grid{grid-template-columns:42% 58%}.home-hero-worker,.home-hero-pipes{height:235px}.home-hero{min-height:280px}
- .home-hero-copy{width:55%;top:9px}.home-hero-title{font-size:18px}.home-hero-copy p{font-size:8.5px}
- .home-product-band{padding:9px 12px}.home-product-band h3{font-size:13px}.home-industries{gap:3px}.home-industry{min-width:34px;font-size:6.5px}
-}
-@media(max-width:360px){
- .home-logo-img{max-width:160px;height:42px}.home-actions{grid-template-columns:1fr 1fr;padding-left:12px;padding-right:12px}.home-action{min-height:94px}
- .home-section-title{padding-left:12px;padding-right:12px}.home-welcome{margin-left:12px;margin-right:12px}
- .home-reward{margin-left:12px;margin-right:12px}.home-reward-inner{grid-template-columns:30% 70%}.home-reward-right{grid-column:2}.home-reward-top{border-right:0}
-}
-.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:22px 20px 44px}
-.hero b{background:#fff;color:var(--red);font-weight:800;padding:5px 11px;border-radius:8px}
-.band{background:var(--red);margin-top:16px;border-radius:14px;padding:12px 16px;font-size:12.5px;font-weight:700}
-.greet{background:var(--card);border-radius:16px;padding:16px 18px;margin:-24px 18px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:0 10px 24px rgba(20,30,60,.12);position:relative}
-.greet .n{color:var(--red);font-weight:800;font-size:19px;text-align:right}.greet small{display:block;color:var(--muted);font-size:10.5px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:18px}
-.tile{background:var(--card);border-radius:14px;padding:15px;box-shadow:0 4px 14px rgba(20,30,60,.08);cursor:pointer}.tile.wide{grid-column:1/3;background:var(--red);color:#fff}
-.tile h4{font-size:14px}.tile p{margin:2px 0 0;font-size:11.5px;color:var(--muted)}.tile.wide p{color:#FFE1E1}
-.shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 18px 18px}
-.shape{background-size:cover;background-position:center;aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#C7CBD1,#EDEFF1);color:var(--navy);display:flex;align-items:flex-end;padding:8px;font-size:11px;font-weight:700;cursor:pointer}
-.next{margin:0 18px 18px;background:#FDECEC;color:#1D2230;border-radius:14px;padding:14px 16px;font-size:12.5px;cursor:pointer}
-.bar{height:7px;background:#F5D0D0;border-radius:5px;margin:8px 0 6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--red)}
-.nav{position:sticky;bottom:0;width:100%;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom,0px));margin-top:auto;z-index:20}
-.nav button{background:none;color:var(--muted);font-size:11px}.nav .on{color:var(--red);font-weight:700}
-.head{padding:20px 20px 14px;background:var(--white);position:sticky;top:env(safe-area-inset-top,0px);z-index:5;border-bottom:1px solid var(--line)}
-.tabs{display:flex;gap:6px;margin-top:12px;background:var(--st);padding:4px;border-radius:12px}
-.tabs button{flex:1;padding:9px 0;border-radius:9px;font-size:12.5px;font-weight:700;color:var(--muted);background:none}.tabs .on{background:var(--card);color:var(--red)}
-.card{background:var(--card);border-radius:14px;padding:16px;margin:14px 18px;box-shadow:0 4px 14px rgba(20,30,60,.08)}
-.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:9px 14px;border-radius:20px;border:1.5px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
+.err{background:#FDECEC;border:1px solid #F5C2C2;color:#A81F1F;border-radius:12px;padding:11px 14px;margin-top:12px;font-size:13px;font-weight:600;display:none;line-height:1.4}
+.rem{display:flex;align-items:center;gap:9px;margin:14px 0;font-size:13.5px;color:var(--muted);font-weight:500}.rem input{width:auto}
+.link{color:var(--red);font-weight:700;text-decoration:none}
+/* home */
+#home{background:var(--bg)}
+.top{background:#fff;padding:calc(8px + env(safe-area-inset-top,0px)) 14px 6px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;position:sticky;top:0;z-index:30}
+.icobtn{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--st);color:var(--ink)}
+.top .logo-img{height:42px;max-width:100%;object-fit:contain;justify-self:center}
+.top .wordmark{justify-self:center}
+.hero{position:relative;background:linear-gradient(180deg,#fff 0%,#E8ECF2 100%);overflow:hidden}
+.hero-copy{position:relative;z-index:3;text-align:center;padding:4px 20px 0}
+.hero-copy h1{font-size:25px;font-weight:900;letter-spacing:-.4px;color:var(--navy);line-height:1.1}
+.hero-copy p{font-size:13.5px;color:var(--muted);margin-top:4px}
+.hero-stage{position:relative;height:210px;margin-top:6px}
+.hero-art{position:absolute;right:0;bottom:0;width:64%;height:100%;z-index:0}
+.hero-pipes{position:absolute;right:0;bottom:0;height:100%;width:64%;object-fit:cover;z-index:1}
+.hero-worker{position:absolute;left:0;bottom:0;height:100%;width:42%;object-fit:cover;object-position:top center;z-index:2}
+.qr-chip{position:absolute;right:12px;top:8px;z-index:3;background:#fff;border-radius:13px;padding:7px 11px 7px 8px;box-shadow:0 6px 18px rgba(15,27,51,.18);display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;color:var(--navy);line-height:1.2}
+.qr-chip .ic{width:26px;height:26px;color:var(--red)}
+.perks{position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:rgba(255,255,255,.94);padding:11px 6px;border-top:1px solid var(--line)}
+.perk{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--ink);text-align:center;line-height:1.15}
+.perk .ic{color:var(--red)}
+.band{margin:14px 16px 0;border-radius:24px;padding:18px 16px 46px;color:#fff;background:radial-gradient(120% 140% at 100% 0%,#F0475A 0%,rgba(240,71,90,0) 55%),linear-gradient(135deg,#A30D25,#D81E36);position:relative;overflow:hidden}
+.band h3{font-size:18px;font-weight:800;letter-spacing:-.2px}
+.band .sub{font-size:12.5px;margin-top:4px;color:#FFE3E7;line-height:1.35}
+.chips4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.chip4{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;font-weight:700;text-align:center}
+.chip4 i{width:46px;height:46px;border-radius:16px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-style:normal}
+.chip4 .ic{width:23px;height:23px;color:#fff}
+.wcard{margin:-34px 16px 16px;background:#fff;border-radius:22px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 14px 34px rgba(15,27,51,.14);position:relative;z-index:2}
+.ava{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex:0 0 auto}
+.wmain{flex:1;min-width:0}.wmain h3{font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wmain p{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wpts{display:flex;align-items:center;gap:8px;padding:6px 4px 6px 12px;border-left:1px solid var(--line);flex:0 0 auto}
+.coin{width:34px;height:34px;flex:0 0 auto}
+.wpts small{display:block;font-size:10.5px;color:var(--muted);font-weight:600}
+.wpts b{display:block;font-size:20px;font-weight:900;color:var(--ink);line-height:1.1}
+.wpts .ic{width:18px;height:18px;color:var(--muted)}
+.stitle{font-size:15px;font-weight:800;padding:2px 18px 10px}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px}
+.qa-card{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:13px 12px;text-align:left;box-shadow:0 3px 12px rgba(15,27,51,.07);min-width:0}
+.qa-card.wide{grid-column:1/3}
+.qa-card.primary{background:linear-gradient(135deg,#B00E27,#DD2338);color:#fff;padding:15px 14px;box-shadow:0 10px 22px rgba(200,16,46,.28)}
+.qa-ico{width:42px;height:42px;border-radius:13px;background:var(--pink);color:var(--red);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.primary .qa-ico{background:rgba(255,255,255,.18);color:#fff}
+.qa-t{flex:1;min-width:0}.qa-t h4{font-size:14.5px;font-weight:800;line-height:1.2}.qa-t p{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.25}.primary .qa-t p{color:#FFE3E7}
+.qa-card>.ic{width:18px;height:18px;opacity:.55}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:0 0 16px}
+.tile{height:138px;position:relative;overflow:hidden;background:linear-gradient(135deg,#8C95A5,#D9DEE6);cursor:pointer;text-align:left;display:block;width:100%}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile:after{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(transparent,rgba(10,18,34,.78))}
+.tile .pt{position:absolute;left:10px;right:6px;bottom:9px;z-index:2;color:#fff;font-size:12.5px;font-weight:800;line-height:1.15}
+.tile .pt small{display:block;font-size:9px;font-weight:600;margin-top:2px;opacity:.9}
+.nr{margin:0 16px 18px;background:#fff;border-radius:20px;padding:10px;box-shadow:0 3px 12px rgba(15,27,51,.07);display:block;width:calc(100% - 32px);text-align:left}
+.nr-in{background:var(--pink);border-radius:14px;padding:12px;display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:center}
+.nr-img{width:78px;height:78px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:38px;overflow:hidden}
+.nr-img img{width:100%;height:100%;object-fit:cover}
+.nr small{font-size:11.5px;color:var(--muted);font-weight:600}.nr h3{font-size:17px;font-weight:800;margin-top:1px}.nr .np{color:var(--red);font-weight:800;font-size:13.5px}
+.bar{height:9px;background:#F3CDD3;border-radius:6px;margin:10px 0 6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:6px;width:0}
+.nr .foot{font-size:11.5px;color:var(--muted)}
+.foot-strip{background:linear-gradient(135deg,#A30D25,#C8102E);color:#fff;padding:16px 16px 18px;display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:center}
+.foot-strip h4{font-size:13.5px;font-weight:800}
+.foot-strip .loc{display:flex;align-items:center;gap:5px;font-size:12px;margin-top:3px;color:#FFE3E7}.foot-strip .loc .ic{width:15px;height:15px}
+.foot-strip .tag{grid-column:1/3;font-style:italic;font-size:13px;color:#FFE3E7;text-align:center;border-top:1px solid rgba(255,255,255,.22);padding-top:10px}
+.wa{display:flex;align-items:center;gap:9px;background:#fff;color:var(--ink);text-decoration:none;border-radius:14px;padding:8px 12px 8px 9px}
+.wa .ic{width:26px;height:26px;color:#1FA855}
+.wa small{display:block;font-size:10px;color:var(--muted);font-weight:600}.wa b{display:block;font-size:13px;font-weight:800}
+/* nav */
+.nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 2px calc(7px + env(safe-area-inset-bottom,0px));z-index:40}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10.5px;font-weight:600;min-width:52px;padding:3px 2px}
+.nav .ic{width:23px;height:23px}
+.nav .on{color:var(--red);font-weight:800}
+/* sheet */
+.sheet{position:fixed;inset:0;background:rgba(10,18,34,.5);z-index:60;display:none;align-items:flex-end;justify-content:center}
+.sheet.open{display:flex}
+.sheet-card{width:100%;max-width:430px;background:#fff;border-radius:24px 24px 0 0;padding:10px 14px calc(18px + env(safe-area-inset-bottom,0px))}
+.sheet-card .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:2px auto 10px}
+.sheet-item{display:flex;align-items:center;gap:13px;width:100%;padding:13px 10px;border-radius:14px;text-align:left;font-size:15px;font-weight:600}
+.sheet-item:active{background:var(--st)}
+.sheet-item .ic{color:var(--red)}
+/* app screens */
+.head{padding:calc(14px + env(safe-area-inset-top,0px)) 18px 12px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
+.head h2{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.head .sub{margin-top:4px;color:var(--muted);font-size:12.5px;line-height:1.35}
+.head .back{margin-bottom:8px}
+.tabs{display:flex;gap:6px;margin-top:12px;background:var(--st);padding:4px;border-radius:13px}
+.tabs button{flex:1;padding:10px 0;border-radius:10px;font-size:13px;font-weight:700;color:var(--muted)}.tabs .on{background:#fff;color:var(--red);box-shadow:0 2px 8px rgba(15,27,51,.08)}
+.card{background:#fff;border-radius:18px;padding:16px;margin:14px 16px;box-shadow:0 3px 14px rgba(15,27,51,.08)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:9px 14px;border-radius:20px;border:1.5px solid var(--line);background:#fff;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
 .chip.on{background:var(--red);border-color:var(--red);color:#fff}
-.qty{display:flex;align-items:center;gap:10px}.qty button{width:40px;height:40px;border-radius:10px;background:var(--st);font-size:18px;font-weight:700;color:var(--nt)}.qty div{flex:1;text-align:center;font-size:18px;font-weight:700}
-.res{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:18px;margin:16px 18px;color:#fff}
-.res div{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:#DCE2F0}.res .t{border-top:1px solid rgba(255,255,255,.2);margin-top:6px;padding-top:12px;font-size:16px;font-weight:700;color:#fff}.res .p{color:#FFD27A;font-weight:700}
-.warn{background:#FFF3E0;color:#8A5A00;border-radius:12px;padding:12px 14px;margin:14px 18px;font-size:12.5px}
-.btns{display:flex;gap:10px;padding:0 18px 18px;min-width:0}.btns .cta{padding:14px 0;font-size:13.5px;border-radius:12px;min-width:0}
-.cut{display:flex;gap:8px;margin-bottom:8px}.cut button{width:38px;border-radius:9px;background:#FDECEC;color:var(--red);font-weight:700}
-.pat{background:var(--st);border-radius:12px;padding:12px;margin-bottom:8px;font-size:12.5px;font-weight:700}.pat span{display:inline-block;background:var(--red);color:#fff;font-size:11px;padding:4px 9px;border-radius:8px;margin:6px 6px 0 0}.pat span.w{background:none;color:var(--muted);border:1px dashed var(--muted)}
-.ol{background:var(--card);border-radius:12px;padding:12px 14px;margin:0 18px 10px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 10px rgba(20,30,60,.06);min-width:0}.ol>div:first-child{min-width:0;overflow-wrap:anywhere}
-.ol small{display:block;color:var(--muted);font-size:11px}.ol .rm{color:var(--red);font-size:11px;font-weight:700;cursor:pointer;text-align:right}
-.tot div{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 0;color:var(--muted)}.tot .g{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-size:16px;font-weight:700;color:var(--ink)}
-.tot input{width:80px;padding:7px 10px}
-.pts{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:20px;text-align:center}.pts b{display:block;font-size:34px;font-weight:800;color:#FFD27A}.pts small{font-size:12px;letter-spacing:1px}
-.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 18px}.rc{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(20,30,60,.08)}
-.rc .im{aspect-ratio:1;background:var(--st);display:flex;align-items:center;justify-content:center;font-size:38px}.rc .im img{display:block;width:100%;height:100%;object-fit:cover}
-.rc div.b{padding:10px}.rc h4{font-size:12.5px}.rc .pp{font-size:11.5px;color:var(--red);font-weight:700;margin:4px 0 6px}
-.rb{width:100%;padding:8px 0;border-radius:9px;font-size:11.5px;font-weight:700;background:var(--red);color:#fff}.rb.lk{background:var(--st);color:var(--muted)}
-.empty{text-align:center;padding:50px 30px;color:var(--muted);font-size:13.5px}
-.scan-card{margin-top:14px}.scan-status{background:var(--st);border-radius:12px;padding:11px 12px;font-size:12px;color:var(--muted);margin-bottom:10px}.scan-status.ok{background:#EAF7EE;color:#216B38}.scan-status.bad{background:#FDECEC;color:#A81F1F}.scan-card video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:#111;display:none}.scan-history{display:flex;flex-direction:column;gap:7px}.scan-history .item{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;background:var(--st);border-radius:10px;font-size:11px}.scan-history small{display:block;color:var(--muted);margin-top:2px}</style></head><body><div class="phone">
+.qty{display:flex;align-items:center;gap:10px}.qty button{width:44px;height:44px;border-radius:12px;background:var(--st);font-size:20px;font-weight:700;color:var(--navy)}.qty div{flex:1;text-align:center;font-size:20px;font-weight:800}
+.res{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:18px;padding:18px;margin:16px;color:#fff}
+.res div{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:6px 0;color:#DCE2F0}.res div span:last-child{text-align:right}
+.res .t{border-top:1px solid rgba(255,255,255,.2);margin-top:6px;padding-top:12px;font-size:17px;font-weight:800;color:#fff}.res .p{color:#FFD27A;font-weight:700}
+.warn{background:#FFF3E0;color:#7A4D00;border-radius:13px;padding:12px 14px;margin:14px 16px;font-size:12.5px;line-height:1.4}
+.btns{display:flex;gap:10px;padding:0 16px 16px;min-width:0}.btns .cta{padding:14px 8px;font-size:13.5px;border-radius:13px}
+.cut{display:flex;gap:8px;margin-bottom:8px}.cut button{width:42px;border-radius:11px;background:#FDECEC;color:var(--red);font-weight:800;font-size:18px}
+.pat{background:var(--st);border-radius:13px;padding:12px;margin-bottom:8px;font-size:12.5px;font-weight:700}.pat span{display:inline-block;background:var(--red);color:#fff;font-size:11px;padding:4px 9px;border-radius:8px;margin:6px 6px 0 0}.pat span.w{background:none;color:var(--muted);border:1px dashed var(--muted)}
+.ol{background:#fff;border-radius:14px;padding:12px 14px;margin:0 16px 10px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 3px 10px rgba(15,27,51,.07);min-width:0}.ol>div:first-child{min-width:0;overflow-wrap:anywhere}
+.ol small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}.ol .rm{color:var(--red);font-size:12px;font-weight:800;cursor:pointer;padding:4px 2px}
+.tag-m{display:inline-block;background:#FFF3E0;color:#7A4D00;border-radius:6px;font-size:10px;font-weight:800;padding:1px 6px;margin-left:6px}
+.tot div{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:6px 0;color:var(--muted)}.tot .g{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;font-size:17px;font-weight:800;color:var(--ink)}
+.tot input{width:84px;padding:8px 10px}
+.pts{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:calc(22px + env(safe-area-inset-top,0px)) 20px 22px;text-align:center}.pts b{display:block;font-size:36px;font-weight:900;color:#FFD27A}.pts small{font-size:12px;letter-spacing:.6px}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px}.rc{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(15,27,51,.08)}
+.rc .im{aspect-ratio:1;background:var(--st);display:flex;align-items:center;justify-content:center;font-size:40px}.rc .im img{display:block;width:100%;height:100%;object-fit:cover}
+.rc .b{padding:10px}.rc h4{font-size:13px;line-height:1.25}.rc .pp{font-size:12px;color:var(--red);font-weight:800;margin:4px 0 8px}
+.rb{width:100%;padding:9px 0;border-radius:10px;font-size:12px;font-weight:800;background:var(--red);color:#fff}.rb.lk{background:var(--st);color:var(--muted)}
+.empty{text-align:center;padding:44px 28px;color:var(--muted);font-size:14px;line-height:1.5}
+.scan-status{background:var(--st);border-radius:13px;padding:12px;font-size:12.5px;color:var(--muted);margin-bottom:10px;line-height:1.4}.scan-status.ok{background:#EAF7EE;color:#216B38}.scan-status.bad{background:#FDECEC;color:#A81F1F}
+#qr-video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:#111;display:none}
+.list{display:flex;flex-direction:column;gap:8px}.list .item{display:flex;justify-content:space-between;gap:10px;padding:11px 12px;background:var(--st);border-radius:12px;font-size:12.5px;align-items:center}.list small{display:block;color:var(--muted);margin-top:2px;font-size:11px}
+.pj{background:#fff;border-radius:16px;padding:14px;margin:0 16px 12px;box-shadow:0 3px 12px rgba(15,27,51,.08)}.pj h4{font-size:15px;font-weight:800;overflow-wrap:anywhere}.pj p{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}.pj .btns{padding:12px 0 0}
+.prof-row{padding:2px 0}.prof-row b{display:block;font-size:15px;overflow-wrap:anywhere}
+@media(max-width:360px){.chip4{font-size:10px}.chip4 i{width:40px;height:40px}.qa{gap:8px}.wpts b{font-size:18px}.hero-stage{height:190px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
 
-<section id="splash" class="screen active"><div class="badge"><b>HULAS</b><span>METAL CRAFTS LTD.</span></div>
-<div style="font-size:13px;letter-spacing:3px;color:#B9C2DA">STAINLESS STEEL PIPES &amp; TUBES</div>
-<div style="font-size:14px;color:#DCE2F0;margin:22px 0 34px">Measure • Estimate • Quote • Build • Order</div>
-<button class="cta" onclick="if(typeof go==='function'){go('welcome')}else{document.getElementById('splash').classList.remove('active');document.getElementById('welcome').classList.add('active')}">GET STARTED</button></section>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></symbol>
+<symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><rect x="7" y="7" width="3.5" height="3.5" rx=".6"/><rect x="13.5" y="7" width="3.5" height="3.5" rx=".6"/><rect x="7" y="13.5" width="3.5" height="3.5" rx=".6"/><path d="M13.5 13.5h3.5v3.5M13.5 17h.01"/></symbol>
+<symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><rect x="8" y="5.5" width="8" height="3.5" rx=".8"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 17h.01M12 17h.01M15.5 17h.01"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M12 8v13M12 8c-1.6-3.4-5.2-3.6-5.2-1.4C6.8 8.2 9 8 12 8zM12 8c1.6-3.4 5.2-3.6 5.2-1.4C17.2 8.2 15 8 12 8z"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2.2l2.4 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-7M22 20H2"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="i-build" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h.01M12 7h.01M15 7h.01M9 11h.01M12 11h.01M15 11h.01M10 21v-4h4v4"/></symbol>
+<symbol id="i-shop" viewBox="0 0 24 24"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9c0 1.7 1.3 3 2.7 3S9.3 10.7 9.3 9c0 1.7 1.3 3 2.7 3s2.7-1.300 2.7-3c0 1.7 1.300 3 2.700 3S20 10.700 20 9M9.500 20v-5h5v5"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.500v3M12 18.500v3M2.500 12h3M18.500 12h3M5.300 5.300l2.100 2.100M16.600 16.600l2.100 2.100M5.300 18.700l2.100-2.100M16.600 7.400l2.100-2.100"/></symbol>
+<symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.700 6.300a4 4 0 0 0-5.400 5.400L3 18l3 3 6.300-6.300a4 4 0 0 0 5.400-5.400l-2.500 2.500-2.200-.5-.5-2.200z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.500 8-8 9-4.500-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.500 6 11a6 6 0 0 1-12 0c0-4.500 6-11 6-11z"/></symbol>
+<symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l-2 6 5 12M15 3l2 6-5 12"/></symbol>
+<symbol id="i-loop" viewBox="0 0 24 24"><path d="M6 8a4 4 0 1 0 0 8c4 0 8-8 12-8a4 4 0 1 1 0 8c-4 0-8-8-12-8z"/></symbol>
+<symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.400 7.800L3 21l1.300-4.400A9 9 0 1 1 21 12z"/><path d="M9 8.500c0 3.500 3 6.500 6.500 6.500l1.200-1.300-2.100-1-.9.800c-1-.4-2-1.400-2.400-2.400l.8-.9-1-2.100z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></symbol>
+<symbol id="i-install" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M16 8l4 4-4 4M20 12H9"/></symbol>
+<symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4"/></symbol>
+</defs></svg>
 
-<section id="welcome" class="screen"><div><h2 style="color:var(--red);margin-bottom:14px;font-size:22px">HULAS <small style="font-size:11px;color:var(--muted);font-weight:400">Smart Fabricator</small></h2>
-<div class="val"><h3>Calculate instantly</h3><p>Official Hulas weight chart — pipe weight, price &amp; VAT in seconds.</p></div>
-<div class="val"><h3>Order in one tap</h3><p>Build your material list and send it to Hulas on WhatsApp.</p></div>
-<div class="val"><h3>Earn as you build</h3><p>1 kg = 1 point. Redeem for real rewards.</p></div></div>
-<div class="stack"><button class="cta" onclick="go('register')">CREATE ACCOUNT</button><button class="cta ghost" onclick="go('login')">LOG IN</button><button id="install-btn" class="cta navy" onclick="installApp()">INSTALL / ADD TO HOME SCREEN</button></div></section>
+<div class="phone">
 
-<section id="login" class="screen form"><div class="back" onclick="go('welcome')">←</div>
+<section id="splash" class="screen active"><div class="sp-in"><div class="badge"><b>HULAS</b><span>METAL CRAFTS LTD.</span></div>
+<p class="sp-a">Stainless steel pipes &amp; tubes</p>
+<p class="sp-b">Measure, estimate, quote and order</p>
+<button class="cta" onclick="go('welcome')">Get started</button></div></section>
+
+<section id="welcome" class="screen">
+<div>
+ <div class="wl-logo"><img src="07_Hulas_Logo.jpg" alt="Hulas Metal Crafts" onerror="logoFail(this)"><div class="wordmark" style="display:none">HULAS<small>METAL CRAFTS LTD.</small></div></div>
+ <h1>Smart Fabricator</h1>
+ <p class="lead">Scan. Earn. Fabricate. Grow with Hulas.</p>
+ <div class="val"><div class="vi"><svg class="ic"><use href="#i-calc"/></svg></div><div><h3>Calculate instantly</h3><p>Official Hulas weight chart. Pipe weight, price and VAT in seconds.</p></div></div>
+ <div class="val"><div class="vi"><svg class="ic"><use href="#i-wa"/></svg></div><div><h3>Order in one tap</h3><p>Build your material list and send it to Hulas on WhatsApp.</p></div></div>
+ <div class="val"><div class="vi"><svg class="ic"><use href="#i-gift"/></svg></div><div><h3>Earn as you build</h3><p>Scan the QR on Hulas pipes. 1 kg = 1 point. Redeem for real rewards.</p></div></div>
+</div>
+<div class="stack"><button class="cta" onclick="go('register')">Create account</button><button class="cta ghost" onclick="go('login')">Log in</button><button id="install-btn" class="cta navy" onclick="installApp()"><svg class="ic"><use href="#i-install"/></svg>Install app</button></div>
+</section>
+
+<section id="login" class="screen form"><button class="back" aria-label="Back" onclick="go('welcome')"><svg class="ic"><use href="#i-back"/></svg></button>
 <h2>Welcome back</h2><p>Log in with your registered mobile number and password.</p>
-<label>Mobile Number</label><input id="l-mob" type="tel" inputmode="numeric" placeholder="98XXXXXXXX" autocomplete="username">
-<label>Password</label><input id="l-pw" type="password" placeholder="Enter password" autocomplete="current-password">
+<label for="l-mob">Mobile number</label><input id="l-mob" type="tel" inputmode="numeric" placeholder="98XXXXXXXX" autocomplete="username">
+<label for="l-pw">Password</label><input id="l-pw" type="password" placeholder="Enter password" autocomplete="current-password">
 <label class="rem"><input type="checkbox" id="l-rem"> Remember my mobile number</label>
-<div id="l-err" class="err"></div>
-<button class="cta" style="margin-top:14px" onclick="doLogin()">LOG IN</button>
-<p style="text-align:center;margin-top:16px">New fabricator? <a href="#" style="color:var(--red);font-weight:600" onclick="go('register');return false">Register</a></p>
-<p style="text-align:center"><a href="#" style="color:var(--muted)" onclick="forgot();return false">Forgot password?</a></p></section>
+<div id="l-err" class="err" role="alert"></div>
+<button class="cta" style="margin-top:14px" onclick="doLogin()">Log in</button>
+<p style="text-align:center;margin-top:18px">New fabricator? <a class="link" href="#" onclick="go('register');return false">Create an account</a></p>
+<p style="text-align:center;margin-top:8px"><a href="#" style="color:var(--muted)" onclick="forgot();return false">Forgot password?</a></p></section>
 
-<section id="register" class="screen form"><div class="back" onclick="go('welcome')">←</div>
+<section id="register" class="screen form"><button class="back" aria-label="Back" onclick="go('welcome')"><svg class="ic"><use href="#i-back"/></svg></button>
 <h2>Create your account</h2><p>Register as a Hulas fabricator. You can log in only after registering.</p>
-<div class="sec">PERSONAL</div><label>Full Name</label><input id="r-name"><label>Mobile Number</label><input id="r-mob" type="tel" inputmode="numeric" placeholder="98XXXXXXXX">
-<div class="sec">BUSINESS</div><label>Workshop / Firm Name</label><input id="r-firm">
-<div class="row2"><div><label>District</label><input id="r-dist"></div><div><label>PAN/VAT (optional)</label><input id="r-pan"></div></div>
-<label>Address</label><input id="r-addr">
-<div class="sec">ACCOUNT</div><label>Password (min 6)</label><input id="r-pw" type="password" autocomplete="new-password"><label>Confirm Password</label><input id="r-pw2" type="password" autocomplete="new-password">
-<div id="r-err" class="err"></div><button class="cta" style="margin-top:10px;background:var(--navy)" onclick="showLoginFor(cm($('r-mob').value))">LOG IN WITH THIS NUMBER</button><button class="cta" style="margin-top:10px" onclick="doRegister()">CREATE ACCOUNT</button></section>
+<div class="sec">Personal</div><label for="r-name">Full name</label><input id="r-name" autocomplete="name"><label for="r-mob">Mobile number</label><input id="r-mob" type="tel" inputmode="numeric" placeholder="98XXXXXXXX" autocomplete="tel">
+<div class="sec">Business</div><label for="r-firm">Workshop / firm name</label><input id="r-firm">
+<div class="row2"><div><label for="r-dist">District</label><input id="r-dist"></div><div><label for="r-pan">PAN/VAT (optional)</label><input id="r-pan"></div></div>
+<label for="r-addr">Address</label><input id="r-addr">
+<div class="sec">Account</div><label for="r-pw">Password (min 6 characters)</label><input id="r-pw" type="password" autocomplete="new-password"><label for="r-pw2">Confirm password</label><input id="r-pw2" type="password" autocomplete="new-password">
+<div id="r-err" class="err" role="alert"></div>
+<button class="cta" style="margin-top:16px" onclick="doRegister()">Create account</button>
+<p style="text-align:center;margin-top:16px">Already registered? <a class="link" href="#" onclick="showLoginFor(cm($('r-mob').value));return false">Log in</a></p></section>
 
-<section id="pending" class="screen form" style="align-items:center;justify-content:center;text-align:center"><div style="font-size:44px">✅</div><h2>Registration complete</h2>
-<p>Now log in with your <b>mobile number</b> and <b>password</b>.</p><button class="cta navy" style="margin-top:20px" onclick="go('login')">GO TO LOGIN</button></section>
-
-<section id="home" class="screen">
+<section id="home" class="screen hasnav">
 <div style="flex:1">
-<div class="home-top"><div class="home-topbar">
-<button class="home-iconbtn" aria-label="Menu" onclick="alert('Hulas menu will be connected here.')">☰</button>
-<img class="home-logo-img" src="07_Hulas_Logo.jpg" alt="HULAS Metal Crafts Ltd.">
-<button class="home-iconbtn home-bell" aria-label="Notifications" onclick="alert('No new notifications.')">♧<span class="home-badge">3</span></button>
-</div></div>
+ <div class="top">
+  <button class="icobtn" aria-label="Menu" onclick="openMenu()"><svg class="ic"><use href="#i-menu"/></svg></button>
+  <img class="logo-img" src="07_Hulas_Logo.jpg" alt="Hulas Metal Crafts" onerror="logoFail(this)"><div class="wordmark" style="display:none">HULAS<small>METAL CRAFTS LTD.</small></div>
+  <span></span>
+ </div>
+ <div class="hero">
+  <div class="hero-copy"><h1>Smart Fabricator</h1><p>Scan. Earn. Fabricate. Grow with Hulas.</p></div>
+  <div class="hero-stage">
+   <svg class="hero-art" viewBox="0 0 260 210" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F9FC"/><stop offset=".35" stop-color="#C9CFD9"/><stop offset=".62" stop-color="#8E97A6"/><stop offset="1" stop-color="#DDE2EA"/></linearGradient></defs><g transform="rotate(-11 130 120)"><rect x="22" y="40" width="250" height="40" rx="20" fill="url(#gs)"/><ellipse cx="34" cy="60" rx="14" ry="20" fill="#5B6472"/><ellipse cx="34" cy="60" rx="9" ry="14" fill="#2B313C"/><rect x="30" y="92" width="240" height="36" rx="6" fill="url(#gs)"/><rect x="38" y="138" width="232" height="30" rx="6" fill="url(#gs)"/></g></svg>
+   <img class="hero-pipes" src="02_Hero_Pipes.jpg" alt="" onerror="this.remove()">
+   <img class="hero-worker" src="01_Fabricator_Worker.jpg" alt="" onerror="this.remove()">
+   <div class="qr-chip"><svg class="ic"><use href="#i-qr"/></svg><span>Scan and earn<br>1 kg = 1 point</span></div>
+  </div>
+  <div class="perks">
+   <div class="perk"><svg class="ic"><use href="#i-shield"/></svg>Durable</div>
+   <div class="perk"><svg class="ic"><use href="#i-drop"/></svg>Rust resistant</div>
+   <div class="perk"><svg class="ic"><use href="#i-gem"/></svg>Premium finish</div>
+   <div class="perk"><svg class="ic"><use href="#i-loop"/></svg>Long life</div>
+  </div>
+ </div>
 
-<div class="home-hero">
-<div class="home-hero-grid">
-<img class="home-hero-worker" src="01_Fabricator_Worker.jpg" alt="Hulas fabricator">
-<img class="home-hero-pipes" src="02_Hero_Pipes.jpg" alt="Hulas stainless steel pipes">
-</div>
-<div class="home-hero-copy">
-<div class="home-hero-kicker">HULAS SMART FABRICATOR</div>
-<div class="home-hero-title">Scan. Earn.<br><span>Fabricate. Grow.</span></div>
-<p>Stronger projects with Hulas stainless steel.</p>
-<div class="home-hero-pills"><span>202 GRADE</span><span>304 GRADE</span><span>ROUND · SQUARE · RECTANGLE</span></div>
-</div>
-</div>
+ <div class="band">
+  <h3>Hulas SS pipes &amp; tubes</h3>
+  <p class="sub">Round, square and rectangle in 202 and 304 grade.</p>
+  <div class="chips4">
+   <div class="chip4"><i><svg class="ic"><use href="#i-build"/></svg></i>Residential</div>
+   <div class="chip4"><i><svg class="ic"><use href="#i-shop"/></svg></i>Commercial</div>
+   <div class="chip4"><i><svg class="ic"><use href="#i-gear"/></svg></i>Industrial</div>
+   <div class="chip4"><i><svg class="ic"><use href="#i-tool"/></svg></i>Fabrication</div>
+  </div>
+ </div>
 
-<div class="home-product-band">
-<div><h3>HULAS SS PIPES &amp; TUBES</h3><p>ROUND · SQUARE · RECTANGLE · 202 &amp; 304 GRADE</p></div>
-<div class="home-industries"><div class="home-industry"><i>▦</i>RESIDENTIAL</div><div class="home-industry"><i>▥</i>COMMERCIAL</div><div class="home-industry"><i>⚙</i>INDUSTRIAL</div><div class="home-industry"><i>⌂</i>FABRICATION</div></div>
-</div>
+ <div class="wcard">
+  <div class="ava" id="h-ava">H</div>
+  <div class="wmain"><h3 id="h-greet">Namaste!</h3><p id="h-sub">Let's build a stronger Nepal with Hulas.</p></div>
+  <button class="wpts" onclick="go('rewards')" aria-label="View rewards">
+   <svg class="coin" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#E9A100"/></linearGradient></defs><circle cx="20" cy="20" r="18" fill="url(#gc)"/><circle cx="20" cy="20" r="13.500" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.500"/><path d="M20 11.500l2.600 5.300 5.800.8-4.200 4.100 1 5.800L20 24.700l-5.200 2.800 1-5.800-4.200-4.100 5.800-.8z" fill="#fff"/></svg>
+   <div style="text-align:left"><small>My points</small><b id="h-pts">0</b></div>
+   <svg class="ic"><use href="#i-chev"/></svg>
+  </button>
+ </div>
 
-<div class="home-welcome">
-<div class="home-avatar">●</div>
-<div class="home-welcome-main"><h3 id="h-greet"></h3><p>Let's build a stronger Nepal with Hulas.</p></div>
-<div class="home-points"><small>MY POINTS</small><b id="h-pts">0</b></div>
-</div>
+ <div class="stitle">Quick actions</div>
+ <div class="qa">
+  <button class="qa-card primary wide" onclick="go('scan')"><span class="qa-ico"><svg class="ic"><use href="#i-scan"/></svg></span><div class="qa-t"><h4>Scan Hulas QR</h4><p>Earn 1 point per kg</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+  <button class="qa-card" onclick="openTools('calc')"><span class="qa-ico"><svg class="ic"><use href="#i-calc"/></svg></span><div class="qa-t"><h4>Calculate</h4><p>Estimate material</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+  <button class="qa-card" onclick="go('projects')"><span class="qa-ico"><svg class="ic"><use href="#i-file"/></svg></span><div class="qa-t"><h4>My projects</h4><p>Save and manage</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+  <button class="qa-card" onclick="go('rewards')"><span class="qa-ico"><svg class="ic"><use href="#i-gift"/></svg></span><div class="qa-t"><h4>Rewards</h4><p>Gift catalogue</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+  <button class="qa-card" onclick="go('order')"><span class="qa-ico"><svg class="ic"><use href="#i-cart"/></svg></span><div class="qa-t"><h4>Order Hulas</h4><p>Get quotation</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+  <button class="qa-card wide" onclick="go('activity')"><span class="qa-ico"><svg class="ic"><use href="#i-chart"/></svg></span><div class="qa-t"><h4>My activity</h4><p>Scan history and order requests</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+ </div>
 
-<div class="home-section-title">Quick Actions</div>
-<div class="home-actions">
-<button class="home-action primary" onclick="go('scan')"><span class="ico">⌗</span><div><h4>Scan Hulas QR</h4><p>Earn 1 point per kg</p></div></button>
-<button class="home-action" onclick="openTools('calc')"><span class="ico">▣</span><div><h4>Calculate</h4><p>Estimate material</p></div></button>
-<button class="home-action" onclick="openTools('est')"><span class="ico">▤</span><div><h4>My Projects</h4><p>Save &amp; manage</p></div></button>
-<button class="home-action" onclick="go('rewards')"><span class="ico">★</span><div><h4>Rewards</h4><p>Gift catalogue</p></div></button>
-<button class="home-action" onclick="go('order')"><span class="ico">🛒</span><div><h4>Order Hulas</h4><p>Get quotation</p></div></button>
-<button class="home-action" onclick="go('order')"><span class="ico">▥</span><div><h4>My Activity</h4><p>Scan history</p></div></button>
-</div>
+ <div class="tiles">
+  <button class="tile" onclick="openTools('calc')"><img src="08_Round_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">ROUND PIPES<small>Hulas stainless steel</small></div></button>
+  <button class="tile" onclick="openTools('calc')"><img src="09_Square_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">SQUARE PIPES<small>Hulas stainless steel</small></div></button>
+  <button class="tile" onclick="openTools('calc')"><img src="10_Rectangle_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">RECTANGLE PIPES<small>Hulas stainless steel</small></div></button>
+ </div>
 
-<div class="home-products">
-<div class="home-product-tile" onclick="openTools('calc')"><img src="08_Round_Product_Tile.jpg" alt="Round pipes"><div class="ptxt">ROUND PIPES<small>HULAS STAINLESS STEEL 304</small></div></div>
-<div class="home-product-tile" onclick="openTools('calc')"><img src="09_Square_Product_Tile.jpg" alt="Square pipes"><div class="ptxt">SQUARE PIPES<small>HULAS STAINLESS STEEL 304</small></div></div>
-<div class="home-product-tile" onclick="openTools('calc')"><img src="10_Rectangle_Product_Tile.jpg" alt="Rectangle pipes"><div class="ptxt">RECTANGLE PIPES<small>HULAS STAINLESS STEEL 304</small></div></div>
-</div>
+ <button class="nr" onclick="go('rewards')"><div class="nr-in">
+  <div class="nr-img" id="n-img"></div>
+  <div><small>Next reward</small><h3 id="n-name"></h3><div class="np" id="n-pts"></div>
+   <div class="bar"><i id="n-bar"></i></div><div class="foot" id="n-sub"></div></div>
+ </div></button>
 
-<div class="home-reward" onclick="go('rewards')">
-<div class="home-reward-inner">
-<img class="home-reward-img" src="06_Stand_Fan.jpg" alt="Stand fan reward">
-<div class="home-reward-top"><small>Next Reward</small><h3 id="n-name"></h3><b id="n-pts"></b></div>
-<div class="home-reward-right"><div>You have <b id="n-have">0</b> points</div><div class="bar"><i id="n-bar"></i></div><div class="home-reward-foot"><span id="n-sub"></span><span>View Rewards ›</span></div></div>
-</div>
-</div>
+ <div class="foot-strip">
+  <div><h4>HULAS METAL CRAFTS LTD.</h4><div class="loc"><svg class="ic"><use href="#i-pin"/></svg>Biratnagar, Nepal</div></div>
+  <a class="wa" href="https://wa.me/9779845656595" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><div><small>Order on WhatsApp</small><b>+977 9845656595</b></div></a>
+  <div class="tag">Nepali for Generations</div>
+ </div>
 </div>
 <div class="nav" data-nav="home"></div></section>
-<section id="tools" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>Build &amp; Order</h2>
+
+<section id="tools" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>Build &amp; order</h2>
 <div class="tabs"><button data-t="calc" onclick="switchTool('calc')">Calculate</button><button data-t="est" onclick="switchTool('est')">Estimate</button><button data-t="cut" onclick="switchTool('cut')">Cutting</button></div></div>
-<div id="p-calc"><div class="card"><div id="pk-calc"></div><div class="fl">QUANTITY (6m pipes)</div><div class="qty"><button onclick="calcQty(-1)">−</button><div id="c-qty">1</div><button onclick="calcQty(1)">+</button></div></div>
-<div class="res" id="c-res"></div><div class="btns"><button class="cta" onclick="addCalc()">ADD TO ORDER</button></div></div>
+<div id="p-calc"><div class="card"><div id="pk-calc"></div><div class="fl">Quantity (6 m pipes)</div><div class="qty"><button aria-label="Less" onclick="calcQty(-1)">−</button><div id="c-qty">1</div><button aria-label="More" onclick="calcQty(1)">+</button></div></div>
+<div class="res" id="c-res"></div><div class="btns"><button class="cta" onclick="addCalc()">Add to order</button></div></div>
 
-<div id="p-est" style="display:none"><div class="card" oninput="estStale()"><div class="fl">PROJECT TYPE</div><div class="chips"><span class="chip on">Railing</span></div>
-<label>Project Name</label><input id="e-name" placeholder="e.g. Shrestha Balcony Railing">
-<div class="fl">GRADE</div><div class="chips" id="e-grade"></div>
-<div class="row2"><div><label>Length (m)</label><input id="e-len" type="number" min="0" step="any"></div><div><label>Height (m)</label><input id="e-hgt" type="number" min="0" step="any"></div></div>
-<div class="row2"><div><label>Horizontal rails</label><input id="e-rails" type="number" value="3"></div><div><label>Post spacing (m)</label><input id="e-sp" type="number" value="1.2" step="any"></div></div>
-<div class="sec">RAIL / BAR PIPE</div><div id="pk-rail"></div><div class="sec">POST / VERTICAL PIPE</div><div id="pk-post"></div>
-<label>Wastage %</label><input id="e-waste" type="number" value="5"><button class="cta" style="margin-top:16px" onclick="runEst()">CALCULATE ESTIMATE</button></div>
-<div id="e-warn"></div><div class="res" id="e-res" style="display:none"></div><div class="warn" id="e-note" style="display:none">This is an ESTIMATE from the dimensions entered. Confirm final cutting on site.</div>
-<div class="btns"><button class="cta" onclick="addEst()">ADD TO ORDER</button></div></div>
+<div id="p-est" style="display:none"><div class="card" oninput="if(event.target.id!=='e-name')estStale()"><div class="fl" style="margin-top:0">Project type</div><div class="chips"><span class="chip on">Railing</span></div>
+<label for="e-name">Project name</label><input id="e-name" placeholder="e.g. Shrestha balcony railing">
+<div class="fl">Grade</div><div class="chips" id="e-grade"></div>
+<div class="row2"><div><label for="e-len">Length (m)</label><input id="e-len" type="number" min="0" step="any" inputmode="decimal"></div><div><label for="e-hgt">Height (m)</label><input id="e-hgt" type="number" min="0" step="any" inputmode="decimal"></div></div>
+<div class="row2"><div><label for="e-rails">Horizontal rails</label><input id="e-rails" type="number" value="3" min="1" step="1"></div><div><label for="e-sp">Post spacing (m)</label><input id="e-sp" type="number" value="1.2" step="any" inputmode="decimal"></div></div>
+<div class="sec">Rail / bar pipe</div><div id="pk-rail"></div><div class="sec">Post / vertical pipe</div><div id="pk-post"></div>
+<label for="e-waste">Wastage %</label><input id="e-waste" type="number" value="5" min="0" max="50"><button class="cta" style="margin-top:16px" onclick="runEst()">Calculate estimate</button></div>
+<div id="e-warn"></div><div class="res" id="e-res" style="display:none"></div><div class="warn" id="e-note" style="display:none">This is an estimate from the dimensions entered. Confirm final cutting on site.</div>
+<div class="btns"><button class="cta ghost" onclick="saveProject()">Save project</button><button class="cta" onclick="addEst()">Add to order</button></div></div>
 
-<div id="p-cut" style="display:none"><div class="card"><div id="pk-cut"></div><div class="fl">UNIT</div><div class="chips" id="cut-unit"></div></div>
-<div class="card"><div class="fl">REQUIRED CUT LENGTHS</div><div id="cut-rows"></div><button class="cta ghost" style="padding:11px" onclick="cutAdd()">+ ADD CUT LENGTH</button>
-<button class="cta" style="margin-top:12px" onclick="runCut()">OPTIMIZE CUTTING PLAN</button></div>
+<div id="p-cut" style="display:none"><div class="card"><div id="pk-cut"></div><div class="fl">Unit</div><div class="chips" id="cut-unit"></div></div>
+<div class="card"><div class="fl" style="margin-top:0">Required cut lengths</div><div id="cut-rows"></div><button class="cta ghost" style="padding:11px" onclick="cutAdd()">+ Add cut length</button>
+<button class="cta" style="margin-top:12px" onclick="runCut()">Optimize cutting plan</button></div>
 <div id="cut-warn"></div><div class="card" id="cut-pat" style="display:none"></div><div class="res" id="cut-res" style="display:none"></div>
-<div class="btns"><button class="cta" onclick="addCut()">ADD CUTTING PLAN TO ORDER</button></div></div></section>
+<div class="btns"><button class="cta" onclick="addCut()">Add cutting plan to order</button></div></div>
+<div class="nav" data-nav="tools"></div></section>
 
-<section id="order" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>My Order</h2><p style="margin:5px 0 0;color:var(--muted);font-size:12px">Review, edit or add pipe requirements before sending.</p></div>
+<section id="order" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>My order</h2><p class="sub">Review, edit or add pipe requirements before sending.</p></div>
 <div style="flex:1;padding-top:14px" id="o-body"></div>
-<div class="card" style="margin-top:4px"><div class="sec" style="margin-top:0">ADD / EDIT PIPE</div>
-<label>Pipe specification</label><input id="op-spec" placeholder="Example: 202 Grade 1&quot; Light Round">
-<div class="row2"><div><label>Quantity (pcs)</label><input id="op-qty" type="number" min="1" step="1" value="1"></div><div><label>Length / pipe (m)</label><input id="op-len" type="number" min="0.1" step="0.01" value="6"></div></div>
-<div class="row2"><div><label>Weight / pipe (kg)</label><input id="op-wt" type="number" min="0" step="0.001" placeholder="e.g. 5.100"></div><div><label>Rate / kg (Rs.)</label><input id="op-rate" type="number" min="0" step="0.01" placeholder="e.g. 290"></div></div>
-<div class="btns" style="padding:12px 0 0"><button class="cta ghost" onclick="clearPipeEditor()">CLEAR</button><button class="cta" onclick="addManualPipe()">ADD PIPE TO ORDER</button></div>
-<small style="color:var(--muted);font-size:11px">You can enter any approved Hulas pipe specification. Weight and rate should be verified before sending.</small></div>
+<div class="card" style="margin-top:4px"><div class="sec" style="margin-top:0">Add or edit a pipe</div>
+<label for="op-spec">Pipe specification</label><input id="op-spec" placeholder="Example: 202 grade 1&quot; light round">
+<div class="row2"><div><label for="op-qty">Quantity (pcs)</label><input id="op-qty" type="number" min="1" step="1" value="1"></div><div><label for="op-len">Length / pipe (m)</label><input id="op-len" type="number" min="0.1" step="0.01" value="6"></div></div>
+<div class="row2"><div><label for="op-wt">Weight / pipe (kg)</label><input id="op-wt" type="number" min="0" step="0.001" placeholder="e.g. 5.100"></div><div><label for="op-rate">Rate / kg (Rs.)</label><input id="op-rate" type="number" min="0" step="0.01" placeholder="e.g. 290"></div></div>
+<div class="btns" style="padding:12px 0 0"><button class="cta ghost" onclick="clearPipeEditor()">Clear</button><button class="cta" onclick="addManualPipe()">Add pipe</button></div>
+<p style="color:var(--muted);font-size:11.5px;margin-top:8px;line-height:1.4">Manual pipes are marked "manual entry" when sent. Hulas verifies weight and rate before confirming.</p></div>
 <div class="card tot" id="o-tot"></div>
-<div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">CLEAR ORDER</button><button class="cta" onclick="sendOrder()">SEND ORDER TO HULAS</button></div><div class="nav" data-nav="order"></div></section>
+<div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">Clear order</button><button class="cta" onclick="sendOrder()">Send to Hulas</button></div><div class="nav" data-nav="order"></div></section>
 
-<section id="scan" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>Scan Hulas QR</h2><p style="margin:5px 0 0;color:var(--muted);font-size:12px">Scan the unique QR on Hulas pipe/packaging to record points.</p></div><div class="card scan-card"><div id="scan-status" class="scan-status">Camera is off. Tap START SCANNER.</div><video id="qr-video" playsinline muted></video><canvas id="qr-canvas" hidden></canvas><div class="btns" style="padding:12px 0 4px"><button class="cta" onclick="startScanner()">START SCANNER</button><button class="cta ghost" onclick="stopScanner()">STOP</button></div><div class="sec">NO CAMERA? USE THE PRINTED CODE</div><label>Hulas QR code</label><input id="scan-code" inputmode="text" autocomplete="off" placeholder="HULAS|PIPE|ID|KG"><button class="cta navy" style="margin-top:10px" onclick="verifyManualScan()">VERIFY CODE</button><div class="warn" style="margin:12px 0 0">This offline build can detect and deduplicate QR codes on this device, but it cannot cryptographically prove a purchase. Production points must be verified by the Hulas server.</div></div><div class="card"><div class="fl">RECENT SCANS</div><div id="scan-history" class="scan-history"></div></div><div class="pts"><b id="scan-pts">0</b><small>MY HULAS POINTS · 1 KG = 1 POINT</small></div><div class="nav" data-nav="scan"></div></section><section id="rewards" class="screen"><div style="flex:1"><div class="pts"><b id="w-pts">0</b><small>MY HULAS POINTS · 1 KG = 1 POINT</small></div>
+<section id="scan" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>Scan Hulas QR</h2><p class="sub">Scan the unique QR on Hulas pipe or packaging to record points.</p></div>
+<div class="card"><div id="scan-status" class="scan-status">Camera is off. Tap Start scanner.</div><video id="qr-video" playsinline muted></video><div class="btns" style="padding:12px 0 4px"><button class="cta" onclick="startScanner()">Start scanner</button><button class="cta ghost" onclick="stopScanner()">Stop</button></div>
+<div class="sec">No camera? Use the printed code</div><label for="scan-code">Hulas QR code</label><input id="scan-code" inputmode="text" autocomplete="off" autocapitalize="off" placeholder="HULAS|PIPE|ID|KG"><button class="cta navy" style="margin-top:10px" onclick="verifyManualScan()">Verify code</button>
+<div class="warn" style="margin:12px 0 0">This build checks QR codes on this device only. It cannot prove a purchase, so Hulas verifies points before any reward is released.</div></div>
+<div class="card"><div class="fl" style="margin-top:0">Recent scans</div><div id="scan-history" class="list"></div></div>
+<div class="pts" style="padding-top:22px"><b id="scan-pts">0</b><small>My Hulas points · 1 kg = 1 point</small></div><div class="nav" data-nav="scan"></div></section>
+
+<section id="rewards" class="screen hasnav"><div style="flex:1"><div class="pts"><b id="w-pts">0</b><small>My Hulas points · 1 kg = 1 point</small></div>
 <div class="rg" id="w-grid"></div><div class="warn">Reward values are Hulas' reference catalogue and may be updated by management.</div></div><div class="nav" data-nav="rewards"></div></section>
 
-<section id="profile" class="screen"><div style="flex:1"><div class="pts"><b id="p-pts">0</b><small>MY HULAS POINTS</small></div>
-<div class="card"><div class="fl">NAME</div><b id="p-name"></b><div class="fl">MOBILE</div><b id="p-mob"></b><div class="fl">FIRM</div><b id="p-firm"></b></div>
-<div class="btns"><button class="cta" onclick="sendRegistration()">SEND PROFILE TO HULAS</button></div><div class="btns"><button class="cta ghost" onclick="logout()">LOG OUT</button></div></div><div class="nav" data-nav="profile"></div></section>
+<section id="profile" class="screen hasnav"><div style="flex:1"><div class="pts"><b id="p-pts">0</b><small>My Hulas points</small></div>
+<div class="card"><div class="prof-row"><div class="fl" style="margin-top:0">Name</div><b id="p-name"></b></div><div class="prof-row"><div class="fl">Mobile</div><b id="p-mob"></b></div><div class="prof-row"><div class="fl">Firm</div><b id="p-firm"></b></div></div>
+<div class="btns"><button class="cta" onclick="sendRegistration()">Send profile to Hulas</button></div><div class="btns"><button class="cta ghost" onclick="logout()">Log out</button></div></div><div class="nav" data-nav="profile"></div></section>
+
+<section id="projects" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>My projects</h2><p class="sub">Railing estimates you saved on this device.</p></div>
+<div style="flex:1;padding-top:14px" id="pj-list"></div><div class="nav" data-nav=""></div></section>
+
+<section id="activity" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>My activity</h2><p class="sub">Scans and order requests from this device.</p></div>
+<div class="card" style="margin-top:14px"><div id="ac-list" class="list"></div></div><div class="nav" data-nav=""></div></section>
+
+<div id="sheet" class="sheet" onclick="if(event.target===this)closeMenu()"><div class="sheet-card" role="dialog" aria-label="Menu"><div class="grab"></div>
+ <button class="sheet-item" onclick="go('projects')"><svg class="ic"><use href="#i-file"/></svg>My projects</button>
+ <button class="sheet-item" onclick="go('activity')"><svg class="ic"><use href="#i-chart"/></svg>My activity</button>
+ <button class="sheet-item" onclick="go('profile')"><svg class="ic"><use href="#i-user"/></svg>Profile</button>
+ <button class="sheet-item" onclick="orderWA()"><svg class="ic"><use href="#i-wa"/></svg>Chat with Hulas on WhatsApp</button>
+ <button class="sheet-item" id="menu-install" onclick="closeMenu();installApp()"><svg class="ic"><use href="#i-install"/></svg>Install app</button>
+ <button class="sheet-item" onclick="logout()"><svg class="ic"><use href="#i-logout"/></svg>Log out</button>
+</div></div>
+
 </div>
 <script>
 const $=id=>document.getElementById(id);
-/* ===== OFFICIAL HULAS WEIGHT CHART (kg per 6m pipe) — single source ===== */
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* ===== OFFICIAL HULAS WEIGHT CHART (kg per 6m pipe): single source ===== */
 const W={round:{'1/2"':{light:2.070,heavy:2.520},'3/4" (0.60mm)':{thin:1.600},'3/4"':{light:3.228,heavy:4.070},'1"':{light:4.160,heavy:5.100},'1.5"':{light:6.520,heavy:7.780},'2"':{light:8.480,heavy:10.690}},
 square:{'20x20':{light:4.160,heavy:5.100},'25x25':{light:5.280,heavy:6.610},'40x40':{light:8.480,heavy:10.690},'50x50':{light:11.150,heavy:12.800}},
 rectangle:{'20x40':{light:6.520,heavy:7.780},'25x50':{light:8.480,heavy:10.690}}};
 const CL={light:'Light',heavy:'Heavy',thin:'0.60 mm'},cap=s=>s[0].toUpperCase()+s.slice(1);
+/* Rates (Rs/kg) and VAT: edit here when management changes them */
 const R={'202':290,'304':475,sq:30,q34:10,vat:13,len:6};
 const rateFor=s=>R[s.grade]+(s.shape!=='round'?R.sq:0)+(s.size.startsWith('3/4"')?R.q34:0);
 const money=n=>'Rs. '+Math.round(n).toLocaleString('en-IN'),kg=n=>n.toLocaleString('en-IN',{maximumFractionDigits:3})+' kg',fp=n=>n.toLocaleString('en-IN',{maximumFractionDigits:1});
 const vatOf=b=>b*R.vat/100;
-function line(s,qty){const w=W[s.shape][s.size][s.cls]*qty;return{spec:`${s.grade} ${s.shape} ${s.size} (${CL[s.cls]})`,qty,weight:w,amount:w*rateFor(s),key:[s.grade,s.shape,s.size,s.cls].join('|')}}
-/* ===== picker: Grade / Shape / Size / Class — chips re-render so the highlight always follows the choice ===== */
+function line(s,qty){const w=W[s.shape][s.size][s.cls]*qty,rate=rateFor(s);return{spec:s.grade+' '+s.shape+' '+s.size+' ('+CL[s.cls]+')',qty,len:R.len,rate,weight:w,amount:w*rate,key:[s.grade,s.shape,s.size,s.cls].join('|')}}
+/* ===== picker: grade / shape / size / class ===== */
 function Picker(id,s,o={}){const el=$(id),grade=o.grade!==false;
- const chips=(k,list,cur,lab)=>`<div class="chips">${list.map(v=>`<span class="chip ${v===cur?'on':''}" data-k="${k}" data-v="${v}">${lab?lab(v):v}</span>`).join('')}</div>`;
+ const chips=(k,list,cur,lab)=>'<div class="chips">'+list.map(v=>'<span class="chip '+(v===cur?'on':'')+'" data-k="'+k+'" data-v="'+v+'">'+(lab?lab(v):v)+'</span>').join('')+'</div>';
  const draw=()=>{const sizes=Object.keys(W[s.shape]);if(!sizes.includes(s.size))s.size=sizes[0];const cls=Object.keys(W[s.shape][s.size]);if(!cls.includes(s.cls))s.cls=cls[0];
-  el.innerHTML=(grade?'<div class="fl">GRADE</div>'+chips('grade',['202','304'],s.grade):'')+'<div class="fl">SHAPE</div>'+chips('shape',['round','square','rectangle'],s.shape,cap)+
-  '<div class="fl">SIZE</div><select>'+sizes.map((z,i)=>`<option value="${i}" ${z===s.size?'selected':''}>${z.replace(/"/g,'&quot;')}</option>`).join('')+'</select><div class="fl">CLASS</div>'+chips('cls',cls,s.cls,v=>CL[v]);};
- el.onclick=e=>{const c=e.target.closest('.chip');if(!c)return;s[c.dataset.k]=c.dataset.v;draw();o.cb&&o.cb()};
+  el.innerHTML=(grade?'<div class="fl" style="margin-top:0">Grade</div>'+chips('grade',['202','304'],s.grade):'')+'<div class="fl">Shape</div>'+chips('shape',['round','square','rectangle'],s.shape,cap)+
+  '<div class="fl">Size</div><select aria-label="Size">'+sizes.map((z,i)=>'<option value="'+i+'"'+(z===s.size?' selected':'')+'>'+z.replace(/"/g,'&quot;')+'</option>').join('')+'</select><div class="fl">Class</div>'+chips('cls',cls,s.cls,v=>CL[v]);};
+ el.onclick=e=>{const c=e.target.closest('.chip');if(!c||!c.dataset.k)return;s[c.dataset.k]=c.dataset.v;draw();o.cb&&o.cb()};
  el.onchange=e=>{if(e.target.tagName==='SELECT'){s.size=Object.keys(W[s.shape])[e.target.value];draw();o.cb&&o.cb()}};draw();}
-/* ===== accounts (local prototype; Supabase OTP will replace this) =====
-   All phone numbers are stored in one canonical format so +977/98... cannot
-   accidentally create a second identity on the same browser. */
+/* ===== accounts (local prototype; Supabase will replace this) ===== */
 const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
 st=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
 function canonicalMobile(v){let m=(v||'').replace(/\D/g,'');if(m.startsWith('977')&&m.length===13)m=m.slice(3);return m}
-function storageReady(){
- try{const k='hmc_storage_test',v='ok-'+Date.now();localStorage.setItem(k,v);const good=localStorage.getItem(k)===v;localStorage.removeItem(k);return good}catch(e){return false}
-}
-/* Primary account store: IndexedDB. localStorage remains a migration/fallback layer. */
+function storageReady(){try{const k='hmc_storage_test',v='ok-'+Date.now();localStorage.setItem(k,v);const good=localStorage.getItem(k)===v;localStorage.removeItem(k);return good}catch(e){return false}}
 let HMC_DB=null;
-function openAccountDB(){
- return new Promise((resolve,reject)=>{
-   if(!('indexedDB' in window))return reject(new Error('indexeddb_unavailable'));
-   if(HMC_DB)return resolve(HMC_DB);
-   const req=indexedDB.open('HMC_SMART_FABRICATOR',1);
-   req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('accounts'))db.createObjectStore('accounts',{keyPath:'mobile'})};
-   req.onsuccess=()=>{HMC_DB=req.result;resolve(HMC_DB)};
-   req.onerror=()=>reject(req.error||new Error('indexeddb_open_failed'));
- });
-}
-async function idbGetAccount(m){
- try{const db=await openAccountDB();return await new Promise((resolve,reject)=>{const q=db.transaction('accounts','readonly').objectStore('accounts').get(m);q.onsuccess=()=>resolve(q.result||null);q.onerror=()=>reject(q.error)})}catch(e){return null}
-}
-async function idbPutAccount(a){
- try{const db=await openAccountDB();return await new Promise((resolve,reject)=>{const q=db.transaction('accounts','readwrite').objectStore('accounts').put(a);q.onsuccess=()=>resolve(true);q.onerror=()=>reject(q.error)})}catch(e){return false}
-}
-async function idbGetAll(){
- try{const db=await openAccountDB();return await new Promise((resolve,reject)=>{const q=db.transaction('accounts','readonly').objectStore('accounts').getAll();q.onsuccess=()=>resolve(q.result||[]);q.onerror=()=>reject(q.error)})}catch(e){return []}
-}
+function openAccountDB(){return new Promise((resolve,reject)=>{
+ if(!('indexedDB' in window))return reject(new Error('indexeddb_unavailable'));
+ if(HMC_DB)return resolve(HMC_DB);
+ const req=indexedDB.open('HMC_SMART_FABRICATOR',1);
+ req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('accounts'))db.createObjectStore('accounts',{keyPath:'mobile'})};
+ req.onsuccess=()=>{HMC_DB=req.result;resolve(HMC_DB)};
+ req.onerror=()=>reject(req.error||new Error('indexeddb_open_failed'));})}
+async function idbGetAccount(m){try{const db=await openAccountDB();return await new Promise((res,rej)=>{const q=db.transaction('accounts','readonly').objectStore('accounts').get(m);q.onsuccess=()=>res(q.result||null);q.onerror=()=>rej(q.error)})}catch(e){return null}}
+async function idbPutAccount(a){try{const db=await openAccountDB();return await new Promise((res,rej)=>{const t=db.transaction('accounts','readwrite');t.objectStore('accounts').put(a);t.oncomplete=()=>res(true);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)})}catch(e){return false}}
+async function idbGetAll(){try{const db=await openAccountDB();return await new Promise((res,rej)=>{const q=db.transaction('accounts','readonly').objectStore('accounts').getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error)})}catch(e){return []}}
+const okAcc=(m,a)=>/^9[678]\d{8}$/.test(m)&&a&&a.hash&&a.salt;
 function loadAccounts(){
  const out={};
- try{
-   const raw=localStorage.getItem('hmc_accounts');const old=raw?JSON.parse(raw):{};
-   Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}})
- }catch(e){}
- try{
-   const raw=localStorage.getItem('hmc_accounts_v2');const v2=raw?JSON.parse(raw):{};
-   Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}})
- }catch(e){}
- try{
-   for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i)||'';if(!key.startsWith('hmc_account_'))continue;const m=canonicalMobile(key.slice(12)),a=JSON.parse(localStorage.getItem(key)||'null');if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}}
- }catch(e){}
- return out
-}
-async function loadAllAccounts(){
- const out=loadAccounts();
- for(const a of await idbGetAll()){const m=canonicalMobile(a?.mobile);if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}}
- return out
-}
-async function loadAccount(m){
- const n=canonicalMobile(m);
- const db=await idbGetAccount(n);if(db?.hash&&db?.salt)return {...db,mobile:n};
- return loadAccounts()[n]||null;
-}
+ try{const raw=localStorage.getItem('hmc_accounts');const old=raw?JSON.parse(raw):{};Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile((a&&a.mobile)||k);if(okAcc(m,a))out[m]={...a,mobile:m}})}catch(e){}
+ try{const raw=localStorage.getItem('hmc_accounts_v2');const v2=raw?JSON.parse(raw):{};Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile((a&&a.mobile)||k);if(okAcc(m,a))out[m]={...a,mobile:m}})}catch(e){}
+ try{for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i)||'';if(!key.startsWith('hmc_account_'))continue;const m=canonicalMobile(key.slice(12)),a=JSON.parse(localStorage.getItem(key)||'null');if(okAcc(m,a))out[m]={...a,mobile:m}}}catch(e){}
+ return out}
+async function loadAllAccounts(){const out=loadAccounts();for(const a of await idbGetAll()){const m=canonicalMobile(a&&a.mobile);if(okAcc(m,a))out[m]={...a,mobile:m}}return out}
+async function loadAccount(m){const n=canonicalMobile(m);const db=await idbGetAccount(n);if(db&&db.hash&&db.salt)return{...db,mobile:n};return loadAccounts()[n]||null}
 async function saveAccount(a){
  const m=canonicalMobile(a.mobile);a={...a,mobile:m};
- const idb=await idbPutAccount(a);
- let ls=false;
- try{
-   const all=loadAccounts();all[m]=a;
-   const payload=JSON.stringify(all);
-   localStorage.setItem('hmc_accounts_v2',payload);
-   localStorage.setItem('hmc_accounts',payload);
-   localStorage.setItem('hmc_account_'+m,JSON.stringify(a));
-   ls=JSON.parse(localStorage.getItem('hmc_account_'+m)||'null')?.hash===a.hash;
- }catch(e){}
- return idb||ls;
-}
-async function migrateAccountsToIDB(){
- const all=await loadAllAccounts();
- for(const m of Object.keys(all))await idbPutAccount(all[m]);
- return all;
-}
+ const idb=await idbPutAccount(a);let ls=false;
+ try{const all=loadAccounts();all[m]=a;const payload=JSON.stringify(all);localStorage.setItem('hmc_accounts_v2',payload);localStorage.setItem('hmc_accounts',payload);localStorage.setItem('hmc_account_'+m,JSON.stringify(a));ls=JSON.parse(localStorage.getItem('hmc_account_'+m)||'null').hash===a.hash}catch(e){}
+ return idb||ls}
+async function migrateAccountsToIDB(){const all=await loadAllAccounts();for(const m of Object.keys(all))await idbPutAccount(all[m]);return all}
 let ACC=loadAccounts(),ME=null,POINTS=0,ORDER=[],CD=3;const WA='9779845656595';
 function hash(t){let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^a>>>16,2246822507)^Math.imul(b^b>>>13,3266489909);b=Math.imul(b^b>>>16,2246822507)^Math.imul(a^a>>>13,3266489909);return(4294967296*(2097151&b)+(a>>>0)).toString(36)}
 async function pwHash(salt,pw){try{const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+pw));return[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return hash(salt+pw)+hash(pw+salt)}}
-const cm=v=>canonicalMobile(v),err=(id,m)=>{const e=$(id);e.innerHTML=m;e.style.display=m?'block':'none'};
-function showLoginFor(m){const n=cm(m);$('l-mob').value=n;err('r-err','');err('l-err','');go('login');setTimeout(()=>$('l-pw').focus(),50)}
+const cm=v=>canonicalMobile(v),err=(id,m)=>{const e=$(id);e.textContent=m;e.style.display=m?'block':'none'};
+function showLoginFor(m){const n=cm(m);if(n)$('l-mob').value=n;err('r-err','');err('l-err','');go('login');setTimeout(()=>$('l-pw').focus(),50)}
 async function doRegister(){
  const g=i=>$(i).value.trim(),m=cm($('r-mob').value),p=$('r-pw').value;
  if(!g('r-name'))return err('r-err','Please enter your full name.');
  if(!/^9[678]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 96XXXXXXXX, 97XXXXXXXX or 98XXXXXXXX.');
  if(p.length<6)return err('r-err','Password must be at least 6 characters.');
  if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
- if(!storageReady() && !('indexedDB' in window))return err('r-err','This browser is blocking app storage. Please use normal Chrome/Safari mode.');
+ if(!storageReady()&&!('indexedDB' in window))return err('r-err','This browser is blocking app storage. Please use normal Chrome or Safari mode.');
  const existing=await loadAccount(m);
- if(existing)return err('r-err','This mobile number is already registered on this device. Please use LOG IN.');
+ if(existing)return err('r-err','This mobile number is already registered on this device. Please log in.');
  const salt=crypto.getRandomValues(new Uint32Array(4)).join('')+Date.now();
  const account={mobile:m,name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};
- if(!await saveAccount(account))return err('r-err','Account could not be saved. Please use normal Chrome/Safari mode and try again.');
+ if(!await saveAccount(account))return err('r-err','Account could not be saved. Please use normal Chrome or Safari mode and try again.');
  const verified=await loadAccount(m);
- if(!verified)return err('r-err','Account was not saved correctly. Please try registration again.');
+ if(!verified)return err('r-err','Account was not saved correctly. Please try registering again.');
  ACC=await loadAllAccounts();
- err('r-err','');$('l-mob').value=m;ME={mobile:m,...verified};POINTS=0;go('home')
-}
+ err('r-err','');$('l-mob').value=m;ME={...verified,mobile:m};POINTS=Number(verified.points)||0;go('home')}
 async function doLogin(){
- const m=cm($('l-mob').value),p=$('l-pw').value;
- err('l-err','');
+ const m=cm($('l-mob').value),p=$('l-pw').value;err('l-err','');
  if(!/^9[678]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
- const btn=document.querySelector('#login .cta');
- if(btn){btn.disabled=true;btn.style.opacity='.7'}
+ const btn=document.querySelector('#login .cta');if(btn){btn.disabled=true}
  try{
-   const a=await loadAccount(m);
-   if(!a)return err('l-err','No account was found for this mobile number. If you registered it on another phone/browser, this offline version cannot see that account.');
-   const modern=await pwHash(a.salt,p);
-   const legacy=hash(a.salt+p)+hash(p+a.salt);
-   const good=modern===a.hash||legacy===a.hash;
-   if(!good)return err('l-err','Wrong password. Please use the exact password created during registration.');
-   ACC=await loadAllAccounts();
-   $('l-pw').value='';
-   if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
-   ME={mobile:m,...a};POINTS=Number(a.points)||0;
-   go('home');
- }catch(e){
-   console.error(e);
-   err('l-err','Login could not be completed on this device. Please refresh the app and try again.');
- }finally{
-   if(btn){btn.disabled=false;btn.style.opacity='1'}
- }
-}
-function forgot(){alert('For security, this offline version cannot reset a password without a Hulas server. Please contact Hulas with your registered mobile number; do not share your password.')}
-function sendRegistration(){if(!ME)return;const m='*HULAS FABRICATOR REGISTRATION*\\n\\nName: '+ME.name+'\\nFirm: '+(ME.firm||'-')+'\\nMobile: '+ME.mobile+'\\nDistrict: '+(ME.district||'-')+'\\nPAN/VAT: '+(ME.pan||'-')+'\\nAddress: '+(ME.address||'-')+'\\n\\nPlease verify/activate this fabricator.';if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))alert('Please allow pop-ups so WhatsApp can open.');}function logout(){ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
-document.addEventListener('input',e=>{if(e.target&&e.target.closest('#login'))err('l-err','')});
+  const a=await loadAccount(m);
+  if(!a)return err('l-err','No account was found for this mobile number. If you registered on another phone or browser, this offline version cannot see that account.');
+  const modern=await pwHash(a.salt,p),legacy=hash(a.salt+p)+hash(p+a.salt);
+  if(!(modern===a.hash||legacy===a.hash))return err('l-err','Wrong password. Please use the exact password created during registration.');
+  if(modern!==a.hash){a.hash=modern;await saveAccount(a)}
+  ACC=await loadAllAccounts();$('l-pw').value='';
+  if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
+  ME={...a,mobile:m};POINTS=Number(a.points)||0;go('home');
+ }catch(e){console.error(e);err('l-err','Login could not be completed on this device. Please refresh the app and try again.')}
+ finally{if(btn)btn.disabled=false}}
+function forgot(){alert('For security, this offline version cannot reset a password without a Hulas server. Please contact Hulas with your registered mobile number. Never share your password.')}
+function sendRegistration(){if(!ME)return;const m='*HULAS FABRICATOR REGISTRATION*\n\nName: '+ME.name+'\nFirm: '+(ME.firm||'-')+'\nMobile: '+ME.mobile+'\nDistrict: '+(ME.district||'-')+'\nPAN/VAT: '+(ME.pan||'-')+'\nAddress: '+(ME.address||'-')+'\n\nPlease verify/activate this fabricator.';if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))alert('Please allow pop-ups so WhatsApp can open.')}
+function logout(){stopScanner();closeMenu();ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
+document.addEventListener('input',e=>{if(e.target&&e.target.closest&&e.target.closest('#login'))err('l-err','')});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login').classList.contains('active'))doLogin()});
-/* ===== navigation (every app screen needs a logged-in session) ===== */
-const PROT=['home','tools','order','scan','rewards','profile'];
-function go(id){if(PROT.includes(id)&&!ME)id='login';document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));renderAll();scrollTo(0,0)}
-document.querySelectorAll('.nav').forEach(n=>{const cur=n.dataset.nav;const items=cur==='home'?[['home','Home'],['scan','Scan'],['tools','Calculate'],['rewards','Rewards'],['order','Orders'],['profile','Profile']]:[['home','Home'],['scan','Scan'],['order','Orders'],['rewards','Rewards'],['profile','Profile']];n.innerHTML=items.map(([k,l])=>`<button class="${k===cur?'on':''}" onclick="go('${k}')">${l}</button>`).join('')});
+/* ===== navigation ===== */
+const PROT=['home','tools','order','scan','rewards','profile','projects','activity'];
+function go(id){
+ if(PROT.includes(id)&&!ME)id='login';
+ if(id!=='scan')stopScanner();
+ closeMenu();
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+ renderAll();window.scrollTo(0,0)}
+const NAV=[['home','Home','i-home'],['scan','Scan','i-scan'],['tools','Calculate','i-calc'],['rewards','Rewards','i-gift'],['order','Orders','i-cart'],['profile','Profile','i-user']];
+document.querySelectorAll('.nav').forEach(n=>{const cur=n.dataset.nav;n.innerHTML=NAV.map(([k,l,i])=>'<button class="'+(k===cur?'on':'')+'" onclick="go(\''+k+'\')"'+(k===cur?' aria-current="page"':'')+'><svg class="ic"><use href="#'+i+'"/></svg><span>'+l+'</span></button>').join('')});
+function openMenu(){$('sheet').classList.add('open')}
+function closeMenu(){const s=$('sheet');if(s)s.classList.remove('open')}
+function orderWA(){closeMenu();if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Namaste Hulas, I am '+(ME?ME.name:'a fabricator')+'. I would like to place an order.'),'_blank'))alert('Please allow pop-ups so WhatsApp can open.')}
 function switchTool(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));['calc','est','cut'].forEach(x=>$('p-'+x).style.display=x===t?'block':'none')}
 function openTools(t){go('tools');switchTool(t)}
-function openShape(sh){est.rail.shape=est.post.shape=sh;Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});openTools('est')}
-/* ===== calculator (no discount here — discount lives on the Order screen only) ===== */
+/* ===== calculator ===== */
 const cs={grade:'304',shape:'round',size:'1/2"',cls:'light'};let cq=1;
 function calcQty(d){cq=Math.max(1,cq+d);runCalc()}
 function runCalc(){$('c-qty').textContent=cq;const l=line(cs,cq),b=l.amount,v=vatOf(b);
- $('c-res').innerHTML=`<div><span>Weight per pipe</span><span>${kg(l.weight/cq)}</span></div><div><span>Total weight</span><span>${kg(l.weight)}</span></div><div><span>Rate</span><span>${money(rateFor(cs))}/kg</span></div><div><span>Basic amount</span><span>${money(b)}</span></div><div><span>VAT (${R.vat}%)</span><span>${money(v)}</span></div><div class="t"><span>Total</span><span>${money(b+v)}</span></div><div><span>Points earned</span><span class="p">${l.weight.toFixed(3)} pts</span></div>`}
+ $('c-res').innerHTML='<div><span>Weight per pipe</span><span>'+kg(l.weight/cq)+'</span></div><div><span>Total weight</span><span>'+kg(l.weight)+'</span></div><div><span>Rate</span><span>'+money(l.rate)+'/kg</span></div><div><span>Basic amount</span><span>'+money(b)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(v)+'</span></div><div class="t"><span>Total</span><span>'+money(b+v)+'</span></div><div><span>Points if scanned from QR</span><span class="p">'+l.weight.toFixed(3)+' pts</span></div>'}
 function addCalc(){addLine(line(cs,cq));go('order')}
-function addLine(l){const e=ORDER.find(x=>x.key===l.key);if(e){e.qty+=l.qty;e.weight+=l.weight;e.amount+=l.amount}else ORDER.push(l)}
+function addLine(l){const e=ORDER.find(x=>x.key===l.key);if(e){e.qty+=l.qty;e.weight+=l.weight;e.amount+=l.amount}else ORDER.push({...l})}
 /* ===== estimator (railing) ===== */
 const est={grade:'304',rail:{grade:'304',shape:'round',size:'1"',cls:'light'},post:{grade:'304',shape:'round',size:'1.5"',cls:'light'},last:null};
 function estStale(){est.last=null;$('e-res').style.display=$('e-note').style.display='none'}
-function estGrade(){$('e-grade').innerHTML=['202','304'].map(g=>`<span class="chip ${g===est.grade?'on':''}" data-g="${g}">${g}</span>`).join('');est.rail.grade=est.post.grade=est.grade}
+function estGrade(){$('e-grade').innerHTML=['202','304'].map(g=>'<span class="chip '+(g===est.grade?'on':'')+'" data-g="'+g+'">'+g+'</span>').join('');est.rail.grade=est.post.grade=est.grade}
 $('e-grade').onclick=e=>{const g=e.target.dataset.g;if(g){est.grade=g;estGrade();estStale()}};
 function packCuts(lengths){const bins=[];lengths.slice().sort((a,b)=>b-a).forEach(x=>{const b=bins.find(v=>v.rem+1e-9>=x);if(b){b.cuts.push(x);b.rem-=x}else bins.push({cuts:[x],rem:R.len-x})});return bins}
+function splitRun(len){const out=[];let r=len;while(r>R.len+1e-9){out.push(R.len);r-=R.len}if(r>1e-9)out.push(+r.toFixed(4));return out}
 function runEst(){
- const L=+$('e-len').value,H=+$('e-hgt').value,n=+$('e-rails').value,sp=+$('e-sp').value,waste=Math.max(0,Math.min(50,+$('e-waste').value||0))/100;
- if(!(L>0&&H>0&&n>0&&sp>0)){estStale();$('e-warn').innerHTML='<div class="warn">Enter valid Length, Height, Rails and Post spacing (all above 0).</div>';return}
+ const L=+$('e-len').value,H=+$('e-hgt').value,n=Math.floor(+$('e-rails').value),sp=+$('e-sp').value,waste=Math.max(0,Math.min(50,+$('e-waste').value||0))/100;
+ if(!(L>0&&H>0&&n>=1&&sp>0)){estStale();$('e-warn').innerHTML='<div class="warn">Enter valid length, height, number of rails and post spacing (all above 0).</div>';return}
+ if(H>R.len+1e-9){estStale();$('e-warn').innerHTML='<div class="warn">Post height is more than the standard 6 m pipe. Use a different construction for this height.</div>';return}
  $('e-warn').innerHTML='';
- const posts=Math.ceil(L/sp)+1;
- const railCuts=Array(n).fill(L),postCuts=Array(posts).fill(H);
- if(railCuts.some(x=>x>R.len)||postCuts.some(x=>x>R.len)){estStale();$('e-warn').innerHTML='<div class="warn">A required rail or post is longer than the standard 6m pipe. Split the design or use a different construction method.</div>';return}
+ const posts=Math.ceil(L/sp-1e-9)+1,runPieces=splitRun(L),joints=(runPieces.length-1)*n;
+ let railCuts=[];for(let i=0;i<n;i++)railCuts=railCuts.concat(runPieces);
+ const postCuts=Array(posts).fill(H);
  const railBins=packCuts(railCuts),postBins=packCuts(postCuts);
  const rp=Math.ceil(railBins.length*(1+waste)),pp=Math.ceil(postBins.length*(1+waste));
  const rl=line(est.rail,rp),pl=line(est.post,pp),b=rl.amount+pl.amount,v=vatOf(b),wt=rl.weight+pl.weight;
  const railOff=railBins.reduce((a,x)=>a+x.rem,0),postOff=postBins.reduce((a,x)=>a+x.rem,0);
  const offWt=railOff*(rl.weight/rp/R.len)+postOff*(pl.weight/pp/R.len);
- est.last={rl,pl,railBins,postBins,posts};
+ est.last={rl,pl,railBins,postBins,posts,meta:{L,H,n,sp,grade:est.grade}};
  $('e-res').style.display=$('e-note').style.display='block';
- $('e-res').innerHTML='<div><span>Posts ('+posts+' @ ≤'+sp+' m)</span><span>'+posts+' cuts</span></div><div><span>Rails</span><span>'+railBins.length+' pipes for cutting</span></div><div><span>Posts</span><span>'+postBins.length+' pipes for cutting</span></div><div><span>Recommended purchase</span><span>'+rp+' rail + '+pp+' post pipes</span></div><div><span>Off-cut after packing</span><span>'+kg(offWt)+'</span></div><div><span>Total purchase weight</span><span>'+kg(wt)+'</span></div><div><span>Basic amount</span><span>'+money(b)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(v)+'</span></div><div class="t"><span>Total</span><span>'+money(b+v)+'</span></div>';
-}
-function addEst(){if(!est.last){alert('Tap Calculate Estimate first.');return}addLine(est.last.rl);addLine(est.last.pl);go('order')}
-/* ===== cutting plan (first-fit decreasing) ===== */
+ $('e-res').innerHTML='<div><span>Posts ('+posts+' at up to '+sp+' m)</span><span>'+posts+' cuts</span></div><div><span>Rails</span><span>'+railBins.length+' pipes for cutting</span></div>'+(joints>0?'<div><span>Rail joints (weld or couple)</span><span>'+joints+'</span></div>':'')+'<div><span>Posts</span><span>'+postBins.length+' pipes for cutting</span></div><div><span>Recommended purchase</span><span>'+rp+' rail + '+pp+' post pipes</span></div><div><span>Off-cut after packing</span><span>'+kg(offWt)+'</span></div><div><span>Total purchase weight</span><span>'+kg(wt)+'</span></div><div><span>Basic amount</span><span>'+money(b)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(v)+'</span></div><div class="t"><span>Total</span><span>'+money(b+v)+'</span></div>'}
+function addEst(){if(!est.last){alert('Tap Calculate estimate first.');return}addLine(est.last.rl);addLine(est.last.pl);go('order')}
+/* ===== saved projects ===== */
+const projKey=()=>'hmc_projects_'+ME.mobile;
+function saveProject(){if(!ME)return;if(!est.last)return alert('Tap Calculate estimate first.');
+ const list=ld(projKey(),[]),nm=$('e-name').value.trim()||'Untitled project',{rl,pl,meta}=est.last;
+ list.unshift({id:Date.now(),name:nm,at:Date.now(),rl,pl,meta});
+ if(!st(projKey(),list.slice(0,30)))return alert('Could not save on this device.');
+ alert('Project saved. Find it under My projects.')}
+function renderProjects(){if(!ME)return;const list=ld(projKey(),[]);
+ $('pj-list').innerHTML=list.length?list.map(p=>{const wt=p.rl.weight+p.pl.weight,tot=(p.rl.amount+p.pl.amount)*(1+R.vat/100),m=p.meta||{};
+  return '<div class="pj"><h4>'+esc(p.name)+'</h4><p>'+new Date(p.at).toLocaleDateString()+' · '+esc(m.L)+' m long × '+esc(m.H)+' m high · '+esc(m.grade)+' grade</p><p>'+kg(wt)+' · '+money(tot)+' with VAT</p><div class="btns"><button class="cta ghost" onclick="delProject('+p.id+')">Delete</button><button class="cta" onclick="addProject('+p.id+')">Add to order</button></div></div>'}).join(''):'<div class="empty">No saved projects yet.<br>Calculate a railing estimate, then tap Save project.</div>'}
+function addProject(id){const p=ld(projKey(),[]).find(x=>x.id===id);if(!p)return;addLine({...p.rl});addLine({...p.pl});go('order')}
+function delProject(id){if(!confirm('Delete this project?'))return;st(projKey(),ld(projKey(),[]).filter(x=>x.id!==id));renderProjects()}
+/* ===== cutting plan ===== */
 const cu={grade:'304',shape:'round',size:'1"',cls:'light'};let cunit='ft',crows=[{len:3,qty:12},{len:2.5,qty:8}],clast=null;const FT=3.28084;
-function cutUnitDraw(){$('cut-unit').innerHTML=['ft','m'].map(u=>`<span class="chip ${u===cunit?'on':''}" data-u="${u}">${u==='ft'?'Feet':'Metre'}</span>`).join('')}
-$('cut-unit').onclick=e=>{const u=e.target.dataset.u;if(!u||u===cunit)return;const f=u==='m'?1/FT:FT;crows.forEach(r=>{if(r.len)r.len=+(r.len*f).toFixed(3)});cunit=u;cutUnitDraw();cutRows()};
-function cutRows(){$('cut-rows').innerHTML=crows.map((r,i)=>`<div class="cut"><input type="number" step="any" value="${r.len}" placeholder="Length (${cunit})" onchange="crows[${i}].len=+this.value||0"><input type="number" value="${r.qty}" placeholder="Pieces" style="max-width:90px" onchange="crows[${i}].qty=parseInt(this.value)||0"><button onclick="crows.splice(${i},1);cutRows()">×</button></div>`).join('')}
+function cutUnitDraw(){$('cut-unit').innerHTML=['ft','m'].map(u=>'<span class="chip '+(u===cunit?'on':'')+'" data-u="'+u+'">'+(u==='ft'?'Feet':'Metre')+'</span>').join('')}
+$('cut-unit').onclick=e=>{const u=e.target.dataset.u;if(!u||u===cunit)return;const f=u==='m'?1/FT:FT;crows.forEach(r=>{if(r.len)r.len=+(r.len*f).toFixed(3)});cunit=u;cutUnitDraw();cutRows();clast=null};
+function cutRows(){$('cut-rows').innerHTML=crows.map((r,i)=>'<div class="cut"><input type="number" step="any" inputmode="decimal" value="'+r.len+'" placeholder="Length ('+cunit+')" aria-label="Length" onchange="crows['+i+'].len=+this.value||0"><input type="number" inputmode="numeric" value="'+r.qty+'" placeholder="Pieces" aria-label="Pieces" style="max-width:90px" onchange="crows['+i+'].qty=parseInt(this.value)||0"><button aria-label="Remove" onclick="crows.splice('+i+',1);cutRows()">×</button></div>').join('')}
 function cutAdd(){crows.push({len:'',qty:1});cutRows()}
 function runCut(){const toM=v=>cunit==='ft'?v/FT:v,disp=m=>(cunit==='ft'?m*FT:m).toFixed(2)+' '+cunit;let p=[];crows.forEach(r=>{if(r.len>0&&r.qty>0)for(let i=0;i<r.qty;i++)p.push(toM(r.len))});
- const bad=m=>{clast=null;$('cut-warn').innerHTML=`<div class="warn">${m}</div>`;$('cut-pat').style.display=$('cut-res').style.display='none'};
- if(!p.length)return bad('Add at least one valid cut length and quantity.');if(p.some(x=>x>R.len+1e-9))return bad('A cut length is longer than the 6m standard pipe.');$('cut-warn').innerHTML='';
+ const bad=m=>{clast=null;$('cut-warn').innerHTML='<div class="warn">'+m+'</div>';$('cut-pat').style.display=$('cut-res').style.display='none'};
+ if(!p.length)return bad('Add at least one valid cut length and quantity.');if(p.some(x=>x>R.len+1e-9))return bad('A cut length is longer than the 6 m standard pipe.');$('cut-warn').innerHTML='';
  p.sort((a,b)=>b-a);const bins=[];p.forEach(x=>{const b=bins.find(b=>b.rem>=x-1e-9);if(b){b.cuts.push(x);b.rem-=x}else bins.push({cuts:[x],rem:R.len-x})});
  const tot=p.reduce((a,b)=>a+b,0),proc=bins.length*R.len,l=line(cu,bins.length),v=vatOf(l.amount);clast=l;
- $('cut-pat').style.display='block';$('cut-pat').innerHTML='<div class="fl">CUTTING PATTERN</div>'+bins.map((b,i)=>`<div class="pat">Pipe #${i+1} — ${(R.len-b.rem).toFixed(2)}m used, ${b.rem.toFixed(2)}m off-cut<br>${b.cuts.map(c=>`<span>${disp(c)}</span>`).join('')}${b.rem>.01?`<span class="w">waste ${disp(b.rem)}</span>`:''}</div>`).join('');
- $('cut-res').style.display='block';$('cut-res').innerHTML=`<div><span>6m pipes required</span><span>${bins.length}</span></div><div><span>Total cut length</span><span>${disp(tot)}</span></div><div><span>Off-cut / waste</span><span>${disp(proc-tot)}</span></div><div><span>Total weight</span><span>${kg(l.weight)}</span></div><div><span>Basic amount</span><span>${money(l.amount)}</span></div><div><span>VAT (${R.vat}%)</span><span>${money(v)}</span></div><div class="t"><span>Total</span><span>${money(l.amount+v)}</span></div><div><span>Points earned</span><span class="p">${l.weight.toFixed(3)} pts</span></div>`}
-function addCut(){if(!clast){alert('Tap Optimize Cutting Plan first.');return}addLine({...clast,spec:clast.spec+' — cutting plan'});go('order')}
-/* ===== order: cash discount is applied LAST, on the bill total (basic + VAT) ===== */
+ $('cut-pat').style.display='block';$('cut-pat').innerHTML='<div class="fl" style="margin-top:0">Cutting pattern</div>'+bins.map((b,i)=>'<div class="pat">Pipe #'+(i+1)+': '+(R.len-b.rem).toFixed(2)+' m used, '+b.rem.toFixed(2)+' m off-cut<br>'+b.cuts.map(c=>'<span>'+disp(c)+'</span>').join('')+(b.rem>.01?'<span class="w">waste '+disp(b.rem)+'</span>':'')+'</div>').join('');
+ $('cut-res').style.display='block';$('cut-res').innerHTML='<div><span>6 m pipes required</span><span>'+bins.length+'</span></div><div><span>Total cut length</span><span>'+disp(tot)+'</span></div><div><span>Off-cut / waste</span><span>'+disp(proc-tot)+'</span></div><div><span>Total weight</span><span>'+kg(l.weight)+'</span></div><div><span>Basic amount</span><span>'+money(l.amount)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(v)+'</span></div><div class="t"><span>Total</span><span>'+money(l.amount+v)+'</span></div><div><span>Points if scanned from QR</span><span class="p">'+l.weight.toFixed(3)+' pts</span></div>'}
+function addCut(){if(!clast){alert('Tap Optimize cutting plan first.');return}addLine({...clast,spec:clast.spec+' (cutting plan)',key:clast.key+'|cut'});go('order')}
+/* ===== order: cash discount applied last, on bill total (basic + VAT) ===== */
 function orderTotals(){const wt=ORDER.reduce((s,l)=>s+l.weight,0),b=ORDER.reduce((s,l)=>s+l.amount,0),v=vatOf(b),bill=b+v,cd=bill*CD/100;return{wt,b,v,bill,cd,pay:bill-cd}}
-function renderOrder(){const t=orderTotals();$('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>`<div class="ol"><div style="flex:1"><b style="font-size:12.5px">${l.spec}</b><small>${l.qty} × ${l.len||6}m · ${kg(l.weight)}</small><small>Rate: ${money(l.rate||0)}/kg · Amount: ${money(l.amount)}</small></div><div style="text-align:right"><b>${money(l.amount)}</b><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:5px"><span class="rm" onclick="editPipe(${i})">Edit</span><span class="rm" onclick="ORDER.splice(${i},1);renderOrder()">Remove</span></div></div></div>`).join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result, or enter a pipe manually below.</div>';
+function renderOrder(){const t=orderTotals();
+ $('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>'<div class="ol"><div style="flex:1"><b style="font-size:13px">'+esc(l.spec)+'</b>'+(l.manual?'<span class="tag-m">manual entry</span>':'')+'<small>'+l.qty+' × '+(l.len||6)+' m · '+kg(l.weight)+'</small><small>Rate '+money(l.rate||0)+'/kg · Amount '+money(l.amount)+'</small></div><div style="text-align:right"><b>'+money(l.amount)+'</b><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:5px"><span class="rm" role="button" onclick="editPipe('+i+')">Edit</span><span class="rm" role="button" onclick="ORDER.splice('+i+',1);renderOrder()">Remove</span></div></div></div>').join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result, or enter a pipe manually below.</div>';
  $('o-tot').style.display=ORDER.length?'block':'none';if(!ORDER.length)return;
  if(document.activeElement&&document.activeElement.id==='cd')return;
- $('o-tot').innerHTML=`<div><span>Total weight</span><span>${kg(t.wt)}</span></div><div><span>Basic amount</span><span>${money(t.b)}</span></div><div><span>VAT (${R.vat}%)</span><span>${money(t.v)}</span></div><div><span>Bill total</span><span>${money(t.bill)}</span></div><div><span>Cash discount (%)</span><span><input id="cd" type="number" min="0" max="100" step="0.5" value="${CD}" onchange="CD=Math.min(100,Math.max(0,+this.value||0));renderOrder()"></span></div><div><span>Discount amount</span><span>− ${money(t.cd)}</span></div><div class="g"><span>Payable</span><span>${money(t.pay)}</span></div>`}
+ $('o-tot').innerHTML='<div><span>Total weight</span><span>'+kg(t.wt)+'</span></div><div><span>Basic amount</span><span>'+money(t.b)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(t.v)+'</span></div><div><span>Bill total</span><span>'+money(t.bill)+'</span></div><div><span>Cash discount (%)</span><span><input id="cd" type="number" min="0" max="100" step="0.5" value="'+CD+'" onchange="CD=Math.min(100,Math.max(0,+this.value||0));renderOrder()"></span></div><div><span>Discount amount</span><span>− '+money(t.cd)+'</span></div><div class="g"><span>Payable</span><span>'+money(t.pay)+'</span></div>'}
 function clearPipeEditor(){['op-spec','op-wt','op-rate'].forEach(id=>$(id).value='');$('op-qty').value=1;$('op-len').value=6;$('op-spec').focus()}
-function addManualPipe(){const spec=$('op-spec').value.trim(),qty=Math.max(1,Math.floor(+$('op-qty').value||0)),len=Math.max(.1,+$('op-len').value||0),wt=Math.max(0,+$('op-wt').value||0),rate=Math.max(0,+$('op-rate').value||0);if(!spec)return alert('Enter the pipe specification.');if(!wt)return alert('Enter weight per pipe in kg.');if(!rate)return alert('Enter the rate per kg.');ORDER.push({spec,qty,len,weight:wt*qty,amount:wt*qty*rate,rate});clearPipeEditor();renderOrder()}
+function addManualPipe(){const spec=$('op-spec').value.trim(),qty=Math.max(1,Math.floor(+$('op-qty').value||0)),len=Math.max(.1,+$('op-len').value||0),wt=Math.max(0,+$('op-wt').value||0),rate=Math.max(0,+$('op-rate').value||0);
+ if(!spec)return alert('Enter the pipe specification.');if(!wt)return alert('Enter weight per pipe in kg.');if(!rate)return alert('Enter the rate per kg.');
+ ORDER.push({spec,qty,len,weight:wt*qty,amount:wt*qty*rate,rate,manual:true,key:'m'+Date.now()+Math.random()});clearPipeEditor();renderOrder()}
 function editPipe(i){const l=ORDER[i];$('op-spec').value=l.spec||'';$('op-qty').value=l.qty||1;$('op-len').value=l.len||6;$('op-wt').value=(l.weight/(l.qty||1)).toFixed(3);$('op-rate').value=l.rate||0;ORDER.splice(i,1);$('op-spec').focus();renderOrder()}
-
 function sendOrder(){if(!ORDER.length)return alert('Add at least one item first.');const t=orderTotals();
- let m=`*HULAS ORDER REQUEST*\n\nFabricator: ${ME.name}\nFirm: ${ME.firm||'-'}\nMobile: ${ME.mobile}\n\n`;ORDER.forEach(l=>m+=`• ${l.spec} — ${l.qty} pcs × ${l.len||6}m — ${kg(l.weight)} — Rate ${money(l.rate||0)}/kg — ${money(l.amount)}\n`);
- m+=`\nTotal weight: ${kg(t.wt)}\nBasic amount: ${money(t.b)}\nVAT (${R.vat}%): ${money(t.v)}\nBill total: ${money(t.bill)}\nCash discount (${CD}%): -${money(t.cd)}\n*Payable: ${money(t.pay)}*`;
- if(!window.open(`https://wa.me/${WA}?text=${encodeURIComponent(m)}`,'_blank'))return alert('Please allow pop-ups so WhatsApp can open, then press Send again.');
+ let m='*HULAS ORDER REQUEST*\n\nFabricator: '+ME.name+'\nFirm: '+(ME.firm||'-')+'\nMobile: '+ME.mobile+'\n\n';
+ ORDER.forEach(l=>{m+='• '+l.spec+(l.manual?' (manual entry)':'')+' — '+l.qty+' pcs × '+(l.len||6)+' m — '+kg(l.weight)+' — Rate '+money(l.rate||0)+'/kg — '+money(l.amount)+'\n'});
+ m+='\nTotal weight: '+kg(t.wt)+'\nBasic amount: '+money(t.b)+'\nVAT ('+R.vat+'%): '+money(t.v)+'\nBill total: '+money(t.bill)+'\nCash discount ('+CD+'%): -'+money(t.cd)+'\n*Payable: '+money(t.pay)+'*';
+ if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))return alert('Please allow pop-ups so WhatsApp can open, then press Send again.');
+ const lg=ld('hmc_log_'+ME.mobile,[]);lg.unshift({at:Date.now(),weight:t.wt,pay:t.pay,items:ORDER.length});st('hmc_log_'+ME.mobile,lg.slice(0,50));
  alert('WhatsApp opened. Review the order and tap Send in WhatsApp. Points are earned only through the Hulas QR scan.');go('order')}
-function addPts(n){POINTS=Math.max(0,POINTS+n);if(ACC[ME.mobile])ACC[ME.mobile].points=POINTS;st('hmc_accounts',ACC);st('hmc_accounts_v2',ACC)}
+/* ===== points ===== */
+async function addPts(n){POINTS=Math.max(0,Math.round((POINTS+n)*1000)/1000);if(ME){ME.points=POINTS;await saveAccount({...ME});ACC[ME.mobile]={...ME}}}
 /* ===== QR scanner: device-local verification until Hulas backend signing is connected ===== */
 let qrStream=null,qrTimer=null;
 function scanStore(){return ld('hmc_qr_scans',{})}
 function setScanStatus(msg,kind){const e=$('scan-status');if(e){e.textContent=msg;e.className='scan-status '+(kind||'')}}
-function renderScanHistory(){const h=scanStore(),rows=Object.values(h).sort((a,b)=>b.at-a.at).slice(0,8);$('scan-history').innerHTML=rows.length?rows.map(x=>'<div class="item"><div><b>'+x.id+'</b><small>'+new Date(x.at).toLocaleString()+'</small></div><b>+'+fp(x.kg)+' pts</b></div>').join(''):'<div style="color:var(--muted);font-size:12px">No scans yet.</div>';if($('scan-pts'))$('scan-pts').textContent=fp(POINTS)}
-function verifyScan(raw){const v=(raw||'').trim(),m=v.match(/^HULAS\\|PIPE\\|([A-Za-z0-9_-]{3,64})\\|(\\d+(?:\\.\\d+)?)$/i);if(!m)return setScanStatus('Invalid Hulas QR format.','bad');const id=m[1],kgv=+m[2];if(!(kgv>0&&kgv<=1000))return setScanStatus('Invalid weight in QR code.','bad');const h=scanStore();if(h[id])return setScanStatus('This QR was already scanned on this device. No points added.','bad');h[id]={id:id,kg:kgv,at:Date.now()};st('hmc_qr_scans',h);addPts(kgv);setScanStatus('Verified locally: +'+fp(kgv)+' points added.','ok');renderAll();renderScanHistory()}
+function renderScanHistory(){if(!ME)return;const rows=Object.values(scanStore()).filter(x=>x.by===ME.mobile).sort((a,b)=>b.at-a.at).slice(0,8);
+ $('scan-history').innerHTML=rows.length?rows.map(x=>'<div class="item"><div><b>'+esc(x.id)+'</b><small>'+new Date(x.at).toLocaleString()+'</small></div><b>+'+fp(x.kg)+' pts</b></div>').join(''):'<div style="color:var(--muted);font-size:12.5px">No scans yet.</div>';
+ $('scan-pts').textContent=fp(POINTS)}
+async function verifyScan(raw){
+ if(!ME)return;
+ const v=(raw||'').trim(),m=v.match(/^HULAS\|PIPE\|([A-Za-z0-9_-]{3,64})\|(\d+(?:\.\d+)?)$/i);
+ if(!m)return setScanStatus('Invalid Hulas QR format.','bad');
+ const id=m[1],kgv=+m[2];if(!(kgv>0&&kgv<=1000))return setScanStatus('Invalid weight in QR code.','bad');
+ const h=scanStore();if(h[id])return setScanStatus('This QR was already scanned on this device. No points added.','bad');
+ h[id]={id:id,kg:kgv,at:Date.now(),by:ME.mobile};if(!st('hmc_qr_scans',h))return setScanStatus('Could not save the scan on this device. Please try again.','bad');
+ await addPts(kgv);setScanStatus('Recorded on this device: +'+fp(kgv)+' points added.','ok');$('scan-code').value='';renderAll()}
 function verifyManualScan(){verifyScan($('scan-code').value)}
-async function startScanner(){if(qrStream)return;if(!('BarcodeDetector'in window))return setScanStatus('This browser has no built-in QR scanner. Use the printed code below.','bad');if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return setScanStatus('Camera access is not available. Use the printed code below.','bad');try{const supported=await BarcodeDetector.getSupportedFormats();if(!supported.includes('qr_code'))throw new Error('qr');qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const video=$('qr-video');video.srcObject=qrStream;video.style.display='block';await video.play();setScanStatus('Point the camera at the Hulas QR code.');const detector=new BarcodeDetector({formats:['qr_code']});qrTimer=setInterval(async()=>{if(!qrStream)return;try{const codes=await detector.detect(video);if(codes[0]&&codes[0].rawValue){verifyScan(codes[0].rawValue);stopScanner()}}catch(e){}},450)}catch(e){setScanStatus('Camera could not start. Check camera permission or use the printed code field.','bad')}}
-function stopScanner(){if(qrTimer){clearInterval(qrTimer);qrTimer=null}if(qrStream){qrStream.getTracks().forEach(t=>t.stop());qrStream=null}const v=$('qr-video');if(v){v.pause();v.srcObject=null;v.style.display='none'}if($('scan-status')&&!$('scan-status').classList.contains('ok'))setScanStatus('Camera is off. Tap START SCANNER.')}
+async function startScanner(){if(qrStream)return;
+ if(!('BarcodeDetector' in window))return setScanStatus('This browser has no built-in QR scanner. Use the printed code below.','bad');
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return setScanStatus('Camera access is not available. Use the printed code below.','bad');
+ try{const supported=await BarcodeDetector.getSupportedFormats();if(!supported.includes('qr_code'))throw new Error('qr');
+  qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  const video=$('qr-video');video.srcObject=qrStream;video.style.display='block';await video.play();setScanStatus('Point the camera at the Hulas QR code.');
+  const detector=new BarcodeDetector({formats:['qr_code']});
+  qrTimer=setInterval(async()=>{if(!qrStream)return;try{const codes=await detector.detect(video);if(codes[0]&&codes[0].rawValue){const val=codes[0].rawValue;stopScanner();await verifyScan(val)}}catch(e){}},450)
+ }catch(e){stopScanner();setScanStatus('Camera could not start. Check camera permission or use the printed code field.','bad')}}
+function stopScanner(){if(qrTimer){clearInterval(qrTimer);qrTimer=null}if(qrStream){qrStream.getTracks().forEach(t=>t.stop());qrStream=null}
+ const v=$('qr-video');if(v){if(v.srcObject)v.pause();v.srcObject=null;v.style.display='none'}
+ const s=$('scan-status');if(s&&!s.classList.contains('ok')&&!s.classList.contains('bad'))setScanStatus('Camera is off. Tap Start scanner.')}
 /* ===== rewards ===== */
 const RW=[['Electric Jug',1500,'☕'],['Suitcase 18"',2800,'🧳'],['Rice Cooker 1.8L',3500,'🍚'],['Suitcase 20"',4200,'🧳'],['Stand Fan',5000,'🌀'],['Suitcase 22"',6000,'🧳'],['Induction Stove',7500,'🍳'],['Mixer Grinder',10000,'🥤'],['Cooler',15000,'❄️'],['Trolley Speaker',18000,'🔊'],['Gear Cycle',22000,'🚲'],['Refrigerator 190L',30000,'🧊'],['Washing Machine 8L Semi-Auto',37500,'🧺'],['Television 42"',45000,'📺'],['Laptop',55000,'💻'],['Bangkok Tour',70000,'✈️']];
-const IMG={"Bangkok Tour": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGwABAQADAQEBAAAAAAAAAAAAAAUCBAYDBwH/xAAxEAEAAgECBAMFBwUAAAAAAAAAAQIDBBEFBhIhEzFRIjJBYaEUFRZxc5PRI0WBgrH/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQQCA//EAB8RAQEAAgICAwEAAAAAAAAAAAABAhEDBBJRITFBE//aAAwDAQACEQMRAD8A+nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT2AE23MHCKWmtuJ6SJidpjxYY/iPg2+33po/wB6HXjfSeU9qglfiTgs/wB10f71WdOP8IyWitOJaSZmdoiMsJ430eUUgEUAAAAAAAAAAAAR+bLXry5q/DtNZtEVmY9JmIn6LCbzDWbcHzRHTvvX3o3j3odY3WUqZS2WR8vx6LFM7dMxP5PW3CaRSckY5tG3p2VdbpMtvai+GY9KYt5+svDPqdVbH4FsnRjmNtq4ohs5OzJjazY9TO5TaRl0kUj+jhrMx5x0tPNptRbz9mPSHSZKWpktSs2tHnvs8b6ebbzOSN5/KXlO1csZY9505L8u65OvlvytoJz2m94pNd5nvtFpiPpELSVyxSKcv6WsT1REW7/7Sqs9u7t3rXwAIAAAAAAAAAACFzrmtg5Y1WStJvMTT2Yt0z70fFdQed72x8q6u9a9XT0TMfLrjcu/xZdVwGi4nTNw/Uajws2K+Ksbxe0zHf4xP+G7jx01GtimHNF+nba1MkWr1T3+MoGt1uPHbJiw4cc1mY6+qZ2ttHbt8t35p8mPT6HTWrj0tpm9rVraszNJ6o77/wDGXLh5ct/m2j+806zU6PSdUfa7dF+iZ3yWiu+35EY+HThx3yTXDPgRk2mPKsfPfvPycrxDjmrzZc0ZPs+THe3eLx1do8u8xu8c/EtXfFpr2yaa1cUzWuOa7+z6T6w4nU5/rZOxjPp9e5Vz4dTy7pM2ni0YrRbpi1dp96fgrIXJFrX5S0F71rW1q2nasbR70rrZJqaZ7d3YAqAAAAAAAAAADHJjplx2x5KVvS0bWraN4mPnDIBpTwfhkzvPDtHM/PBX+D7o4btEfd2k2jyjwK9vo3Rd0aM8G4XM7zw3RzP6Ff4J4NwuY2nhuj2/Qr/DeDdNMceOmLHXHjrWlKxtWtY2iI9IhkCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//2Q==", "Cooler": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAAMEBgf/xAAjEAEAAgEDBAMBAQAAAAAAAAAAAQIDBAUREhMhQQYioVFh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AOnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIdTqsWlxWyZrdNKxzM8JmV+d7bqt00WLFpJ5tS3XbHNuIvHmPwGl0+ox6jHXJinmtq9UT/iVmPg236rbduyYNXP3tab1pFueiJ9fnLTgAAAAAAAAAAAAAAAAKG5YM2a8dmvM9u3mfU+l8BR27Blw3yd2nH1rEWjjz/V4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//Z", "Electric Jug": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAYBAgMH/8QAIxABAAICAgEEAwEAAAAAAAAAAAECAxEEBTEGEhMhFEGxcf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD04AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABre9aRE3tFdzqNzr7bJ/1Tiw26/JnzVm04slK0n3TGt2jf8AQUAhebxMnT9xy+bwuTyKfBmwW/HnJNseTHkmKTXU/ve52ugAAAAAAAAAAAAAAAAEH667/j8fHyetyWnHm+THkrus6tG6z9T4Xjnm4+HPERmxUya8e+sT/QSXUTg9T9xHYYc+W3C40U91JpNa5slZmazufMV3M/7pYsUpWlYrSsVrHiIjUMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=", "Gear Cycle": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAQGAwf/xAAoEAEAAgEDAwIGAwAAAAAAAAAAAQIDBBEhBRITMWEiIyRBQlFScYH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A9OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHfqWnpqfDa093O8+sRMfb+/YFgh0XU8OryXp31pfu2pjtO15jbeJ2nnn1j2XAAAAAAAAAAAAAAAAA46zFkzaLPixX8eS+O1a3/jMxxLNV6DqtTrePotPXi0ePHO9OPlxt614ne088tWAzebpGbyaqtdPNsue09ueLVisfF3VvP5Rau+0bfqP80gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=", "Induction Stove": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAcGAQP/xAAqEAEAAQIEBAUFAQAAAAAAAAAAAQIDBAURMQYSExQiQVFhgQchQlJxkf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGwl/HvGHeXa8oy65MYfSYvXqZ0i7MfhTP667z57bbhUBCsl4h4hwFyixg8Rd1qqii3h7njiuZnTSIq2+NFwwnX7Sz3XJ3HJHU6cTy82n3018tQeoAAAAAAAAAAAAAAAOVU010zTVETTMaTE+cMNnv02weMjqZZeqwtcbWbkzXan29afj/G6AYDgfgm7lWa3cwzKzRRctRyWKabkVxM6eKv29Ij+t+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/2Q==", "Laptop": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGgABAQADAQEAAAAAAAAAAAAAAAUCBAcDAf/EADQQAQACAQMCAwUDDQAAAAAAAAABAgMEBREGMRITIVGBk9HSFRaxFDNBRVJVYWJyg5Khwf/EABgBAQADAQAAAAAAAAAAAAAAAAACAwUE/8QAIREBAAICAgAHAAAAAAAAAAAAAAECAxIRQRQhIiNRUpH/2gAMAwEAAhEDEQA/AOnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5jvW5bvXe9bTBr9TTHXNaK1rfiIjns0ftPe5nidy1kf3Zhl1NbVzvOurp8+OKxntzTjie/tRq5Nwre0WvTt+x3bdbVrWvt9R1DNnabT61e24b3WIm256uIntPmy8b7nvPhmY3TVzx7M0o2ptrox0m1bTS0z4Y9Y/08seTV3ia0rOOY73n8OUoyU540j8Smt489nfcMzOGkzPMzWOZ9zNhh/MU/pj8GbCaAAAAAAAAAAAAAT2E7qCmsy7Jqce318WpvXw1jmI9JnifWf4cg471HunmdQ6++HHhtjtmtNbWi3Mx7e6bXX3ifTFg/wAbfUu6rojqHLmm1dun4tPm1/uL1HH6tn4tPm6Iz5IjiLSr0j4S/tC/Hri0/Pt8NvqfPy69p48jTzz/AC2+pW+43Uf7tt8WnzZ4eieoseWLTts+/JSf+niMv2k0jqHZNBnx6rQYM+G3ix5KRas+5sJXS+l1Gi6f0mDV4/Lz0i3ipzE8c2mf0eiq51gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//Z", "Mixer Grinder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAYBAwQH/8QAIxABAAMAAgIBBAMAAAAAAAAAAAECAwQRBTEGEiFBoRRhgf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwD04AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABi160ju0xEevuynfl/ksvHY8a2mumdr2n7Z99zWOpt+o6/0FEODxfIz/AI+XHvy8t94r39rxNpr+JmPfrp3gAAAAAAAAAAAAAAAA18nOduPpnWeptWYie5j9wiPK/C+f5PLixffDOcq3iaTrpeIm0+4mf6XYCS4nxXlZ2zrrthWc8Ma13pEzf66WmfU/jqZjvtWgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//Z", "Refrigerator 190L": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAcGBP/EACYQAQACAQMEAQQDAAAAAAAAAAABAgMEBREGEiExExQyQWFRcYH/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAwH/xAAaEQEAAwEBAQAAAAAAAAAAAAAAAQIDMREy/9oADAMBAAIRAxEAPwCnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT6SPec2pnqbcIpqdTM/V3pTFXLaI8RXiPf55VyfSTZsGqz9b7rfT4Zz49NqLZctIvFea+OYj9zwtj9Dr6fz5o6q23FObUdvM1vFs9r1vPbbmY/XMelOYnHuW363qLZ66LDWJjJaYn45pOKOy08fxMTMzLbM17wAEgAAAAAAAAAAAAAAn0leTZ9duPV+8X0mT44+pmv39vf65/wAVRKtdg37B1Hu+o27Ra3482e8Rkx4eZ8eOaz+P7hbG0VmZDprDbD1boaz3cUzWr5jjjilvCqpj0zot0jqjQ5dbodXipF7TbLmxzHM9lvanG9otb2AARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/9k=", "Rice Cooker 1.8L": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGQABAQADAQAAAAAAAAAAAAAAAAYBAgUH/8QAJBABAAICAQMDBQAAAAAAAAAAAAECAwQRBRIhBjFxExQiQbH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8A9OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYtatKza1orWI5mZniIZn2Qt7bWzm3LdR1d6Ita0UiMfdW1faImImePH6WTRcY8lMlIvjtFq2jmJieYlsgLfd6tdWelau930mOazj7KVjnzHEzHPwvaTNqVmYmJmOeJjiYLMGwCAAAAAAAAAAAAAAA4fXsW1XU3b6uL6t5wzbHSMfd+Uf34dwWXBN+n6dQ2NXQy79LY8nZN8sXx9szPPj4n28KQEW3QAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/9k=", "Stand Fan": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGgABAQEBAAMAAAAAAAAAAAAAAAMFAQIEB//EAB8QAQADAAICAwEAAAAAAAAAAAABAgMEETEyBRJBUf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAGBEBAQEBAQAAAAAAAAAAAAAAAAERAiH/2gAMAwEAAhEDEQA/APpwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACeu+WNJvrpSlI82tPUQ87essr5vi8jlcL68a9K2ie7VvHdb1/YlZNuVLcnjSy3x3pF8taaVnxNZ7hRhfAcbXPO3Itv98da1nGniK16/n43K+sHUy5CXY6AigAAAAAAAAAAAAAOW9ZTVT1wz2zmmle6z5jsEOLSufEypSIitaxERH49qvrCPH4mHGp9cM4pX+R4XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//9k=", "Suitcase 18\"": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUBBgf/xAAiEAEAAgICAQQDAAAAAAAAAAAAAQIDBBESBQYTITFRYZH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A9OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZe8UrNrTxENcz6p8luae1ix6uf2qzj7TEViZmef2DpYmLREx9S1C9J7+zv6Oa23l9y9MnWJ6xHxxH4XQAAAAAAAAAAAAAAAAELz3gcvltrHkpsVxUpj6zzXtMzyugJPp/xF/Ea+bFfNGXvk7RMRx8cRH1/VYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/9k=", "Suitcase 20\"": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAEHBv/EACQQAQACAgIBAwUBAAAAAAAAAAABAgMEERIFBiExFUFhcZGh/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFxEBAQEBAAAAAAAAAAAAAAAAAAERAv/aAAwDAQACEQMRAD8A04AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABL3rSObTxHMR/fZWfepfI7v13awV2s1cNJjrSt5rEe0T9vysms9XGgVtFqxNZ5iVcr6H28+xTex5s2TLGO9OveZnjmvv8/p1RZlWXZoAigAAAAAAAAAAAAADO/PaW3t+e3sutrZsuOMkV70pMxzFY5hogsuM9TXH+gYtW3ke9bVm1qTEWiY+ImJ/wBiYdgla1rz1iI5nmeI+ZUt2rJkwARQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q==", "Suitcase 22\"": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGwABAAICAwAAAAAAAAAAAAAAAAYHAgQBAwX/xAAoEAEAAgIABAQHAQAAAAAAAAAAAQIDEQQFEiExQVFxBhMiIzJhgZH/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAwQBAv/EAB0RAQADAAIDAQAAAAAAAAAAAAABAgMEERIhMTL/2gAMAwEAAhEDEQA/ALOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdUcVgm1qxmxzavaY643DO+4pbp11a7b8NqnxZMnJcuW/2r2zZb9oibRvcT6x6w8XtNY9K5Zxefc9QtiuSlp1W9Zn9SyQvkPOMlM824ng8kbrqJxzXt/OpMcOWubDXJXerRuNuUv5Qa5TnLMBRIAAAAAAAAAAAAABxb8Z9lR8zx0ycz4SuOlaxGe3VqPKsRpbsxuNPHj4X5RGSMkcJ9Ub1PzLdt+Pmnesz8WyvWv6RXg99Va1jvMxEe8p/hpGLDSkeFYiGnh5NwGHJTJjwatSdxPVM6n/W+nhlOffa3K5FduvGPgA0MYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/9k=", "Television 42\"": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGgABAQADAQEAAAAAAAAAAAAAAAUDBAYHAv/EADMQAQABAwMDAQMKBwAAAAAAAAABAgMEBREhBhIxQRMikwcVMjNCcZKx0uFRYXKRocHR/8QAGQEBAQADAQAAAAAAAAAAAAAAAAIBAwUE/8QAIBEBAQACAgICAwAAAAAAAAAAAAECEQMxEhQEQROhsf/aAAwDAQACEQMRAD8A9OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATeodRuaTo17MtW6blduadqap4neYj/akkdVY9eV0/kWrcRNUzTtEz/CqF8clzkvSM7ZjbHJU9f6hXVEU4WPvPj3pbF3rDWbdqi5ODiRTXO1O9fP58eXOzpmVbnuizXExzx5aleNc7+3sr7t/G07ur63DenN9nk+3QZPX2q2qu2nHw+6N4qjtqmI+6Yq5Yo+UPVvXGw/w1fqRMfTL+VcpotW6qpqq7d9p2if5z6MuZot3GyabNFVORVPG9qJnn+x+D48ur22Tn5LNvUundQu6poeNmX6aKLl2J7oo32jaqY9fuUk/QMa3h6LjWLUzNFFM8z533mZ/yoOTnryvj06GO9TYAlkAAAAAAAAAAR+q702On8i5TXNExNPMf1QsNLV8GdS065ixc9n3zHvxHMbTEpznljYxXmEZuVPNqqq5z55iW/j6vqNP1sxRTHrVVG7qp6M06fN7M+N+zFV0JpdU7zfzfjfs8Xr8vUy/rX4VBnqCu3TMTeu1zPO1MxEfkwfPt37FFNG/r3cy6WOhdMjxezPix/x9R0Rp0eL+ZE+k+0p/Sn1OT7y/dVqqXTV6rI0HGu1/Sqirf8UqjT0nCnTtNs4k3Zuzb3jvmNpq5mW49+E1jJVgCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//2Q==", "Trolley Speaker": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAcBBQMG/8QAJxABAAIBAwMEAQUAAAAAAAAAAAECAwQFERIxUQYhQbEUI1KBkcH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ApwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMveuOlr3tFa1jmZntEPn8nrPZ6dX6ma0V7zXBaY+nZ3GOdt1UecV/qUSy7xireK32nBaPbm/Xkj+e4Kvt3rDZtx1f42DU2jL7REZMdqRMzPERzPy7yObJWtt9xYdLSJrOXHf2nnnm0T3nxELGAAAAAAAAAAAAAAAADx1sc6LPHnHb6lHrXtOOOYnmI+YWdnTHiARbYdRfS7/izUrMzW9OImJ/dx/q1M6Yj4j+mgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/9k=", "Washing Machine 8L Semi-Auto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgwKCA0MCwwPDg0QFCIWFBISFCkdHxgiMSszMjArLy42PE1CNjlJOi4vQ1xESVBSV1dXNEFfZl5UZU1VV1P/2wBDAQ4PDxQSFCcWFidTNy83U1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1P/wAARCACgAKADASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAcGAQX/xAAtEAEAAgIBAgQFAgcAAAAAAAAAAQIDEQQFBwYSITETIkFhcVHRFDJigaGisf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oADAMBAAIRAxEAPwCnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyvcDJfH0rj/Dvalpza3Wf6ZT63OtxvlvyL5slZ35ax6R9p9dN13Nyzg8P48lf5q5fT86lNuPxstaY+ZPk/h8drRu+p3r399x5p9db91k0d5XMnlX38XNjtO/li0xE/X01OlQ7dVmnhuazl+NrPf59zO/b9Ur5XFzWi/JtWkYb3isTj1qJmNx7em4+uvuqHbK/n8J1tPvOa8/8LMGtAQAAAAAAAAAAAAAAYzufWL9BwUt7Wz6/wBZSmcmTFjnDkvNaWncxO/Lada3+dK33H4vJ5fRuNTi4Mue8Z4ny46Tadan9E+p0fq8Rqel83++C37LKPJpfNnw1w0va2Om9ekxWm41M/eVa7bRFfC/lr7RnvEf4T2/SerzXUdM5sfjBb9lF7eYM/G8OWx8nDkw5I5F91yVms/T6SaNQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//Z"};/* optional: name -> base64 photo (original photos can be merged here) */
-function renderRewards(){$('w-pts').textContent=fp(POINTS);$('w-grid').innerHTML=RW.map(([n,p,e],i)=>{const lk=POINTS<p;return`<div class="rc"><div class="im">${IMG[n]?`<img src="${IMG[n]}">`:e}</div><div class="b"><h4>${n}</h4><div class="pp">${p.toLocaleString('en-IN')} pts</div><button class="rb ${lk?'lk':''}" onclick="${lk?"openTools('calc')":`redeem(${i})`}">${lk?'Earn '+Math.ceil(p-POINTS).toLocaleString('en-IN')+' more ›':'REDEEM'}</button></div></div>`}).join('')}
-function redeem(i){
- const [n,p]=RW[i];
+/* Reward photos (name -> data URI). Paste your existing "const IMG={...}" line over the next line to keep the photos. */
+const IMG={};
+const rwImg=(n,e)=>IMG[n]?'<img src="'+IMG[n]+'" alt="">':e;
+function renderRewards(){$('w-pts').textContent=fp(POINTS);
+ $('w-grid').innerHTML=RW.map(([n,p,e],i)=>{const lk=POINTS<p;return '<div class="rc"><div class="im">'+rwImg(n,e)+'</div><div class="b"><h4>'+esc(n)+'</h4><div class="pp">'+p.toLocaleString('en-IN')+' pts</div><button class="rb '+(lk?'lk':'')+'" onclick="'+(lk?"openTools('calc')":'redeem('+i+')')+'">'+(lk?'Earn '+Math.ceil(p-POINTS).toLocaleString('en-IN')+' more':'Redeem')+'</button></div></div>'}).join('')}
+function redeem(i){const [n,p]=RW[i];
  if(POINTS<p||!confirm('Request '+n+' for '+p.toLocaleString('en-IN')+' points?'))return;
- const msg='*HULAS REWARD REDEMPTION*\\n\\nFabricator: '+ME.name+'\\nMobile: '+ME.mobile+'\\nReward: '+n+' ('+p+' pts)\\n\\nPlease verify my Hulas points before approval.';
+ const msg='*HULAS REWARD REDEMPTION*\n\nFabricator: '+ME.name+'\nMobile: '+ME.mobile+'\nReward: '+n+' ('+p+' pts)\n\nPlease verify my Hulas points before approval.';
  if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank'))return alert('Please allow pop-ups, then try again.');
- alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.');
-}
-function renderHome(){if(!ME)return;const hg=$('h-greet'),hi=$('h-id'),hp=$('h-pts');if(hg)hg.textContent='Namaste, '+ME.name+'!';if(hi)hi.textContent='Mobile: '+ME.mobile;if(hp)hp.textContent=fp(POINTS);
- const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1];$('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' pts';if($('n-have'))$('n-have').textContent=POINTS.toLocaleString('en-IN');$('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
- $('n-sub').textContent=POINTS>=nx[1]?'All rewards unlocked!':Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more points to unlock — 1 kg = 1 point.'}
-function renderAll(){renderHome();renderRewards();renderOrder();if($("scan-history"))renderScanHistory();if(ME){$('p-pts').textContent=fp(POINTS);$('p-name').textContent=ME.name;$('p-mob').textContent=ME.mobile;$('p-firm').textContent=ME.firm||'-'}}
+ alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.')}
+/* ===== home / activity / profile renderers ===== */
+const initials=n=>(n||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'H';
+function renderHome(){if(!ME)return;
+ $('h-ava').textContent=initials(ME.name);$('h-greet').textContent='Namaste, '+((ME.name||'').trim().split(/\s+/)[0]||'Fabricator')+'!';
+ $('h-sub').textContent=ME.firm||"Let's build a stronger Nepal with Hulas.";$('h-pts').textContent=fp(POINTS);
+ const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1],done=POINTS>=nx[1];
+ $('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' points';$('n-img').innerHTML=rwImg(nx[0],nx[2]);
+ $('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
+ $('n-sub').textContent=done?'All rewards unlocked!':'You have '+fp(POINTS)+' points. '+Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more to unlock.'}
+function renderActivity(){if(!ME)return;
+ const scans=Object.values(scanStore()).filter(x=>x.by===ME.mobile).map(x=>({at:x.at,a:'QR scan '+x.id,b:'+'+fp(x.kg)+' points'}));
+ const orders=ld('hmc_log_'+ME.mobile,[]).map(x=>({at:x.at,a:'Order request sent',b:kg(x.weight)+' · '+money(x.pay)}));
+ const all=scans.concat(orders).sort((a,b)=>b.at-a.at).slice(0,50);
+ $('ac-list').innerHTML=all.length?all.map(x=>'<div class="item"><div><b>'+esc(x.a)+'</b><small>'+new Date(x.at).toLocaleString()+'</small></div><b>'+esc(x.b)+'</b></div>').join(''):'<div class="empty" style="padding:24px 10px">Nothing here yet.<br>Scan a Hulas QR or send an order and it will show up here.</div>'}
+function renderAll(){renderHome();renderRewards();renderOrder();renderScanHistory();renderProjects();renderActivity();
+ if(ME){$('p-pts').textContent=fp(POINTS);$('p-name').textContent=ME.name;$('p-mob').textContent=ME.mobile;$('p-firm').textContent=ME.firm||'-'}}
+/* ===== install ===== */
 let deferredInstallPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;const b=$('install-btn');if(b)b.style.display='block'});
-window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;const b=$('install-btn');if(b)b.style.display='none'});
+const isStandalone=()=>(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+if(isStandalone()){const b=$('install-btn'),m=$('menu-install');if(b)b.style.display='none';if(m)m.style.display='none'}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e});
+window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;const b=$('install-btn'),m=$('menu-install');if(b)b.style.display='none';if(m)m.style.display='none'});
 async function installApp(){
-  if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;const b=$('install-btn');if(b)b.style.display='none';return}
-  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
-  if(ios)return alert('To install Hulas Smart Fabricator on iPhone: tap Share in Safari, then choose Add to Home Screen.');
-  alert('If your browser does not show the install prompt, open this link in Chrome and use the browser menu → Install app / Add to Home screen.');
-}
-/* ===== init: nobody is ever logged in on load — mobile + password are required every time ===== */
-migrateAccountsToIDB().then(all=>{ACC={...ACC,...all}}).catch(()=>{});Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
-estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');if($("scan-history"))renderScanHistory();
+ if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;return}
+ if(/iphone|ipad|ipod/i.test(navigator.userAgent))return alert('To install on iPhone: tap Share in Safari, then choose Add to Home Screen.');
+ alert('If your browser does not show an install prompt, open this page in Chrome and use the menu, then Install app or Add to Home screen.')}
+/* ===== init: nobody is logged in on load; mobile + password are required every time ===== */
+migrateAccountsToIDB().then(all=>{ACC={...ACC,...all}}).catch(()=>{});
+Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
+estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');
 {const m=ld('hmc_mobile','');if(m){$('l-mob').value=m;$('l-rem').checked=true}}
-if('serviceWorker'in navigator)addEventListener('load',async()=>{
- try{
-   const reg=await navigator.serviceWorker.register('./sw.js?v=14',{updateViaCache:'none'});
-   reg.update().catch(()=>{});
-   if(navigator.serviceWorker.controller){
-     navigator.serviceWorker.addEventListener('controllerchange',()=>{try{if(!sessionStorage.getItem('hmc_sw_reloaded_v14')){sessionStorage.setItem('hmc_sw_reloaded_v14','1');location.reload()}}catch(e){location.reload()}});
-   }
- }catch(e){}
-});
+if('serviceWorker' in navigator)addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=15',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{})});
 </script></body></html>
