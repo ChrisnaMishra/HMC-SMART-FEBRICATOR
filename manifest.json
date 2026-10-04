@@ -1,13 +1,15 @@
 {
   "name": "Hulas Smart Fabricator",
-  "short_name": "Hulas Fabricator",
+  "short_name": "Hulas",
+  "description": "Measure, estimate, quote, order and earn with Hulas stainless steel pipes.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#F4F5F7",
-  "theme_color": "#D42F2F",
-  "description": "Hulas Metal Crafts Smart Fabricator",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#C8102E",
   "icons": [
-    {"src":"icon-192.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
-    {"src":"icon-512.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }
