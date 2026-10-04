@@ -62,141 +62,133 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .err{background:#FDECEC;border:1px solid #F5C2C2;color:#A81F1F;border-radius:12px;padding:11px 14px;margin-top:12px;font-size:13px;font-weight:600;display:none;line-height:1.4}
 .rem{display:flex;align-items:center;gap:9px;margin:14px 0;font-size:13.5px;color:var(--muted);font-weight:500}.rem input{width:auto}
 .link{color:var(--red);font-weight:700;text-decoration:none}
-/* home */
-#home{background:var(--bg);position:relative}
-.top{position:absolute;left:0;right:0;top:0;background:transparent;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 6px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;z-index:30;pointer-events:none}
-.icobtn{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.78);color:#111;box-shadow:0 2px 8px rgba(0,0,0,.08);pointer-events:auto}
-.top .logo-img,.top .wordmark{display:none}
-.hero{position:relative;background:#fff;overflow:hidden}
+/* HOME PAGE — clean rebuild */
+#home{background:#F5F6F8;position:relative}
+.home-main{display:flex;flex-direction:column;min-height:100%;background:#F5F6F8;overflow-x:hidden}
+.home-header{position:relative;flex:0 0 64px;width:100%;height:64px;background:#fff;padding:8px 14px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;border-bottom:1px solid #E7E9ED;z-index:30}
+.home-header .logo-img{display:block;justify-self:center;width:168px;height:48px;object-fit:contain}
+.home-header .wordmark{display:none}
+.home-header .icobtn{width:44px;height:44px;border-radius:13px;background:#F5F6F8;color:#111;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:none}
+.home-notify-dot{position:absolute;right:-2px;top:-3px;min-width:19px;height:19px;padding:0 4px;border-radius:10px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.home-content{display:block;width:100%;min-width:0;overflow:visible}
 
-/* STEP 1 — structural fix: close hero-stage before the product band */
-.hero{display:block;position:relative;width:100%;overflow:visible}
-.hero-stage{position:relative;overflow:hidden;width:100%;box-sizing:border-box}
-.hero-bottom-band{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;width:100%;box-sizing:border-box}
-.home-profile{position:relative;z-index:2}
-.home-profile .wcard{position:relative;z-index:2}
-.hero-stage{--hero-h:290px;position:relative;height:var(--hero-h);margin-top:0;background:linear-gradient(180deg,#fff 0%,#EEF2F6 100%);overflow:hidden}
-.hero-copy{position:absolute;left:51%;top:88px;transform:translateX(-50%);z-index:5;text-align:center;width:45%;pointer-events:none}
-.hero-copy h1{font-size:18px;font-weight:900;letter-spacing:-.35px;color:var(--navy);line-height:1.05;text-transform:uppercase}
-.hero-copy p{font-size:10.5px;color:var(--ink);margin-top:5px;font-weight:600;line-height:1.2;white-space:normal}
-.hero-art{display:none}
-.hero-pipes{position:absolute;right:-5%;bottom:42px;height:62%;width:72%;object-fit:cover;object-position:center;z-index:1;mix-blend-mode:multiply;opacity:.9}
-.hero-worker{position:absolute;left:-7%;bottom:36px;height:88%;width:48%;object-fit:cover;object-position:top center;z-index:2;mix-blend-mode:multiply}
-.hero-logo{position:absolute;left:48%;top:10px;transform:translateX(-50%);width:45%;max-width:195px;height:auto;z-index:8;object-fit:contain}
-.hero-slogan{position:absolute;right:3.5%;top:18px;width:22%;z-index:8;font-size:13px;font-weight:900;font-style:italic;line-height:.94;text-align:left;color:#111;transform:rotate(-5deg)}
-.hero-slogan:after{content:"";display:block;width:52px;height:2px;background:var(--red);transform:rotate(-12deg);margin:5px 0 0 5px;border-radius:3px}
-.qr-chip{position:absolute;right:6%;top:118px;z-index:9;background:#fff;border:1px solid #D5D9E0;border-radius:8px;padding:5px 7px;box-shadow:0 4px 12px rgba(15,27,51,.14);display:flex;align-items:center;gap:5px;font-size:8px;font-weight:900;color:#111;line-height:1.05;transform:rotate(-5deg)}
-.qr-chip .ic{width:26px;height:26px}
-.hero .perks{position:absolute;left:4%;right:4%;bottom:72px;height:48px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:center}
-.hero .perk{min-width:0;text-align:center;font-size:8px;line-height:1.05;color:var(--navy);font-weight:800}
-.hero .perk .ic{width:22px;height:22px;color:var(--red);display:block;margin:0 auto 2px}
-.hero-bottom-band{position:absolute;left:0;right:0;bottom:0;min-height:66px;z-index:12;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px}
+/* Hero */
+.home-hero{background:#fff}
+.hero-stage{position:relative;height:292px;width:100%;overflow:hidden;background:#DDE3E8}
+.hero-stage:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0) 55%,rgba(9,20,34,.18));pointer-events:none;z-index:4}
+.hero-worker{position:absolute;left:0;bottom:0;width:57%;height:100%;object-fit:cover;object-position:center top;z-index:1}
+.hero-pipes{position:absolute;right:-7%;bottom:0;width:66%;height:67%;object-fit:cover;object-position:center;mix-blend-mode:multiply;opacity:.93;z-index:2}
+.hero-logo{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:178px;height:58px;max-width:46%;object-fit:contain;z-index:8}
+.hero-slogan{position:absolute;right:4%;top:18px;width:21%;font-size:11px;line-height:.94;font-weight:900;font-style:italic;text-align:left;color:#111;transform:rotate(-4deg);z-index:8}
+.hero-slogan:after{content:"";display:block;width:42px;height:2px;background:var(--red);margin:5px 0 0 3px;transform:rotate(-10deg);border-radius:3px}
+.hero-copy{position:absolute;left:50%;top:76px;width:58%;transform:translateX(-50%);text-align:center;z-index:7;pointer-events:none}
+.hero-copy h1{font-size:17px;line-height:1.05;font-weight:900;letter-spacing:-.2px;color:var(--navy);text-transform:uppercase}
+.hero-copy p{margin-top:5px;font-size:9.5px;line-height:1.2;font-weight:700;color:#172033}
+.qr-chip{position:absolute;right:5%;top:118px;z-index:9;background:#fff;border:1px solid #D6DBE2;border-radius:10px;padding:6px 8px;box-shadow:0 5px 14px rgba(15,27,51,.16);display:flex;align-items:center;gap:6px;font-size:8px;line-height:1.05;font-weight:900;color:#111;transform:rotate(-3deg)}
+.qr-chip .ic{width:28px;height:28px;color:#111}
+.hero .perks{position:absolute;left:4%;right:4%;bottom:9px;height:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:5px 3px;background:rgba(255,255,255,.91);border:1px solid rgba(255,255,255,.9);border-radius:12px;z-index:10;backdrop-filter:blur(5px)}
+.hero .perk{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;text-align:center;font-size:7.5px;line-height:1.05;font-weight:800;color:#182038}
+.hero .perk .ic{width:21px;height:21px;color:var(--red)}
+
+/* Product identity band — separate block, never overlays hero */
+.hero-bottom-band{position:relative;width:100%;min-height:68px;background:linear-gradient(110deg,#C8102E,#E3283E 65%,#B30D25);color:#fff;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;box-sizing:border-box;z-index:2}
 .hero-bottom-copy{min-width:0;flex:1}
-.hero-bottom-copy h3{font-size:15px;line-height:1.05;font-weight:900;white-space:nowrap}
-.hero-bottom-copy p{font-size:9.5px;line-height:1.15;margin-top:3px;font-weight:700}
-.hero-industries{display:grid;grid-template-columns:repeat(2,auto);gap:4px 8px;flex:0 0 auto}
-.hero-industries span{display:flex;align-items:center;gap:3px;font-size:6.5px;font-weight:800;white-space:nowrap}
-.hero-industries .ic{width:16px;height:16px}
+.hero-bottom-copy h3{font-size:14px;line-height:1.05;font-weight:900;white-space:nowrap}
+.hero-bottom-copy p{font-size:8.5px;line-height:1.15;margin-top:4px;font-weight:700}
+.hero-industries{width:48%;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;text-align:center}
+.hero-industries span{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:5.8px;line-height:1;font-weight:800;white-space:nowrap}
+.hero-industries .ic{width:18px;height:18px}
+
+/* Profile */
+.home-profile{padding:14px 16px 0}
+.home-profile .wcard{margin:0 0 18px;width:100%;min-width:0;background:#fff;border-radius:18px;padding:12px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 5px 18px rgba(15,27,51,.08);position:relative;z-index:2}
+.home-profile .ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex:0 0 auto}
+.home-profile .wmain{flex:1;min-width:0}
+.home-profile .wmain h3{font-size:15px;line-height:1.15;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-profile .wmain p{font-size:10.5px;line-height:1.25;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-profile .wpts{display:flex;align-items:center;gap:6px;padding:5px 0 5px 9px;border-left:1px solid var(--line);flex:0 0 auto}
+.home-profile .coin{width:28px;height:28px}
+.home-profile .wpts small{display:block;font-size:8.5px;color:var(--muted);font-weight:600}
+.home-profile .wpts b{display:block;font-size:17px;line-height:1.1;font-weight:900;color:var(--ink)}
+.home-profile .wpts>.ic{width:15px;height:15px;color:#9AA1AE}
+
+/* Quick actions */
+.home-actions-section{padding:0 16px}
+.home-actions-section .stitle{padding:0 2px 9px;font-size:16px;font-weight:800;color:#151923}
+.home-actions-section .qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 0 18px}
+.home-actions-section .qa-card{min-width:0;min-height:76px;background:#fff;border:1px solid #E8EAF0;border-radius:16px;padding:11px 10px;display:flex;align-items:center;gap:9px;text-align:left;box-shadow:0 3px 12px rgba(15,27,51,.06)}
+.home-actions-section .qa-card.wide{grid-column:1/3}
+.home-actions-section .qa-card.primary{background:linear-gradient(135deg,#C8102E,#EC0B26);border-color:transparent;color:#fff;min-height:78px;box-shadow:0 9px 20px rgba(200,16,46,.20)}
+.home-actions-section .qa-ico{width:36px;height:36px;border-radius:11px;background:#FDECEF;color:var(--red);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.home-actions-section .primary .qa-ico{background:rgba(255,255,255,.18);color:#fff}
+.home-actions-section .qa-ico .ic{width:19px;height:19px}
+.home-actions-section .qa-t{flex:1;min-width:0}
+.home-actions-section .qa-t h4{font-size:13.5px;line-height:1.15;font-weight:800}
+.home-actions-section .qa-t p{font-size:10px;line-height:1.2;color:var(--muted);margin-top:3px}
+.home-actions-section .primary .qa-t p{color:#FFE3E7}
+.home-actions-section .qa-card>.ic{width:17px;height:17px;color:#8B919D;flex:0 0 auto}
+
+/* Products */
+.home-products-section{padding:0 16px 2px}
+.home-products-title{font-size:16px;font-weight:800;margin:0 2px 9px}
+.home-products-section .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:0 0 18px}
+.home-products-section .tile{height:126px;position:relative;overflow:hidden;background:#D9DEE5;border-radius:13px;display:block;width:100%;padding:0;text-align:left}
+.home-products-section .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.home-products-section .tile:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(8,15,28,.84))}
+.home-products-section .tile .pt{position:absolute;left:8px;right:5px;bottom:8px;z-index:2;color:#fff;font-size:10.5px;line-height:1.15;font-weight:800}
+.home-products-section .tile .pt small{display:block;font-size:7.5px;margin-top:2px;font-weight:600;opacity:.92}
+
+/* Reward */
+.home-reward-section{padding:0 16px 4px}
+.home-reward-section .nr{width:100%;margin:0 0 18px;padding:8px;background:#fff;border:0;border-radius:18px;box-shadow:0 3px 12px rgba(15,27,51,.07);text-align:left}
+.home-reward-section .nr-in{display:grid;grid-template-columns:68px minmax(0,1fr);gap:10px;align-items:center;background:#FDECEF;border-radius:13px;padding:10px}
+.home-reward-section .nr-img{width:68px;height:68px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden}
+.home-reward-section .nr-img img{width:100%;height:100%;object-fit:cover}
+.home-reward-section .nr small{font-size:10px;color:var(--muted);font-weight:600}
+.home-reward-section .nr h3{font-size:15px;font-weight:800;margin-top:1px}
+.home-reward-section .nr .np{color:var(--red);font-weight:800;font-size:12px}
+.home-reward-section .bar{height:7px;background:#F3CDD3;border-radius:6px;margin:7px 0 5px;overflow:hidden}
+.home-reward-section .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:6px;width:0}
+.home-reward-section .nr .foot{font-size:10px;color:var(--muted);line-height:1.25}
+
+/* Footer */
+.home-footer{background:linear-gradient(135deg,#A30D25,#C8102E);color:#fff;padding:16px 16px calc(82px + env(safe-area-inset-bottom,0px));display:grid;gap:10px}
+.home-footer h4{font-size:13.5px;font-weight:800}
+.home-footer .loc{display:flex;align-items:center;gap:5px;font-size:11px;margin-top:3px;color:#FFE3E7}
+.home-footer .loc .ic{width:15px;height:15px}
+.home-footer .tag{text-align:center;border-top:1px solid rgba(255,255,255,.22);padding-top:10px;font-size:12px;font-style:italic;color:#FFE3E7}
+.home-footer .wa{display:flex;align-items:center;justify-content:center;gap:9px;background:#fff;color:var(--ink);text-decoration:none;border-radius:13px;padding:9px}
+.home-footer .wa .ic{width:25px;height:25px;color:#1FA855}
+.home-footer .wa small{display:block;font-size:9px;color:var(--muted);font-weight:600}
+.home-footer .wa b{display:block;font-size:12px;font-weight:800}
+
+/* Responsive */
 @media(max-width:360px){
- .hero-stage{--hero-h:270px}
- .hero-logo{width:43%;max-width:175px}
- .hero-copy{top:82px;width:44%}
- .hero-copy h1{font-size:16px}
- .hero-copy p{font-size:9.5px}
- .hero-slogan{font-size:12px}
- .hero-bottom-copy h3{font-size:13px}
- .hero-bottom-copy p{font-size:8.5px}
- .hero-industries{gap:3px 5px}
- .hero-industries span{font-size:6px}
+ .home-header{height:58px;flex-basis:58px;padding:6px 10px}
+ .home-header .logo-img{height:44px;width:158px}
+ .hero-stage{height:276px}
+ .hero-logo{width:150px;height:52px;top:10px}
+ .hero-slogan{font-size:9px}
+ .hero-copy{top:68px;width:62%}
+ .hero-copy h1{font-size:15px}
+ .hero-copy p{font-size:8.5px}
+ .hero-bottom-band{min-height:64px;padding:8px}
+ .hero-bottom-copy h3{font-size:12.5px}
+ .hero-bottom-copy p{font-size:7.5px}
+ .hero-industries span{font-size:5px}
+ .hero-industries .ic{width:16px;height:16px}
+ .home-profile{padding-left:12px;padding-right:12px}
+ .home-actions-section,.home-products-section,.home-reward-section{padding-left:12px;padding-right:12px}
+ .home-actions-section .qa{gap:8px}
+ .home-actions-section .qa-card{min-height:68px;padding:10px 8px}
+ .home-actions-section .qa-t h4{font-size:12px}
+ .home-products-section .tile{height:116px}
+ .home-reward-section .nr-in{grid-template-columns:60px minmax(0,1fr)}
+ .home-reward-section .nr-img{width:60px;height:60px}
 }
 @media(min-width:431px){
- .hero-stage{--hero-h:310px}
+ .hero-stage{height:310px}
 }
-.qr-chip .ic{width:30px;height:30px;color:#111}
-.perks{position:absolute;left:27%;right:2%;bottom:39px;z-index:6;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.9);padding:6px 3px;border-radius:10px}
-.perk{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8px;font-weight:800;color:#111;text-align:center;line-height:1.05}
-.perk .ic{width:23px;height:23px;color:#111}
-.hero-bottom-band{position:absolute;left:0;right:0;bottom:0;z-index:8;background:linear-gradient(110deg,#C8102E,#E3283E 65%,#B30D25);color:#fff;padding:9px 12px 8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
-.hero-bottom-copy{min-width:0}.hero-bottom-copy h3{font-size:15px;font-weight:900;white-space:nowrap}.hero-bottom-copy p{font-size:9.5px;margin-top:3px;font-weight:700}.hero-industries{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;width:47%;font-size:7px;font-weight:800;text-align:center}.hero-industries span{display:flex;flex-direction:column;align-items:center;gap:2px}.hero-industries .ic{width:20px;height:20px}
-.perk .ic{color:var(--red)}
-.band{margin:14px 16px 0;border-radius:24px;padding:18px 16px 46px;color:#fff;background:radial-gradient(120% 140% at 100% 0%,#F0475A 0%,rgba(240,71,90,0) 55%),linear-gradient(135deg,#A30D25,#D81E36);position:relative;overflow:hidden}
-.band h3{font-size:18px;font-weight:800;letter-spacing:-.2px}
-.band .sub{font-size:12.5px;margin-top:4px;color:#FFE3E7;line-height:1.35}
-.chips4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
-.chip4{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;font-weight:700;text-align:center}
-.chip4 i{width:46px;height:46px;border-radius:16px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-style:normal}
-.chip4 .ic{width:23px;height:23px;color:#fff}
-.wcard{margin:12px 16px 16px;background:#fff;border-radius:22px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 14px 34px rgba(15,27,51,.14);position:relative;z-index:2}
-.ava{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex:0 0 auto}
-.wmain{flex:1;min-width:0}.wmain h3{font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wmain p{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wpts{display:flex;align-items:center;gap:8px;padding:6px 4px 6px 12px;border-left:1px solid var(--line);flex:0 0 auto}
-.coin{width:34px;height:34px;flex:0 0 auto}
-.wpts small{display:block;font-size:10.5px;color:var(--muted);font-weight:600}
-.wpts b{display:block;font-size:20px;font-weight:900;color:var(--ink);line-height:1.1}
-.wpts .ic{width:18px;height:18px;color:var(--muted)}
-.stitle{font-size:15px;font-weight:800;padding:2px 18px 10px}
-.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px}
-.qa-card{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:13px 12px;text-align:left;box-shadow:0 3px 12px rgba(15,27,51,.07);min-width:0}
-.qa-card.wide{grid-column:1/3}
-.qa-card.primary{background:linear-gradient(135deg,#B00E27,#DD2338);color:#fff;padding:15px 14px;box-shadow:0 10px 22px rgba(200,16,46,.28)}
-.qa-ico{width:42px;height:42px;border-radius:13px;background:var(--pink);color:var(--red);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.primary .qa-ico{background:rgba(255,255,255,.18);color:#fff}
-.qa-t{flex:1;min-width:0}.qa-t h4{font-size:14.5px;font-weight:800;line-height:1.2}.qa-t p{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.25}.primary .qa-t p{color:#FFE3E7}
-.qa-card>.ic{width:18px;height:18px;opacity:.55}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:0 0 16px}
-.tile{height:138px;position:relative;overflow:hidden;background:linear-gradient(135deg,#8C95A5,#D9DEE6);cursor:pointer;text-align:left;display:block;width:100%}
-.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.tile:after{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(transparent,rgba(10,18,34,.78))}
-.tile .pt{position:absolute;left:10px;right:6px;bottom:9px;z-index:2;color:#fff;font-size:12.5px;font-weight:800;line-height:1.15}
-.tile .pt small{display:block;font-size:9px;font-weight:600;margin-top:2px;opacity:.9}
-.nr{margin:0 16px 18px;background:#fff;border-radius:20px;padding:10px;box-shadow:0 3px 12px rgba(15,27,51,.07);display:block;width:calc(100% - 32px);text-align:left}
-.nr-in{background:var(--pink);border-radius:14px;padding:12px;display:grid;grid-template-columns:78px 1fr;gap:12px;align-items:center}
-.nr-img{width:78px;height:78px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:38px;overflow:hidden}
-.nr-img img{width:100%;height:100%;object-fit:cover}
-.nr small{font-size:11.5px;color:var(--muted);font-weight:600}.nr h3{font-size:17px;font-weight:800;margin-top:1px}.nr .np{color:var(--red);font-weight:800;font-size:13.5px}
-.bar{height:9px;background:#F3CDD3;border-radius:6px;margin:10px 0 6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:6px;width:0}
-.nr .foot{font-size:11.5px;color:var(--muted)}
-.foot-strip{background:linear-gradient(135deg,#A30D25,#C8102E);color:#fff;padding:16px 16px 18px;display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:center}
-.foot-strip h4{font-size:13.5px;font-weight:800}
-.foot-strip .loc{display:flex;align-items:center;gap:5px;font-size:12px;margin-top:3px;color:#FFE3E7}.foot-strip .loc .ic{width:15px;height:15px}
-.foot-strip .tag{grid-column:1/3;font-style:italic;font-size:13px;color:#FFE3E7;text-align:center;border-top:1px solid rgba(255,255,255,.22);padding-top:10px}
-.wa{display:flex;align-items:center;gap:9px;background:#fff;color:var(--ink);text-decoration:none;border-radius:14px;padding:8px 12px 8px 9px}
-.wa .ic{width:26px;height:26px;color:#1FA855}
-.wa small{display:block;font-size:10px;color:var(--muted);font-weight:600}.wa b{display:block;font-size:13px;font-weight:800}
-/* Step 3: JavaScript-driven profile, actions and product layout */
-.home-profile{padding:0 16px}
-.home-profile .wcard{margin:0 0 18px;border-radius:18px;padding:12px;gap:10px;box-shadow:0 6px 18px rgba(15,27,51,.10)}
-.home-profile .ava{width:44px;height:44px;font-size:16px}
-.home-profile .wmain h3{font-size:15px}.home-profile .wmain p{font-size:10.5px}
-.home-profile .wpts{gap:6px;padding-left:8px}.home-profile .coin{width:28px;height:28px}.home-profile .wpts b{font-size:17px}.home-profile .wpts small{font-size:9px}.home-profile .wpts>.ic{display:none}
-.home-actions-section{padding:0 16px}.home-actions-section .stitle{padding:0 2px 9px}
-.home-actions-section .qa{padding:0 0 18px;gap:8px}
-.home-actions-section .qa-card{border-radius:15px;padding:11px 10px;gap:8px;min-height:70px}
-.home-actions-section .qa-card.primary{padding:12px 11px;min-height:76px}
-.home-actions-section .qa-ico{width:36px;height:36px;border-radius:11px}.home-actions-section .qa-ico .ic{width:19px;height:19px}
-.home-actions-section .qa-t h4{font-size:13px}.home-actions-section .qa-t p{font-size:10px}
-.home-products-section{padding:0 16px}.home-products-section .tiles{margin:0 0 18px;gap:7px}
-.home-products-section .tile{height:126px;border-radius:13px}.home-products-section .tile .pt{left:8px;bottom:8px;font-size:10.5px}.home-products-section .tile .pt small{font-size:8px}
-.home-reward-section{padding-bottom:4px}.home-reward-section .nr{margin-bottom:18px}
-@media(max-width:360px){.home-profile{padding:0 12px}.home-actions-section{padding:0 12px}.home-products-section{padding:0 12px}.home-actions-section .qa-card{min-height:66px}.home-products-section .tile{height:116px}.home-actions-section .qa-t h4{font-size:12px}}
-/* Step 4: JS-controlled reward/footer/navigation presentation */
-.home-reward-section{padding:0 16px 4px}.home-reward-section .nr{margin:0 0 18px;width:100%;box-sizing:border-box;padding:8px;border-radius:18px}.home-reward-section .nr-in{grid-template-columns:68px 1fr;gap:10px;padding:10px;border-radius:13px}.home-reward-section .nr-img{width:68px;height:68px;border-radius:10px}.home-reward-section .nr h3{font-size:15px}.home-reward-section .nr .np{font-size:12px}.home-reward-section .bar{height:7px;margin:7px 0 5px}.home-reward-section .nr .foot{font-size:10px}
-.home-main>.foot-strip{margin-top:0;padding:14px 14px calc(76px + env(safe-area-inset-bottom,0px));border-radius:0;grid-template-columns:1fr;gap:9px}.home-main>.foot-strip .tag{grid-column:auto}.home-main>.foot-strip .wa{justify-self:stretch;justify-content:center}
-.home-main+.nav{z-index:50;box-shadow:0 -4px 16px rgba(15,27,51,.08)}
-@media(max-width:360px){.home-reward-section{padding:0 12px 4px}.home-reward-section .nr-in{grid-template-columns:60px 1fr}.home-reward-section .nr-img{width:60px;height:60px}.home-main>.foot-strip{padding-left:12px;padding-right:12px}}
-/* Step 1: homepage structural foundation */
-.home-main{display:flex;flex-direction:column;min-height:100%;background:var(--bg)}
-.home-header{position:relative;left:auto;right:auto;top:auto;flex:0 0 62px;width:100%;box-sizing:border-box;background:#fff;padding:8px 12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;border-bottom:1px solid var(--line);pointer-events:auto;z-index:30}
-.home-header .logo-img{display:block;justify-self:center;width:min(180px,58vw);height:48px;object-fit:contain}
-.home-header .wordmark{display:none}
-.home-header .icobtn{position:relative}
-.home-notify-dot{position:absolute;right:-2px;top:-3px;min-width:18px;height:18px;padding:0 4px;border-radius:10px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
-.home-content{display:block;min-width:0;overflow:visible}
-.home-content>.hero{margin:0}
-.home-profile,.home-actions-section,.home-products-section,.home-reward-section{display:block;min-width:0}
-.home-profile .wcard{margin-top:14px}
-.home-actions-section .stitle{margin-top:2px}
-@media(max-width:360px){.home-header{flex-basis:58px;padding:6px 10px}.home-header .logo-img{height:44px;width:min(165px,56vw)}}
 /* nav */
 .nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 2px calc(7px + env(safe-area-inset-bottom,0px));z-index:40}
 .nav button{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10.5px;font-weight:600;min-width:52px;padding:3px 2px}
@@ -317,28 +309,29 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 
 <section id="home" class="screen hasnav">
 <div class="home-main">
- <header class="top home-header">
+ <header class="home-header" aria-label="Hulas navigation">
   <button class="icobtn" aria-label="Menu" onclick="openMenu()"><svg class="ic"><use href="#i-menu"/></svg></button>
-  <img class="logo-img" src="assets/07_Hulas_Logo.jpg" alt="Hulas Metal Crafts" onerror="logoFail(this)"><div class="wordmark" style="display:none">HULAS<small>METAL CRAFTS LTD.</small></div>
+  <img class="logo-img" src="assets/07_Hulas_Logo.jpg" alt="Hulas Metal Crafts Ltd." onerror="logoFail(this)">
   <button class="icobtn" aria-label="Notifications" onclick="alert('No new notifications.')"><svg class="ic"><use href="#i-gift"/></svg><span class="home-notify-dot">3</span></button>
  </header>
+
  <main class="home-content">
- <section class="hero" aria-label="Hulas Smart Fabricator hero">
-  <div class="hero-stage">
-   <img class="hero-logo" src="assets/07_Hulas_Logo.jpg" alt="Hulas Metal Crafts Ltd." onerror="this.style.display='none'">
-   <div class="hero-slogan">Stronger<br>Smarter<br>Together</div>
-   <div class="hero-copy"><h1>SMART FABRICATOR</h1><p>Scan. Earn. Fabricate. Grow with Hulas.</p></div>
-   <img class="hero-pipes" src="assets/02_Hero_Pipes.jpg" alt="Hulas stainless steel pipes" onerror="this.remove()">
-   <img class="hero-worker" src="assets/01_Fabricator_Worker.jpg" alt="Hulas fabricator" onerror="this.remove()">
-   <div class="qr-chip"><svg class="ic"><use href="#i-qr"/></svg><span>SCAN<br>EARN<br>1KG = 1 POINT</span></div>
-   <div class="perks">
-    <div class="perk"><svg class="ic"><use href="#i-shield"/></svg>Durable</div>
-    <div class="perk"><svg class="ic"><use href="#i-drop"/></svg>Rust<br>resistant</div>
-    <div class="perk"><svg class="ic"><use href="#i-gem"/></svg>Premium<br>finish</div>
-    <div class="perk"><svg class="ic"><use href="#i-loop"/></svg>Long<br>life</div>
+  <section class="home-hero" aria-label="Hulas Smart Fabricator">
+   <div class="hero-stage">
+    <img class="hero-worker" src="assets/01_Fabricator_Worker.jpg" alt="Hulas fabricator" onerror="this.remove()">
+    <img class="hero-pipes" src="assets/02_Hero_Pipes.jpg" alt="Hulas stainless steel pipes" onerror="this.remove()">
+    <img class="hero-logo" src="assets/07_Hulas_Logo.jpg" alt="Hulas Metal Crafts Ltd." onerror="this.style.display='none'">
+    <div class="hero-slogan">Stronger<br>Smarter<br>Together</div>
+    <div class="hero-copy"><h1>SMART FABRICATOR</h1><p>Scan. Earn. Fabricate. Grow with Hulas.</p></div>
+    <div class="qr-chip"><svg class="ic"><use href="#i-qr"/></svg><span>SCAN<br>EARN<br>1KG = 1 POINT</span></div>
+    <div class="perks">
+     <div class="perk"><svg class="ic"><use href="#i-shield"/></svg><span>Durable</span></div>
+     <div class="perk"><svg class="ic"><use href="#i-drop"/></svg><span>Rust<br>resistant</span></div>
+     <div class="perk"><svg class="ic"><use href="#i-gem"/></svg><span>Premium<br>finish</span></div>
+     <div class="perk"><svg class="ic"><use href="#i-loop"/></svg><span>Long<br>life</span></div>
+    </div>
    </div>
-  </div>
-  <div class="hero-bottom-band">
+   <div class="hero-bottom-band">
     <div class="hero-bottom-copy"><h3>HULAS® SS PIPES &amp; TUBES</h3><p>ROUND | SQUARE | RECTANGLE &nbsp; · &nbsp; 202 &amp; 304 GRADE</p></div>
     <div class="hero-industries">
      <span><svg class="ic"><use href="#i-build"/></svg>RESIDENTIAL</span>
@@ -349,54 +342,64 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
    </div>
   </section>
 
- <section class="home-profile" aria-label="Fabricator profile">
- <div class="wcard">
-  <div class="ava" id="h-ava">H</div>
-  <div class="wmain"><h3 id="h-greet">Namaste!</h3><p id="h-sub">Let's build a stronger Nepal with Hulas.</p></div>
-  <button class="wpts" onclick="go('rewards')" aria-label="View rewards">
-   <svg class="coin" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#E9A100"/></linearGradient></defs><circle cx="20" cy="20" r="18" fill="url(#gc)"/><circle cx="20" cy="20" r="13.500" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.500"/><path d="M20 11.500l2.600 5.300 5.800.8-4.200 4.100 1 5.800L20 24.700l-5.200 2.800 1-5.800-4.200-4.100 5.800-.8z" fill="#fff"/></svg>
-   <div style="text-align:left"><small>My points</small><b id="h-pts">0</b></div>
-   <svg class="ic"><use href="#i-chev"/></svg>
-  </button>
- </div>
- </section>
+  <section class="home-profile" aria-label="Fabricator profile">
+   <div class="wcard">
+    <div class="ava" id="h-ava">H</div>
+    <div class="wmain"><h3 id="h-greet">Namaste!</h3><p id="h-sub">Let's build a stronger Nepal with Hulas.</p></div>
+    <button class="wpts" onclick="go('rewards')" aria-label="View my Hulas points">
+     <svg class="coin" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#E9A100"/></linearGradient></defs><circle cx="20" cy="20" r="18" fill="url(#gc)"/><circle cx="20" cy="20" r="13.5" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.5"/><path d="M20 11.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.2-4.1 5.8-.8z" fill="#fff"/></svg>
+     <span style="text-align:left"><small>My points</small><b id="h-pts">0</b></span>
+     <svg class="ic"><use href="#i-chev"/></svg>
+    </button>
+   </div>
+  </section>
 
- <section class="home-actions-section" aria-label="Quick actions">
- <div class="stitle">Quick actions</div>
- <div class="qa">
-  <button class="qa-card primary wide" onclick="go('scan')"><span class="qa-ico"><svg class="ic"><use href="#i-scan"/></svg></span><div class="qa-t"><h4>Scan Hulas QR</h4><p>Earn 1 point per kg</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="qa-card" onclick="openTools('calc')"><span class="qa-ico"><svg class="ic"><use href="#i-calc"/></svg></span><div class="qa-t"><h4>Calculate</h4><p>Estimate material</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="qa-card" onclick="go('projects')"><span class="qa-ico"><svg class="ic"><use href="#i-file"/></svg></span><div class="qa-t"><h4>My projects</h4><p>Save and manage</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="qa-card" onclick="go('rewards')"><span class="qa-ico"><svg class="ic"><use href="#i-gift"/></svg></span><div class="qa-t"><h4>Rewards</h4><p>Gift catalogue</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="qa-card" onclick="go('order')"><span class="qa-ico"><svg class="ic"><use href="#i-cart"/></svg></span><div class="qa-t"><h4>Order Hulas</h4><p>Get quotation</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="qa-card wide" onclick="go('activity')"><span class="qa-ico"><svg class="ic"><use href="#i-chart"/></svg></span><div class="qa-t"><h4>My activity</h4><p>Scan history and order requests</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
- </div>
- </section>
+  <section class="home-actions-section" aria-label="Quick actions">
+   <div class="stitle">Quick actions</div>
+   <div class="qa">
+    <button class="qa-card primary wide" onclick="go('scan')"><span class="qa-ico"><svg class="ic"><use href="#i-scan"/></svg></span><div class="qa-t"><h4>Scan Hulas QR</h4><p>Earn 1 point per kg</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+    <button class="qa-card" onclick="openTools('calc')"><span class="qa-ico"><svg class="ic"><use href="#i-calc"/></svg></span><div class="qa-t"><h4>Calculate</h4><p>Estimate material</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+    <button class="qa-card" onclick="go('projects')"><span class="qa-ico"><svg class="ic"><use href="#i-file"/></svg></span><div class="qa-t"><h4>My projects</h4><p>Save and manage</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+    <button class="qa-card" onclick="go('rewards')"><span class="qa-ico"><svg class="ic"><use href="#i-gift"/></svg></span><div class="qa-t"><h4>Rewards</h4><p>Gift catalogue</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+    <button class="qa-card" onclick="go('order')"><span class="qa-ico"><svg class="ic"><use href="#i-cart"/></svg></span><div class="qa-t"><h4>Order Hulas</h4><p>Get quotation</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+    <button class="qa-card wide" onclick="go('activity')"><span class="qa-ico"><svg class="ic"><use href="#i-chart"/></svg></span><div class="qa-t"><h4>My activity</h4><p>Scan history and order requests</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
+   </div>
+  </section>
 
- <section class="home-products-section" aria-label="Products">
- <div class="tiles">
-  <button class="tile" onclick="openTools('calc')"><img src="assets/08_Round_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">ROUND PIPES<small>Hulas stainless steel</small></div></button>
-  <button class="tile" onclick="openTools('calc')"><img src="assets/09_Square_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">SQUARE PIPES<small>Hulas stainless steel</small></div></button>
-  <button class="tile" onclick="openTools('calc')"><img src="assets/10_Rectangle_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">RECTANGLE PIPES<small>Hulas stainless steel</small></div></button>
- </div>
- </section>
+  <section class="home-products-section" aria-label="Products">
+   <div class="home-products-title">Hulas Stainless Steel</div>
+   <div class="tiles">
+    <button class="tile" onclick="openTools('calc')"><img src="assets/08_Round_Product_Tile.jpg" alt="Round Hulas stainless steel pipes" onerror="this.remove()"><div class="pt">ROUND PIPES<small>Hulas stainless steel</small></div></button>
+    <button class="tile" onclick="openTools('calc')"><img src="assets/09_Square_Product_Tile.jpg" alt="Square Hulas stainless steel pipes" onerror="this.remove()"><div class="pt">SQUARE PIPES<small>Hulas stainless steel</small></div></button>
+    <button class="tile" onclick="openTools('calc')"><img src="assets/10_Rectangle_Product_Tile.jpg" alt="Rectangle Hulas stainless steel pipes" onerror="this.remove()"><div class="pt">RECTANGLE PIPES<small>Hulas stainless steel</small></div></button>
+   </div>
+  </section>
 
- <section class="home-reward-section" aria-label="Next reward">
- <button class="nr" onclick="go('rewards')"><div class="nr-in">
-  <div class="nr-img" id="n-img"></div>
-  <div><small>Next reward</small><h3 id="n-name"></h3><div class="np" id="n-pts"></div>
-   <div class="bar"><i id="n-bar"></i></div><div class="foot" id="n-sub"></div></div>
- </div></button>
+  <section class="home-reward-section" aria-label="Next reward">
+   <button class="nr" onclick="go('rewards')"><div class="nr-in">
+    <div class="nr-img" id="n-img"></div>
+    <div><small>Next reward</small><h3 id="n-name"></h3><div class="np" id="n-pts"></div><div class="bar"><i id="n-bar"></i></div><div class="foot" id="n-sub"></div></div>
+   </div></button>
+  </section>
 
- <div class="foot-strip">
-  <div><h4>HULAS METAL CRAFTS LTD.</h4><div class="loc"><svg class="ic"><use href="#i-pin"/></svg>Biratnagar, Nepal</div></div>
-  <a class="wa" href="https://wa.me/9779845656595" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><div><small>Order on WhatsApp</small><b>+977 9845656595</b></div></a>
-  <div class="tag">Nepali for Generations</div>
- </div>
- </footer>
+  <footer class="home-footer">
+   <div><h4>HULAS METAL CRAFTS LTD.</h4><div class="loc"><svg class="ic"><use href="#i-pin"/></svg>Biratnagar, Nepal</div></div>
+   <a class="wa" href="https://wa.me/9779845656595" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><div><small>Order on WhatsApp</small><b>+977 9845656595</b></div></a>
+   <div class="tag">Nepali for Generations</div>
+  </footer>
  </main>
 </div>
-<div class="nav" data-nav="home"></div></section>
+<div class="nav" data-nav="home"></div>
+
+<div id="sheet" class="sheet" onclick="if(event.target===this)closeMenu()"><div class="sheet-card" role="dialog" aria-label="Menu"><div class="grab"></div>
+ <button class="sheet-item" onclick="go('projects')"><svg class="ic"><use href="#i-file"/></svg>My projects</button>
+ <button class="sheet-item" onclick="go('activity')"><svg class="ic"><use href="#i-chart"/></svg>My activity</button>
+ <button class="sheet-item" onclick="go('profile')"><svg class="ic"><use href="#i-user"/></svg>Profile</button>
+ <button class="sheet-item" onclick="orderWA()"><svg class="ic"><use href="#i-wa"/></svg>Chat with Hulas on WhatsApp</button>
+ <button class="sheet-item" id="menu-install" onclick="closeMenu();installApp()"><svg class="ic"><use href="#i-install"/></svg>Install app</button>
+ <button class="sheet-item" onclick="logout()"><svg class="ic"><use href="#i-logout"/></svg>Log out</button>
+</div></div>
+</section>
 
 <section id="tools" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>Build &amp; order</h2>
 <div class="tabs"><button data-t="calc" onclick="switchTool('calc')">Calculate</button><button data-t="est" onclick="switchTool('est')">Estimate</button><button data-t="cut" onclick="switchTool('cut')">Cutting</button></div></div>
@@ -710,155 +713,18 @@ function redeem(i){const [n,p]=RW[i];
  alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.')}
 /* ===== home / activity / profile renderers ===== */
 const initials=n=>(n||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'H';
-function syncHomeSections(){
- const home=document.getElementById('home'); if(!home)return;
- const w=Math.min(window.innerWidth||390,430);
- const compact=w<=360;
- const qa=home.querySelectorAll('.home-actions-section .qa-card');
- qa.forEach((el,i)=>{el.style.minHeight=(compact?(i===0?72:64):(i===0?78:70))+'px';});
- const tiles=home.querySelectorAll('.home-products-section .tile');
- tiles.forEach(el=>el.style.height=(compact?'116px':'126px'));
-}
-window.addEventListener('resize',syncHomeSections,{passive:true});
-function syncHomeRewardFooter(){
- const home=document.getElementById('home'); if(!home)return;
- const w=Math.min(window.innerWidth||390,430), compact=w<=360;
- const reward=home.querySelector('.home-reward-section .nr-in');
- if(reward){
-  reward.style.gridTemplateColumns=compact?'60px 1fr':'68px 1fr';
-  const img=reward.querySelector('.nr-img'); if(img){img.style.width=compact?'60px':'68px';img.style.height=compact?'60px':'68px'}
- }
- const nav=home.querySelector('.nav');
- if(nav){nav.style.height='';nav.style.paddingBottom='calc(7px + env(safe-area-inset-bottom,0px))'}
-}
-function syncHomeHero(){
- const home=document.getElementById('home');
- if(!home)return;
- const stage=home.querySelector('.hero-stage');
- if(!stage)return;
- const w=Math.min(window.innerWidth||390,430);
- const h=Math.max(270,Math.min(310,Math.round(w*.74)));
- stage.style.setProperty('--hero-h',h+'px');
-}
-window.addEventListener('resize',syncHomeHero,{passive:true});
-/* ===== STEPS 5-10: JavaScript-only homepage finalizer ===== */
-const HMC_HOME={compact:360,phone:430};
-function hmcHomeEl(sel){return document.querySelector('#home '+sel)}
-function hmcSetStyle(el,styles){if(!el)return;Object.keys(styles).forEach(k=>el.style[k]=styles[k])}
-function hmcRepairHero(){
- const home=document.getElementById('home');if(!home)return;
- const stage=home.querySelector('.hero-stage');if(!stage)return;
- const w=window.innerWidth||390;
- const phone=w<=430;
- stage.style.height=(w<=360?'276px':w<=430?'292px':'310px');
- stage.style.overflow='hidden';
- const logo=stage.querySelector('.hero-logo');
- if(logo){
-  logo.style.display='block';
-  logo.style.left='50%';
-  logo.style.top='12px';
-  logo.style.width=w<=360?'150px':'174px';
-  logo.style.maxWidth='45%';
-  logo.style.transform='translateX(-50%)';
-  logo.style.zIndex='8';
- }
- const slogan=stage.querySelector('.hero-slogan');
- if(slogan){
-  slogan.style.display='block';
-  slogan.style.right='4%';
-  slogan.style.top='18px';
-  slogan.style.width=w<=360?'19%':'21%';
-  slogan.style.fontSize=w<=360?'10px':'12px';
-  slogan.style.zIndex='8';
- }
- const copy=stage.querySelector('.hero-copy');
- if(copy){
-  copy.style.left='50%';
-  copy.style.top=w<=360?'64px':'70px';
-  copy.style.width='72%';
-  copy.style.transform='translateX(-50%)';
-  copy.style.zIndex='7';
- }
- const title=copy&&copy.querySelector('h1');if(title){
-  title.style.fontSize=w<=360?'15px':'17px';
-  title.style.letterSpacing='-.2px';
- }
- const sub=copy&&copy.querySelector('p');if(sub){sub.style.fontSize=w<=360?'8.5px':'9.5px'}
- const worker=stage.querySelector('.hero-worker');
- if(worker){
-  worker.style.left='-8%';worker.style.bottom='0';worker.style.width=w<=360?'52%':'50%';worker.style.height='82%';
-  worker.style.objectFit='cover';worker.style.objectPosition='top center';worker.style.zIndex='2';
- }
- const pipes=stage.querySelector('.hero-pipes');
- if(pipes){
-  pipes.style.right='-8%';pipes.style.bottom='4px';pipes.style.width=w<=360?'68%':'70%';pipes.style.height='62%';
-  pipes.style.objectFit='cover';pipes.style.objectPosition='center';pipes.style.zIndex='1';
- }
- const qr=stage.querySelector('.qr-chip');
- if(qr){
-  qr.style.zIndex='9';qr.style.right=w<=360?'8px':'12px';qr.style.top=w<=360?'112px':'116px';qr.style.transform='rotate(-3deg)';
- }
- const perks=stage.querySelector('.perks');
- if(perks){
-  perks.style.left='4%';perks.style.right='4%';perks.style.bottom='10px';perks.style.height='48px';perks.style.zIndex='10';
- }
- const band=home.querySelector('.hero-bottom-band');
- if(band){
-  band.style.position='relative';
-  band.style.left='auto';band.style.right='auto';band.style.bottom='auto';
-  band.style.minHeight=w<=360?'62px':'68px';band.style.zIndex='12';band.style.boxSizing='border-box';
- }
-}
-function hmcFinalLayout(){
- const home=document.getElementById('home');if(!home)return;
- const w=window.innerWidth||390,small=w<=HMC_HOME.compact;
- const main=home.querySelector('.home-main'),content=home.querySelector('.home-content');
- hmcRepairHero();
- hmcSetStyle(main,{display:'flex',flexDirection:'column',minHeight:'100%',width:'100%',boxSizing:'border-box'});
- hmcSetStyle(content,{display:'block',width:'100%',boxSizing:'border-box',overflow:'visible'});
- /* Step 5: products */
- const productSec=home.querySelector('.home-products-section'),tiles=home.querySelectorAll('.home-products-section .tile');
- hmcSetStyle(productSec,{padding:small?'0 12px':'0 16px',boxSizing:'border-box'});
- tiles.forEach((t,i)=>{
-  hmcSetStyle(t,{height:small?'116px':'126px',minWidth:'0',borderRadius:'13px',overflow:'hidden',position:'relative',boxSizing:'border-box'});
-  const img=t.querySelector('img');if(img)hmcSetStyle(img,{width:'100%',height:'100%',objectFit:'cover',display:'block'});
-  const pt=t.querySelector('.pt');if(pt)hmcSetStyle(pt,{fontSize:small?'10px':'10.5px',lineHeight:'1.15',bottom:'8px',left:'8px',right:'6px'});
- });
- /* Step 6: rewards */
- const reward=home.querySelector('.home-reward-section'),nr=home.querySelector('.home-reward-section .nr'),ri=home.querySelector('.home-reward-section .nr-in');
- hmcSetStyle(reward,{padding:small?'0 12px 4px':'0 16px 4px',boxSizing:'border-box'});
- hmcSetStyle(nr,{width:'100%',margin:'0 0 18px',boxSizing:'border-box',borderRadius:'18px'});
- hmcSetStyle(ri,{display:'grid',gridTemplateColumns:small?'60px minmax(0,1fr)':'68px minmax(0,1fr)',gap:'10px',alignItems:'center'});
- const rim=ri&&ri.querySelector('.nr-img');if(rim)hmcSetStyle(rim,{width:small?'60px':'68px',height:small?'60px':'68px'});
- /* Step 7: footer + navigation */
- const footer=home.querySelector('.foot-strip'),nav=home.querySelector('.nav');
- hmcSetStyle(footer,{margin:'0',padding:'14px 14px calc(78px + env(safe-area-inset-bottom,0px))',boxSizing:'border-box',width:'100%'});
- hmcSetStyle(nav,{position:'fixed',left:'0',right:'0',bottom:'0',zIndex:'100',boxSizing:'border-box',paddingBottom:'calc(7px + env(safe-area-inset-bottom,0px))'});
- /* Step 8: prevent horizontal overflow */
- hmcSetStyle(home,{width:'100%',maxWidth:'100vw',overflowX:'hidden'});
- [main,content,productSec,reward,footer].forEach(x=>hmcSetStyle(x,{maxWidth:'100%',overflowX:'hidden'}));
- /* Step 9: accessibility + touch targets */
- home.querySelectorAll('button').forEach(b=>{if(!b.getAttribute('aria-label')&&!b.textContent.trim())b.setAttribute('aria-label','Hulas action');hmcSetStyle(b,{touchAction:'manipulation'})});
- /* Step 10: final runtime state */
- syncHomeHero();syncHomeSections();syncHomeRewardFooter();
-}
-function hmcBindHomeLayout(){
- hmcFinalLayout();
- if(!window.__hmcHomeBound){
-  window.__hmcHomeBound=true;
-  window.addEventListener('resize',hmcFinalLayout,{passive:true});
-  window.addEventListener('orientationchange',()=>setTimeout(hmcFinalLayout,80),{passive:true});
-  window.addEventListener('load',()=>setTimeout(hmcFinalLayout,50),{passive:true});
- }
-}
 function renderHome(){if(!ME)return;
- hmcBindHomeLayout();
- $('h-ava').textContent=initials(ME.name);$('h-greet').textContent='Namaste, '+((ME.name||'').trim().split(/\s+/)[0]||'Fabricator')+'!';
- $('h-sub').textContent=ME.firm||"Let's build a stronger Nepal with Hulas.";$('h-pts').textContent=fp(POINTS);
+ $('h-ava').textContent=initials(ME.name);
+ $('h-greet').textContent='Namaste, '+((ME.name||'').trim().split(/\s+/)[0]||'Fabricator')+'!';
+ $('h-sub').textContent=ME.firm||"Let's build a stronger Nepal with Hulas.";
+ $('h-pts').textContent=fp(POINTS);
  const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1],done=POINTS>=nx[1];
- $('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' points';$('n-img').innerHTML=rwImg(nx[0],nx[2]);
+ $('n-name').textContent=nx[0];
+ $('n-pts').textContent=nx[1].toLocaleString('en-IN')+' points';
+ $('n-img').innerHTML=rwImg(nx[0],nx[2]);
  $('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
- $('n-sub').textContent=done?'All rewards unlocked!':'You have '+fp(POINTS)+' points. '+Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more to unlock.'}
+ $('n-sub').textContent=done?'All rewards unlocked!':'You have '+fp(POINTS)+' points. '+Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more to unlock.';
+}
 function renderActivity(){if(!ME)return;
  const scans=Object.values(scanStore()).filter(x=>x.by===ME.mobile).map(x=>({at:x.at,a:'QR scan '+x.id,b:'+'+fp(x.kg)+' points'}));
  const orders=ld('hmc_log_'+ME.mobile,[]).map(x=>({at:x.at,a:'Order request sent',b:kg(x.weight)+' · '+money(x.pay)}));
