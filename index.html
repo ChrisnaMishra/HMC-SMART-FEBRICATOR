@@ -156,6 +156,22 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .wa{display:flex;align-items:center;gap:9px;background:#fff;color:var(--ink);text-decoration:none;border-radius:14px;padding:8px 12px 8px 9px}
 .wa .ic{width:26px;height:26px;color:#1FA855}
 .wa small{display:block;font-size:10px;color:var(--muted);font-weight:600}.wa b{display:block;font-size:13px;font-weight:800}
+/* Step 3: JavaScript-driven profile, actions and product layout */
+.home-profile{padding:0 16px}
+.home-profile .wcard{margin:12px 0 18px;border-radius:18px;padding:12px;gap:10px;box-shadow:0 6px 18px rgba(15,27,51,.10)}
+.home-profile .ava{width:44px;height:44px;font-size:16px}
+.home-profile .wmain h3{font-size:15px}.home-profile .wmain p{font-size:10.5px}
+.home-profile .wpts{gap:6px;padding-left:8px}.home-profile .coin{width:28px;height:28px}.home-profile .wpts b{font-size:17px}.home-profile .wpts small{font-size:9px}.home-profile .wpts>.ic{display:none}
+.home-actions-section{padding:0 16px}.home-actions-section .stitle{padding:0 2px 9px}
+.home-actions-section .qa{padding:0 0 18px;gap:8px}
+.home-actions-section .qa-card{border-radius:15px;padding:11px 10px;gap:8px;min-height:70px}
+.home-actions-section .qa-card.primary{padding:12px 11px;min-height:76px}
+.home-actions-section .qa-ico{width:36px;height:36px;border-radius:11px}.home-actions-section .qa-ico .ic{width:19px;height:19px}
+.home-actions-section .qa-t h4{font-size:13px}.home-actions-section .qa-t p{font-size:10px}
+.home-products-section{padding:0 16px}.home-products-section .tiles{margin:0 0 18px;gap:7px}
+.home-products-section .tile{height:126px;border-radius:13px}.home-products-section .tile .pt{left:8px;bottom:8px;font-size:10.5px}.home-products-section .tile .pt small{font-size:8px}
+.home-reward-section{padding-bottom:4px}.home-reward-section .nr{margin-bottom:18px}
+@media(max-width:360px){.home-profile{padding:0 12px}.home-actions-section{padding:0 12px}.home-products-section{padding:0 12px}.home-actions-section .qa-card{min-height:66px}.home-products-section .tile{height:116px}.home-actions-section .qa-t h4{font-size:12px}}
 /* Step 1: homepage structural foundation */
 .home-main{display:flex;flex-direction:column;min-height:100%;background:var(--bg)}
 .home-header{position:relative;left:auto;right:auto;top:auto;flex:0 0 62px;width:100%;box-sizing:border-box;background:#fff;padding:8px 12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;border-bottom:1px solid var(--line);pointer-events:auto;z-index:30}
@@ -681,6 +697,16 @@ function redeem(i){const [n,p]=RW[i];
  alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.')}
 /* ===== home / activity / profile renderers ===== */
 const initials=n=>(n||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'H';
+function syncHomeSections(){
+ const home=document.getElementById('home'); if(!home)return;
+ const w=Math.min(window.innerWidth||390,430);
+ const compact=w<=360;
+ const qa=home.querySelectorAll('.home-actions-section .qa-card');
+ qa.forEach((el,i)=>{el.style.minHeight=(compact?(i===0?72:64):(i===0?78:70))+'px';});
+ const tiles=home.querySelectorAll('.home-products-section .tile');
+ tiles.forEach(el=>el.style.height=(compact?'116px':'126px'));
+}
+window.addEventListener('resize',syncHomeSections,{passive:true});
 function syncHomeHero(){
  const home=document.getElementById('home');
  if(!home)return;
