@@ -737,10 +737,34 @@ window.addEventListener('resize',syncHomeHero,{passive:true});
 const HMC_HOME={compact:360,phone:430};
 function hmcHomeEl(sel){return document.querySelector('#home '+sel)}
 function hmcSetStyle(el,styles){if(!el)return;Object.keys(styles).forEach(k=>el.style[k]=styles[k])}
+function hmcRepairHero(){
+ const home=document.getElementById('home');if(!home)return;
+ const stage=home.querySelector('.hero-stage');if(!stage)return;
+ const w=window.innerWidth||390;
+ stage.style.height=(w<=360?'276px':w<=430?'294px':'310px');
+ stage.style.overflow='hidden';
+ const logo=stage.querySelector('.hero-logo');if(logo)logo.style.display='none';
+ const slogan=stage.querySelector('.hero-slogan');if(slogan)slogan.style.display='none';
+ const copy=stage.querySelector('.hero-copy');
+ if(copy){copy.style.left='50%';copy.style.top='18px';copy.style.width='92%';copy.style.transform='translateX(-50%)';copy.style.zIndex='7'}
+ const title=copy&&copy.querySelector('h1');if(title){title.style.fontSize=w<=360?'15px':'17px';title.style.letterSpacing='-.2px'}
+ const sub=copy&&copy.querySelector('p');if(sub){sub.style.fontSize=w<=360?'9px':'10px'}
+ const worker=stage.querySelector('.hero-worker');
+ if(worker){worker.style.left='-5%';worker.style.bottom='55px';worker.style.width='52%';worker.style.height='78%';worker.style.objectFit='cover';worker.style.objectPosition='top center';worker.style.zIndex='2'}
+ const pipes=stage.querySelector('.hero-pipes');
+ if(pipes){pipes.style.right='-7%';pipes.style.bottom='58px';pipes.style.width='68%';pipes.style.height='54%';pipes.style.objectFit='cover';pipes.style.objectPosition='center';pipes.style.zIndex='1'}
+ const qr=stage.querySelector('.qr-chip');
+ if(qr){qr.style.zIndex='9';qr.style.right=w<=360?'10px':'14px';qr.style.top='76px';qr.style.transform='none'}
+ const perks=stage.querySelector('.perks');
+ if(perks){perks.style.left='4%';perks.style.right='4%';perks.style.bottom='68px';perks.style.height='46px';perks.style.zIndex='10'}
+ const band=stage.querySelector('.hero-bottom-band');
+ if(band){band.style.left='0';band.style.right='0';band.style.bottom='0';band.style.minHeight=w<=360?'62px':'66px';band.style.zIndex='12';band.style.boxSizing='border-box'}
+}
 function hmcFinalLayout(){
  const home=document.getElementById('home');if(!home)return;
  const w=window.innerWidth||390,small=w<=HMC_HOME.compact;
  const main=home.querySelector('.home-main'),content=home.querySelector('.home-content');
+ hmcRepairHero();
  hmcSetStyle(main,{display:'flex',flexDirection:'column',minHeight:'100%',width:'100%',boxSizing:'border-box'});
  hmcSetStyle(content,{display:'block',width:'100%',boxSizing:'border-box',overflow:'visible'});
  /* Step 5: products */
