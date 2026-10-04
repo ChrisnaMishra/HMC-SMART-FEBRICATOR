@@ -246,25 +246,55 @@ function Picker(id,s,o={}){const el=$(id),grade=o.grade!==false;
   '<div class="fl">SIZE</div><select>'+sizes.map((z,i)=>`<option value="${i}" ${z===s.size?'selected':''}>${z.replace(/"/g,'&quot;')}</option>`).join('')+'</select><div class="fl">CLASS</div>'+chips('cls',cls,s.cls,v=>CL[v]);};
  el.onclick=e=>{const c=e.target.closest('.chip');if(!c)return;s[c.dataset.k]=c.dataset.v;draw();o.cb&&o.cb()};
  el.onchange=e=>{if(e.target.tagName==='SELECT'){s.size=Object.keys(W[s.shape])[e.target.value];draw();o.cb&&o.cb()}};draw();}
-/* ===== accounts (this device only) ===== */
-const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},st=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
-let ACC=ld('hmc_accounts',{}),ME=null,POINTS=0,ORDER=[],CD=3;const WA='9779845656595';
+/* ===== accounts (local prototype; Supabase OTP will replace this) =====
+   All phone numbers are stored in one canonical format so +977/98... cannot
+   accidentally create a second identity on the same browser. */
+const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+st=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+function canonicalMobile(v){let m=(v||'').replace(/\D/g,'');if(m.startsWith('977')&&m.length===13)m=m.slice(3);return m}
+function loadAccounts(){
+ const out={};
+ try{
+   const raw=localStorage.getItem('hmc_accounts');
+   const old=raw?JSON.parse(raw):{};
+   Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[78]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+ }catch(e){}
+ try{
+   const raw=localStorage.getItem('hmc_accounts_v2');
+   const v2=raw?JSON.parse(raw):{};
+   Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[78]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+ }catch(e){}
+ st('hmc_accounts_v2',out); return out
+}
+let ACC=loadAccounts(),ME=null,POINTS=0,ORDER=[],CD=3;const WA='9779845656595';
 function hash(t){let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^a>>>16,2246822507)^Math.imul(b^b>>>13,3266489909);b=Math.imul(b^b>>>16,2246822507)^Math.imul(a^a>>>13,3266489909);return(4294967296*(2097151&b)+(a>>>0)).toString(36)}
 async function pwHash(salt,pw){try{const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+pw));return[...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return hash(salt+pw)+hash(pw+salt)}}
-const cm=v=>(v||'').replace(/[\s-]/g,'').replace(/^\+?977(?=\d{10}$)/,''),err=(id,m)=>{const e=$(id);e.textContent=m;e.style.display=m?'block':'none'};
-function showLoginFor(m){$('l-mob').value=m;err('r-err','');err('l-err','');go('login');setTimeout(()=>$('l-pw').focus(),50)}
-async function doRegister(){const g=i=>$(i).value.trim(),m=cm($('r-mob').value),p=$('r-pw').value;
- if(!g('r-name'))return err('r-err','Please enter your full name.');if(!/^9[78]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 98XXXXXXXX.');
- if(p.length<6)return err('r-err','Password must be at least 6 characters.');if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
- if(ACC[m])return err('r-err','This number is already registered. Please use the LOG IN button below.')
- const salt=Math.random().toString(36).slice(2)+Date.now();ACC[m]={name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};st('hmc_accounts',ACC);err('r-err','');$('l-mob').value=m;go('pending')}
-async function doLogin(){const m=cm($('l-mob').value),p=$('l-pw').value;if(!/^9[78]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
+const cm=v=>canonicalMobile(v),err=(id,m)=>{const e=$(id);e.innerHTML=m;e.style.display=m?'block':'none'};
+function showLoginFor(m){const n=cm(m);$('l-mob').value=n;err('r-err','');err('l-err','');go('login');setTimeout(()=>$('l-pw').focus(),50)}
+async function doRegister(){
+ const g=i=>$(i).value.trim(),m=cm($('r-mob').value),p=$('r-pw').value;
+ if(!g('r-name'))return err('r-err','Please enter your full name.');
+ if(!/^9[78]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 98XXXXXXXX.');
+ if(p.length<6)return err('r-err','Password must be at least 6 characters.');
+ if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
+ if(ACC[m])return err('r-err','This number is already registered. Please use LOG IN.');
+ const salt=Math.random().toString(36).slice(2)+Date.now();
+ ACC[m]={mobile:m,name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};
+ st('hmc_accounts_v2',ACC); st('hmc_accounts',ACC);
+ err('r-err',''); $('l-mob').value=m; go('pending')
+}
+async function doLogin(){
+ const m=cm($('l-mob').value),p=$('l-pw').value;
+ if(!/^9[78]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
- const a=ACC[m];if(!a)return err('l-err','No account found for this number. Please register first.');
+ const a=ACC[m] || loadAccounts()[m];
+ if(!a)return err('l-err','We could not find this account on this browser. Please register again on this device.');
  const good=await pwHash(a.salt,p)===a.hash;
- if(!good)return err('l-err','Wrong password. If you registered this number but forgot the password, use the registration screen to verify your account.');
- err('l-err','');$('l-pw').value='';if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
- ME={mobile:m,...a};POINTS=a.points||0;renderAll();go('home')}
+ if(!good)return err('l-err','Wrong password. Please use the password you created during registration.');
+ err('l-err','');$('l-pw').value='';
+ if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
+ ME={mobile:m,...a};POINTS=a.points||0;renderAll();go('home')
+}
 function forgot(){alert('Password reset: please contact Hulas on WhatsApp/phone with your registered mobile number.')}
 function logout(){ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login').classList.contains('active'))doLogin()});
