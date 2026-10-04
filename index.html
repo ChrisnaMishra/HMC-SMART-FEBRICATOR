@@ -257,12 +257,12 @@ function loadAccounts(){
  try{
    const raw=localStorage.getItem('hmc_accounts');
    const old=raw?JSON.parse(raw):{};
-   Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[78]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+   Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m))out[m]={...a,mobile:m}})
  }catch(e){}
  try{
    const raw=localStorage.getItem('hmc_accounts_v2');
    const v2=raw?JSON.parse(raw):{};
-   Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[78]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+   Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m))out[m]={...a,mobile:m}})
  }catch(e){}
  st('hmc_accounts_v2',out); return out
 }
@@ -274,7 +274,7 @@ function showLoginFor(m){const n=cm(m);$('l-mob').value=n;err('r-err','');err('l
 async function doRegister(){
  const g=i=>$(i).value.trim(),m=cm($('r-mob').value),p=$('r-pw').value;
  if(!g('r-name'))return err('r-err','Please enter your full name.');
- if(!/^9[78]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 96XXXXXXXX, 97XXXXXXXX or 98XXXXXXXX.');
+ if(!/^9[678]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 96XXXXXXXX, 97XXXXXXXX or 98XXXXXXXX.');
  if(p.length<6)return err('r-err','Password must be at least 6 characters.');
  if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
  if(ACC[m])return err('r-err','This number is already registered. Please use LOG IN.');
@@ -285,7 +285,7 @@ async function doRegister(){
 }
 async function doLogin(){
  const m=cm($('l-mob').value),p=$('l-pw').value;
- if(!/^9[78]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
+ if(!/^9[678]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
  const a=ACC[m] || loadAccounts()[m];
  if(!a)return err('l-err','We could not find this account on this browser. Please register again on this device.');
