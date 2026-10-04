@@ -133,9 +133,16 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div id="cut-warn"></div><div class="card" id="cut-pat" style="display:none"></div><div class="res" id="cut-res" style="display:none"></div>
 <div class="btns"><button class="cta" onclick="addCut()">ADD CUTTING PLAN TO ORDER</button></div></div></section>
 
-<section id="order" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>My Order</h2></div>
-<div style="flex:1;padding-top:14px" id="o-body"></div><div class="card tot" id="o-tot"></div>
-<div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">CLEAR</button><button class="cta" onclick="sendOrder()">SEND ORDER TO HULAS</button></div><div class="nav" data-nav="order"></div></section>
+<section id="order" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>My Order</h2><p style="margin:5px 0 0;color:var(--muted);font-size:12px">Review, edit or add pipe requirements before sending.</p></div>
+<div style="flex:1;padding-top:14px" id="o-body"></div>
+<div class="card" style="margin-top:4px"><div class="sec" style="margin-top:0">ADD / EDIT PIPE</div>
+<label>Pipe specification</label><input id="op-spec" placeholder="Example: 202 Grade 1&quot; Light Round">
+<div class="row2"><div><label>Quantity (pcs)</label><input id="op-qty" type="number" min="1" step="1" value="1"></div><div><label>Length / pipe (m)</label><input id="op-len" type="number" min="0.1" step="0.01" value="6"></div></div>
+<div class="row2"><div><label>Weight / pipe (kg)</label><input id="op-wt" type="number" min="0" step="0.001" placeholder="e.g. 5.100"></div><div><label>Rate / kg (Rs.)</label><input id="op-rate" type="number" min="0" step="0.01" placeholder="e.g. 290"></div></div>
+<div class="btns" style="padding:12px 0 0"><button class="cta ghost" onclick="clearPipeEditor()">CLEAR</button><button class="cta" onclick="addManualPipe()">ADD PIPE TO ORDER</button></div>
+<small style="color:var(--muted);font-size:11px">You can enter any approved Hulas pipe specification. Weight and rate should be verified before sending.</small></div>
+<div class="card tot" id="o-tot"></div>
+<div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">CLEAR ORDER</button><button class="cta" onclick="sendOrder()">SEND ORDER TO HULAS</button></div><div class="nav" data-nav="order"></div></section>
 
 <section id="rewards" class="screen"><div style="flex:1"><div class="pts"><b id="w-pts">0</b><small>MY HULAS POINTS · 1 KG = 1 POINT</small></div>
 <div class="rg" id="w-grid"></div><div class="warn">Reward values are Hulas' reference catalogue and may be updated by management.</div></div><div class="nav" data-nav="rewards"></div></section>
@@ -222,12 +229,16 @@ function runCut(){const toM=v=>cunit==='ft'?v/FT:v,disp=m=>(cunit==='ft'?m*FT:m)
 function addCut(){if(!clast){alert('Tap Optimize Cutting Plan first.');return}addLine({...clast,spec:clast.spec+' — cutting plan'});go('order')}
 /* ===== order: cash discount is applied LAST, on the bill total (basic + VAT) ===== */
 function orderTotals(){const wt=ORDER.reduce((s,l)=>s+l.weight,0),b=ORDER.reduce((s,l)=>s+l.amount,0),v=vatOf(b),bill=b+v,cd=bill*CD/100;return{wt,b,v,bill,cd,pay:bill-cd}}
-function renderOrder(){const t=orderTotals();$('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>`<div class="ol"><div><b style="font-size:12.5px">${l.spec}</b><small>${l.qty} × 6m · ${kg(l.weight)}</small></div><div style="text-align:right"><b>${money(l.amount)}</b><div class="rm" onclick="ORDER.splice(${i},1);renderOrder()">Remove</div></div></div>`).join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result to build your order.</div>';
+function renderOrder(){const t=orderTotals();$('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>`<div class="ol"><div style="flex:1"><b style="font-size:12.5px">${l.spec}</b><small>${l.qty} × ${l.len||6}m · ${kg(l.weight)}</small><small>Rate: ${money(l.rate||0)}/kg · Amount: ${money(l.amount)}</small></div><div style="text-align:right"><b>${money(l.amount)}</b><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:5px"><span class="rm" onclick="editPipe(${i})">Edit</span><span class="rm" onclick="ORDER.splice(${i},1);renderOrder()">Remove</span></div></div></div>`).join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result, or enter a pipe manually below.</div>';
  $('o-tot').style.display=ORDER.length?'block':'none';if(!ORDER.length)return;
  if(document.activeElement&&document.activeElement.id==='cd')return;
  $('o-tot').innerHTML=`<div><span>Total weight</span><span>${kg(t.wt)}</span></div><div><span>Basic amount</span><span>${money(t.b)}</span></div><div><span>VAT (${R.vat}%)</span><span>${money(t.v)}</span></div><div><span>Bill total</span><span>${money(t.bill)}</span></div><div><span>Cash discount (%)</span><span><input id="cd" type="number" min="0" max="100" step="0.5" value="${CD}" onchange="CD=Math.min(100,Math.max(0,+this.value||0));renderOrder()"></span></div><div><span>Discount amount</span><span>− ${money(t.cd)}</span></div><div class="g"><span>Payable</span><span>${money(t.pay)}</span></div>`}
+function clearPipeEditor(){['op-spec','op-wt','op-rate'].forEach(id=>$(id).value='');$('op-qty').value=1;$('op-len').value=6;$('op-spec').focus()}
+function addManualPipe(){const spec=$('op-spec').value.trim(),qty=Math.max(1,Math.floor(+$('op-qty').value||0)),len=Math.max(.1,+$('op-len').value||0),wt=Math.max(0,+$('op-wt').value||0),rate=Math.max(0,+$('op-rate').value||0);if(!spec)return alert('Enter the pipe specification.');if(!wt)return alert('Enter weight per pipe in kg.');if(!rate)return alert('Enter the rate per kg.');ORDER.push({spec,qty,len,weight:wt*qty,amount:wt*qty*rate,rate});clearPipeEditor();renderOrder()}
+function editPipe(i){const l=ORDER[i];$('op-spec').value=l.spec||'';$('op-qty').value=l.qty||1;$('op-len').value=l.len||6;$('op-wt').value=(l.weight/(l.qty||1)).toFixed(3);$('op-rate').value=l.rate||0;ORDER.splice(i,1);$('op-spec').focus();renderOrder()}
+
 function sendOrder(){if(!ORDER.length)return alert('Add at least one item first.');const t=orderTotals();
- let m=`*HULAS ORDER REQUEST*\n\nFabricator: ${ME.name}\nFirm: ${ME.firm||'-'}\nMobile: ${ME.mobile}\n\n`;ORDER.forEach(l=>m+=`• ${l.spec} — ${l.qty} pcs × 6m — ${kg(l.weight)} — ${money(l.amount)}\n`);
+ let m=`*HULAS ORDER REQUEST*\n\nFabricator: ${ME.name}\nFirm: ${ME.firm||'-'}\nMobile: ${ME.mobile}\n\n`;ORDER.forEach(l=>m+=`• ${l.spec} — ${l.qty} pcs × ${l.len||6}m — ${kg(l.weight)} — Rate ${money(l.rate||0)}/kg — ${money(l.amount)}\n`);
  m+=`\nTotal weight: ${kg(t.wt)}\nBasic amount: ${money(t.b)}\nVAT (${R.vat}%): ${money(t.v)}\nBill total: ${money(t.bill)}\nCash discount (${CD}%): -${money(t.cd)}\n*Payable: ${money(t.pay)}*`;
  if(!window.open(`https://wa.me/${WA}?text=${encodeURIComponent(m)}`,'_blank'))return alert('Please allow pop-ups so WhatsApp can open, then press Send again.');
  addPts(t.wt);ORDER=[];alert(`Order sent to Hulas on WhatsApp. +${fp(t.wt)} points added.`);go('home')}
