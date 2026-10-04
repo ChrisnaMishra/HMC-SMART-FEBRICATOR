@@ -66,20 +66,26 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 #home{background:var(--bg)}
 .top{background:#fff;padding:calc(8px + env(safe-area-inset-top,0px)) 14px 6px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;position:sticky;top:0;z-index:30}
 .icobtn{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--st);color:var(--ink)}
-.top .logo-img{height:42px;max-width:100%;object-fit:contain;justify-self:center}
+.top .logo-img{height:44px;max-width:82%;object-fit:contain;justify-self:center}
 .top .wordmark{justify-self:center}
-.hero{position:relative;background:linear-gradient(180deg,#fff 0%,#E8ECF2 100%);overflow:hidden}
-.hero-copy{position:relative;z-index:3;text-align:center;padding:4px 20px 0}
-.hero-copy h1{font-size:25px;font-weight:900;letter-spacing:-.4px;color:var(--navy);line-height:1.1}
-.hero-copy p{font-size:13.5px;color:var(--muted);margin-top:4px}
-.hero-stage{position:relative;height:210px;margin-top:6px}
-.hero-art{position:absolute;right:0;bottom:0;width:64%;height:100%;z-index:0}
-.hero-pipes{position:absolute;right:0;bottom:0;height:100%;width:64%;object-fit:cover;z-index:1}
-.hero-worker{position:absolute;left:0;bottom:0;height:100%;width:42%;object-fit:cover;object-position:top center;z-index:2}
-.qr-chip{position:absolute;right:12px;top:8px;z-index:3;background:#fff;border-radius:13px;padding:7px 11px 7px 8px;box-shadow:0 6px 18px rgba(15,27,51,.18);display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;color:var(--navy);line-height:1.2}
-.qr-chip .ic{width:26px;height:26px;color:var(--red)}
-.perks{position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:rgba(255,255,255,.94);padding:11px 6px;border-top:1px solid var(--line)}
-.perk{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--ink);text-align:center;line-height:1.15}
+.hero{position:relative;background:#fff;overflow:hidden}
+.hero-copy{position:absolute;left:50%;top:70px;transform:translateX(-50%);z-index:5;text-align:center;width:62%;pointer-events:none}
+.hero-copy h1{font-size:22px;font-weight:900;letter-spacing:-.4px;color:var(--navy);line-height:1.05;text-transform:uppercase}
+.hero-copy p{font-size:11.5px;color:var(--ink);margin-top:5px;font-weight:500;white-space:nowrap}
+.hero-stage{position:relative;height:275px;margin-top:0;background:linear-gradient(180deg,#fff 0%,#EEF2F6 100%)}
+.hero-art{display:none}
+.hero-pipes{position:absolute;right:-7%;bottom:0;height:82%;width:72%;object-fit:cover;object-position:center;z-index:1;mix-blend-mode:multiply}
+.hero-worker{position:absolute;left:-5%;bottom:0;height:94%;width:47%;object-fit:cover;object-position:top center;z-index:2;mix-blend-mode:multiply}
+.hero-logo{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:54%;max-width:245px;z-index:6;object-fit:contain}
+.hero-slogan{position:absolute;right:7px;top:12px;width:21%;z-index:6;font-size:17px;font-weight:900;font-style:italic;line-height:.92;text-align:left;color:#111;transform:rotate(-6deg)}
+.hero-slogan:after{content:"";display:block;width:80px;height:3px;background:var(--red);transform:rotate(-12deg);margin:7px 0 0 8px;border-radius:3px}
+.qr-chip{position:absolute;right:9%;top:108px;z-index:7;background:#fff;border:1px solid #D5D9E0;border-radius:8px;padding:5px 7px;box-shadow:0 4px 12px rgba(15,27,51,.14);display:flex;align-items:center;gap:5px;font-size:9px;font-weight:900;color:#111;line-height:1.05;transform:rotate(-7deg)}
+.qr-chip .ic{width:30px;height:30px;color:#111}
+.perks{position:absolute;left:27%;right:2%;bottom:39px;z-index:6;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(255,255,255,.9);padding:6px 3px;border-radius:10px}
+.perk{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8px;font-weight:800;color:#111;text-align:center;line-height:1.05}
+.perk .ic{width:23px;height:23px;color:#111}
+.hero-bottom-band{position:absolute;left:0;right:0;bottom:0;z-index:8;background:linear-gradient(110deg,#C8102E,#E3283E 65%,#B30D25);color:#fff;padding:9px 12px 8px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.hero-bottom-copy{min-width:0}.hero-bottom-copy h3{font-size:15px;font-weight:900;white-space:nowrap}.hero-bottom-copy p{font-size:9.5px;margin-top:3px;font-weight:700}.hero-industries{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;width:47%;font-size:7px;font-weight:800;text-align:center}.hero-industries span{display:flex;flex-direction:column;align-items:center;gap:2px}.hero-industries .ic{width:20px;height:20px}
 .perk .ic{color:var(--red)}
 .band{margin:14px 16px 0;border-radius:24px;padding:18px 16px 46px;color:#fff;background:radial-gradient(120% 140% at 100% 0%,#F0475A 0%,rgba(240,71,90,0) 55%),linear-gradient(135deg,#A30D25,#D81E36);position:relative;overflow:hidden}
 .band h3{font-size:18px;font-weight:800;letter-spacing:-.2px}
@@ -172,7 +178,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .list{display:flex;flex-direction:column;gap:8px}.list .item{display:flex;justify-content:space-between;gap:10px;padding:11px 12px;background:var(--st);border-radius:12px;font-size:12.5px;align-items:center}.list small{display:block;color:var(--muted);margin-top:2px;font-size:11px}
 .pj{background:#fff;border-radius:16px;padding:14px;margin:0 16px 12px;box-shadow:0 3px 12px rgba(15,27,51,.08)}.pj h4{font-size:15px;font-weight:800;overflow-wrap:anywhere}.pj p{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}.pj .btns{padding:12px 0 0}
 .prof-row{padding:2px 0}.prof-row b{display:block;font-size:15px;overflow-wrap:anywhere}
-@media(max-width:360px){.chip4{font-size:10px}.chip4 i{width:40px;height:40px}.qa{gap:8px}.wpts b{font-size:18px}.hero-stage{height:190px}}
+@media(max-width:360px){.qa{gap:8px}.wpts b{font-size:18px}.hero-stage{height:245px}.hero-copy{top:65px}.hero-slogan{font-size:15px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style></head><body>
 
@@ -251,29 +257,28 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
   <span></span>
  </div>
  <div class="hero">
-  <div class="hero-copy"><h1>Smart Fabricator</h1><p>Scan. Earn. Fabricate. Grow with Hulas.</p></div>
   <div class="hero-stage">
-   <svg class="hero-art" viewBox="0 0 260 210" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F9FC"/><stop offset=".35" stop-color="#C9CFD9"/><stop offset=".62" stop-color="#8E97A6"/><stop offset="1" stop-color="#DDE2EA"/></linearGradient></defs><g transform="rotate(-11 130 120)"><rect x="22" y="40" width="250" height="40" rx="20" fill="url(#gs)"/><ellipse cx="34" cy="60" rx="14" ry="20" fill="#5B6472"/><ellipse cx="34" cy="60" rx="9" ry="14" fill="#2B313C"/><rect x="30" y="92" width="240" height="36" rx="6" fill="url(#gs)"/><rect x="38" y="138" width="232" height="30" rx="6" fill="url(#gs)"/></g></svg>
-   <img class="hero-pipes" src="02_Hero_Pipes.jpg" alt="" onerror="this.remove()">
-   <img class="hero-worker" src="01_Fabricator_Worker.jpg" alt="" onerror="this.remove()">
-   <div class="qr-chip"><svg class="ic"><use href="#i-qr"/></svg><span>Scan and earn<br>1 kg = 1 point</span></div>
-  </div>
-  <div class="perks">
-   <div class="perk"><svg class="ic"><use href="#i-shield"/></svg>Durable</div>
-   <div class="perk"><svg class="ic"><use href="#i-drop"/></svg>Rust resistant</div>
-   <div class="perk"><svg class="ic"><use href="#i-gem"/></svg>Premium finish</div>
-   <div class="perk"><svg class="ic"><use href="#i-loop"/></svg>Long life</div>
-  </div>
- </div>
-
- <div class="band">
-  <h3>Hulas SS pipes &amp; tubes</h3>
-  <p class="sub">Round, square and rectangle in 202 and 304 grade.</p>
-  <div class="chips4">
-   <div class="chip4"><i><svg class="ic"><use href="#i-build"/></svg></i>Residential</div>
-   <div class="chip4"><i><svg class="ic"><use href="#i-shop"/></svg></i>Commercial</div>
-   <div class="chip4"><i><svg class="ic"><use href="#i-gear"/></svg></i>Industrial</div>
-   <div class="chip4"><i><svg class="ic"><use href="#i-tool"/></svg></i>Fabrication</div>
+   <img class="hero-logo" src="07_Hulas_Logo.jpg" alt="Hulas Metal Crafts Ltd." onerror="this.style.display='none'">
+   <div class="hero-slogan">Stronger<br>Smarter<br>Together</div>
+   <div class="hero-copy"><h1>SMART FABRICATOR</h1><p>Scan. Earn. Fabricate. Grow with Hulas.</p></div>
+   <img class="hero-pipes" src="02_Hero_Pipes.jpg" alt="Hulas stainless steel pipes" onerror="this.remove()">
+   <img class="hero-worker" src="01_Fabricator_Worker.jpg" alt="Hulas fabricator" onerror="this.remove()">
+   <div class="qr-chip"><svg class="ic"><use href="#i-qr"/></svg><span>SCAN<br>EARN<br>1KG = 1 POINT</span></div>
+   <div class="perks">
+    <div class="perk"><svg class="ic"><use href="#i-shield"/></svg>Durable</div>
+    <div class="perk"><svg class="ic"><use href="#i-drop"/></svg>Rust<br>resistant</div>
+    <div class="perk"><svg class="ic"><use href="#i-gem"/></svg>Premium<br>finish</div>
+    <div class="perk"><svg class="ic"><use href="#i-loop"/></svg>Long<br>life</div>
+   </div>
+   <div class="hero-bottom-band">
+    <div class="hero-bottom-copy"><h3>HULAS® SS PIPES &amp; TUBES</h3><p>ROUND | SQUARE | RECTANGLE &nbsp; · &nbsp; 202 &amp; 304 GRADE</p></div>
+    <div class="hero-industries">
+     <span><svg class="ic"><use href="#i-build"/></svg>RESIDENTIAL</span>
+     <span><svg class="ic"><use href="#i-shop"/></svg>COMMERCIAL</span>
+     <span><svg class="ic"><use href="#i-gear"/></svg>INDUSTRIAL</span>
+     <span><svg class="ic"><use href="#i-tool"/></svg>FABRICATION</span>
+    </div>
+   </div>
   </div>
  </div>
 
