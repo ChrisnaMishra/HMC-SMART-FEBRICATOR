@@ -42,47 +42,64 @@ input:focus,select:focus{outline:2px solid var(--red)}
 .row2{display:flex;gap:10px;min-width:0}.row2>div{flex:1;min-width:0}
 .err{background:#FDECEC;border:1px solid #F5C2C2;color:#A81F1F;border-radius:12px;padding:11px 14px;margin-top:12px;font-size:13px;font-weight:600;display:none}
 .rem{display:flex;align-items:center;gap:8px;margin:14px 0;font-size:13px;color:var(--muted)}.rem input{width:auto}
-/* ===== HOME V2 — premium Hulas dashboard ===== */
+/* ===== HOME — approved Hulas Smart Fabricator design ===== */
 #home{background:#f7f8fa;color:#17191f;overflow-y:auto}
-.home-top{background:#fff;padding:12px 16px 8px;position:sticky;top:0;z-index:30;border-bottom:1px solid #eee}
-.home-topbar{height:48px;display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px}
-.home-iconbtn{width:40px;height:40px;border-radius:12px;background:#f4f5f7;color:#17191f;display:flex;align-items:center;justify-content:center;font-size:23px}
-.home-logo{font-weight:900;font-size:34px;line-height:.9;text-align:center;letter-spacing:-2px;color:#df202b;text-shadow:2px 2px 0 #17191f,-1px -1px 0 #17191f,1px -1px 0 #17191f,-1px 1px 0 #17191f}
-.home-logo small{display:block;color:#17191f;text-shadow:none;font-size:9px;letter-spacing:2.2px;margin-top:5px;font-weight:800}
-.home-bell{position:relative}.home-badge{position:absolute;right:-2px;top:-3px;background:#df202b;color:#fff;border-radius:99px;min-width:20px;height:20px;padding:2px 5px;font-size:10px;font-weight:800}
-.home-hero{margin:0 0 12px;min-height:225px;position:relative;overflow:hidden;background:linear-gradient(125deg,#eef1f4 0%,#fff 48%,#e8eaed 100%);border-bottom:5px solid var(--red)}
-.home-hero:before,.home-hero:after{content:"";position:absolute;right:-35px;bottom:8px;width:260px;height:54px;border-radius:28px;transform:rotate(-10deg);background:linear-gradient(#d9dde1,#fff 48%,#b7bdc3);box-shadow:0 18px 0 -5px #c2c7cc,0 36px 0 -9px #aeb5bc}
-.home-hero:after{right:75px;bottom:25px;width:205px;height:45px;transform:rotate(7deg);opacity:.85}
-.home-hero-copy{position:relative;z-index:2;padding:24px 20px 18px;max-width:67%}
-.home-hero-kicker{font-size:11px;font-weight:800;letter-spacing:1.7px;color:#555;margin-bottom:7px}
-.home-hero-title{font-size:25px;line-height:1.05;font-weight:900;color:#17191f}
+.home-top{background:#fff;padding:8px 16px 7px;position:sticky;top:0;z-index:30;border-bottom:1px solid #eee}
+.home-topbar{height:52px;display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px}
+.home-iconbtn{width:40px;height:40px;border-radius:12px;background:#f4f5f7;color:#17191f;display:flex;align-items:center;justify-content:center;font-size:23px;border:0}
+.home-logo-img{height:46px;max-width:190px;width:auto;object-fit:contain;justify-self:center;display:block}
+.home-bell{position:relative}
+.home-badge{position:absolute;right:-2px;top:-3px;background:#df202b;color:#fff;border-radius:99px;min-width:20px;height:20px;padding:2px 5px;font-size:10px;font-weight:800}
+.home-hero{margin:0 0 0;position:relative;overflow:hidden;background:#fff;border-bottom:5px solid var(--red);min-height:300px}
+.home-hero-grid{display:grid;grid-template-columns:39% 61%;min-height:255px;align-items:stretch}
+.home-hero-worker{width:100%;height:255px;object-fit:cover;object-position:center top;display:block}
+.home-hero-pipes{width:100%;height:255px;object-fit:cover;object-position:center center;display:block}
+.home-hero-copy{position:absolute;left:50%;top:12px;transform:translateX(-50%);width:56%;text-align:center;z-index:3;pointer-events:none}
+.home-hero-kicker{font-size:10px;font-weight:800;letter-spacing:1.6px;color:#17191f;margin-bottom:3px}
+.home-hero-title{font-size:21px;line-height:1.03;font-weight:900;color:#17191f}
 .home-hero-title span{color:var(--red)}
-.home-hero-copy p{font-size:12px;line-height:1.35;color:#505762;margin:9px 0 14px}
-.home-hero-pills{display:flex;gap:6px;flex-wrap:wrap}.home-hero-pills span{background:#17191f;color:#fff;border-radius:99px;padding:6px 9px;font-size:9px;font-weight:800}
-.home-welcome{margin:-2px 18px 12px;background:#fff;border:1px solid #e6e7e9;border-radius:18px;padding:13px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 7px 22px rgba(25,31,40,.08)}
+.home-hero-copy p{font-size:10px;line-height:1.25;color:#505762;margin:5px 0 8px}
+.home-hero-pills{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}.home-hero-pills span{background:#17191f;color:#fff;border-radius:99px;padding:4px 7px;font-size:7.5px;font-weight:800}
+.home-product-band{background:linear-gradient(100deg,#bd101c,#e51b2a);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 18px}
+.home-product-band h3{font-size:15px;margin:0;font-weight:900}.home-product-band p{font-size:9px;margin:2px 0 0}.home-industries{display:flex;gap:8px;flex:0 0 auto}.home-industry{font-size:7px;text-align:center;font-weight:800;min-width:42px}.home-industry i{display:block;font-size:17px;font-style:normal;line-height:1.1;margin-bottom:2px}
+.home-welcome{margin:-1px 18px 12px;background:#fff;border:1px solid #e6e7e9;border-radius:18px;padding:13px 14px;display:flex;align-items:center;gap:11px;box-shadow:0 7px 22px rgba(25,31,40,.08);position:relative;z-index:2}
 .home-avatar{width:46px;height:46px;border-radius:50%;background:#f2f3f5;display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 auto}
 .home-welcome-main{min-width:0;flex:1}.home-welcome-main h3{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.home-welcome-main p{margin:3px 0 0;color:#727780;font-size:11px}
 .home-points{padding-left:13px;border-left:1px solid #e2e3e5;text-align:right;min-width:92px}.home-points small{display:block;color:#727780;font-size:9px;font-weight:700}.home-points b{display:block;color:var(--red);font-size:20px;line-height:1.1}
 .home-section-title{padding:4px 18px 8px;font-size:13px;font-weight:900;color:#17191f}
-.home-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px 14px}
-.home-action{min-height:104px;background:#fff;border:1px solid #e6e7e9;border-radius:16px;padding:14px;box-shadow:0 5px 15px rgba(25,31,40,.06);text-align:left;display:flex;flex-direction:column;justify-content:space-between}
+.home-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:0 18px 12px}
+.home-action{min-height:88px;background:#fff;border:1px solid #e6e7e9;border-radius:15px;padding:11px;box-shadow:0 5px 15px rgba(25,31,40,.06);text-align:left;display:flex;flex-direction:column;justify-content:space-between}
 .home-action.primary{background:linear-gradient(135deg,#d71928,#b90f1c);color:#fff;border:none}
-.home-action .ico{width:36px;height:36px;border-radius:11px;background:#f2f3f5;color:var(--red);display:flex;align-items:center;justify-content:center;font-size:21px}
+.home-action .ico{width:32px;height:32px;border-radius:10px;background:#f2f3f5;color:var(--red);display:flex;align-items:center;justify-content:center;font-size:19px}
 .home-action.primary .ico{background:rgba(255,255,255,.16);color:#fff}
-.home-action h4{font-size:14px;margin-top:8px}.home-action p{font-size:10.5px;color:#747a83;margin:3px 0 0}.home-action.primary p{color:#ffe7e9}
-.home-product{margin:0 18px 14px;border-radius:17px;overflow:hidden;min-height:145px;background:linear-gradient(115deg,#d8dce0,#fff 48%,#c9cdd1);position:relative;border:1px solid #dfe1e4}
-.home-product:before,.home-product:after{content:"";position:absolute;right:-40px;width:245px;height:48px;border:10px solid #b9bec4;border-radius:30px;transform:rotate(-14deg);opacity:.85}.home-product:before{top:22px}.home-product:after{top:82px;width:220px;transform:rotate(8deg)}
-.home-product-copy{position:relative;z-index:2;padding:18px;max-width:58%}.home-product-copy .ey{font-size:9px;color:#fff;background:#17191f;padding:5px 8px;border-radius:99px;font-weight:800;display:inline-block}.home-product-copy h3{font-size:20px;margin:9px 0 4px}.home-product-copy p{font-size:10px;color:#555d67;line-height:1.35;margin:0 0 11px}.home-product-btn{display:inline-block;background:var(--red);color:#fff;padding:8px 12px;border-radius:99px;font-size:10px;font-weight:800}
-.home-reward{margin:0 18px 14px;background:#fff;border:1px solid #e6e7e9;border-radius:17px;padding:14px;box-shadow:0 5px 15px rgba(25,31,40,.05)}
-.home-reward-top{display:flex;justify-content:space-between;align-items:center}.home-reward small{color:#747a83;font-size:10px}.home-reward h3{font-size:15px;margin-top:2px}.home-reward b{color:var(--red);font-size:14px}
-.home-reward .bar{height:9px;background:#e9eaec;margin:10px 0 7px}.home-reward .bar i{background:linear-gradient(90deg,#d71928,#ef4a54)}
-.home-reward-foot{display:flex;justify-content:space-between;color:#727780;font-size:10px}
+.home-action h4{font-size:12.5px;margin-top:6px}.home-action p{font-size:9.5px;color:#747a83;margin:2px 0 0}.home-action.primary p{color:#ffe7e9}
+.home-products{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:0 0 12px}
+.home-product-tile{height:145px;position:relative;overflow:hidden;background:#ddd;cursor:pointer}
+.home-product-tile img{width:100%;height:100%;object-fit:cover;display:block}
+.home-product-tile:after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.home-product-tile .ptxt{position:absolute;left:10px;right:5px;bottom:8px;z-index:2;color:#fff;font-size:12px;font-weight:900}
+.home-product-tile .ptxt small{display:block;font-size:7px;font-weight:700;margin-top:2px}
+.home-reward{margin:0 18px 14px;background:#fff;border:1px solid #e6e7e9;border-radius:17px;padding:10px;box-shadow:0 5px 15px rgba(25,31,40,.05)}
+.home-reward-inner{background:#fff0f2;border-radius:12px;padding:10px;display:grid;grid-template-columns:27% 35% 38%;align-items:center;gap:8px}
+.home-reward-img{width:100%;height:90px;object-fit:contain;display:block}
+.home-reward-top{border-right:1px solid #ddd;padding-right:8px}.home-reward small{color:#747a83;font-size:9px}.home-reward h3{font-size:15px;margin-top:2px}.home-reward b{color:var(--red);font-size:13px}
+.home-reward-right{padding-left:4px}.home-reward .bar{height:9px;background:#d9dadd;margin:9px 0 6px}.home-reward .bar i{background:linear-gradient(90deg,#d71928,#ef4a54)}
+.home-reward-foot{display:flex;justify-content:space-between;color:#727780;font-size:9px}
 #home .nav{background:#fff;padding-top:9px}
 #home .nav button{font-size:10px;min-width:52px;display:flex;flex-direction:column;align-items:center;gap:4px}
 #home .nav button:before{font-size:21px;line-height:1}
 #home .nav button:nth-child(1):before{content:"⌂"}#home .nav button:nth-child(2):before{content:"⌗"}#home .nav button:nth-child(3):before{content:"▣"}#home .nav button:nth-child(4):before{content:"★"}#home .nav button:nth-child(5):before{content:"🛒"}#home .nav button:nth-child(6):before{content:"●"}
 #home .nav .on{color:var(--red)}
-@media(max-width:360px){.home-logo{font-size:29px}.home-hero-copy{max-width:74%}.home-action{min-height:98px;padding:12px}.home-points{min-width:82px}.home-welcome{margin-left:12px;margin-right:12px}.home-actions,.home-section-title{padding-left:12px;padding-right:12px}.home-product,.home-reward{margin-left:12px;margin-right:12px}}
+@media(max-width:520px){
+ .home-hero-grid{grid-template-columns:42% 58%}.home-hero-worker,.home-hero-pipes{height:235px}.home-hero{min-height:280px}
+ .home-hero-copy{width:55%;top:9px}.home-hero-title{font-size:18px}.home-hero-copy p{font-size:8.5px}
+ .home-product-band{padding:9px 12px}.home-product-band h3{font-size:13px}.home-industries{gap:3px}.home-industry{min-width:34px;font-size:6.5px}
+}
+@media(max-width:360px){
+ .home-logo-img{max-width:160px;height:42px}.home-actions{grid-template-columns:1fr 1fr;padding-left:12px;padding-right:12px}.home-action{min-height:94px}
+ .home-section-title{padding-left:12px;padding-right:12px}.home-welcome{margin-left:12px;margin-right:12px}
+ .home-reward{margin-left:12px;margin-right:12px}.home-reward-inner{grid-template-columns:30% 70%}.home-reward-right{grid-column:2}.home-reward-top{border-right:0}
+}
 .hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:22px 20px 44px}
 .hero b{background:#fff;color:var(--red);font-weight:800;padding:5px 11px;border-radius:8px}
 .band{background:var(--red);margin-top:16px;border-radius:14px;padding:12px 16px;font-size:12.5px;font-weight:700}
@@ -159,17 +176,27 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div style="flex:1">
 <div class="home-top"><div class="home-topbar">
 <button class="home-iconbtn" aria-label="Menu" onclick="alert('Hulas menu will be connected here.')">☰</button>
-<div class="home-logo">HULAS<small>METAL CRAFTS LTD. · SMART FABRICATOR</small></div>
+<img class="home-logo-img" src="07_Hulas_Logo.jpg" alt="HULAS Metal Crafts Ltd.">
 <button class="home-iconbtn home-bell" aria-label="Notifications" onclick="alert('No new notifications.')">♧<span class="home-badge">3</span></button>
 </div></div>
 
 <div class="home-hero">
+<div class="home-hero-grid">
+<img class="home-hero-worker" src="01_Fabricator_Worker.jpg" alt="Hulas fabricator">
+<img class="home-hero-pipes" src="02_Hero_Pipes.jpg" alt="Hulas stainless steel pipes">
+</div>
 <div class="home-hero-copy">
 <div class="home-hero-kicker">HULAS SMART FABRICATOR</div>
 <div class="home-hero-title">Scan. Earn.<br><span>Fabricate. Grow.</span></div>
-<p>Stainless steel pipes &amp; tubes for stronger projects — built around the Hulas fabricator.</p>
+<p>Stronger projects with Hulas stainless steel.</p>
 <div class="home-hero-pills"><span>202 GRADE</span><span>304 GRADE</span><span>ROUND · SQUARE · RECTANGLE</span></div>
-</div></div>
+</div>
+</div>
+
+<div class="home-product-band">
+<div><h3>HULAS SS PIPES &amp; TUBES</h3><p>ROUND · SQUARE · RECTANGLE · 202 &amp; 304 GRADE</p></div>
+<div class="home-industries"><div class="home-industry"><i>▦</i>RESIDENTIAL</div><div class="home-industry"><i>▥</i>COMMERCIAL</div><div class="home-industry"><i>⚙</i>INDUSTRIAL</div><div class="home-industry"><i>⌂</i>FABRICATION</div></div>
+</div>
 
 <div class="home-welcome">
 <div class="home-avatar">●</div>
@@ -180,25 +207,28 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div class="home-section-title">Quick Actions</div>
 <div class="home-actions">
 <button class="home-action primary" onclick="go('scan')"><span class="ico">⌗</span><div><h4>Scan Hulas QR</h4><p>Earn 1 point per kg</p></div></button>
-<button class="home-action" onclick="openTools('calc')"><span class="ico">▣</span><div><h4>Calculate</h4><p>Estimate material &amp; price</p></div></button>
-<button class="home-action" onclick="openTools('est')"><span class="ico">▤</span><div><h4>My Projects</h4><p>Build &amp; manage estimates</p></div></button>
-<button class="home-action" onclick="go('rewards')"><span class="ico">★</span><div><h4>Rewards</h4><p>Explore gift catalogue</p></div></button>
-<button class="home-action" onclick="go('order')"><span class="ico">🛒</span><div><h4>Order Hulas</h4><p>Get quotation &amp; order</p></div></button>
-<button class="home-action" onclick="go('order')"><span class="ico">▥</span><div><h4>My Activity</h4><p>Orders &amp; requirements</p></div></button>
+<button class="home-action" onclick="openTools('calc')"><span class="ico">▣</span><div><h4>Calculate</h4><p>Estimate material</p></div></button>
+<button class="home-action" onclick="openTools('est')"><span class="ico">▤</span><div><h4>My Projects</h4><p>Save &amp; manage</p></div></button>
+<button class="home-action" onclick="go('rewards')"><span class="ico">★</span><div><h4>Rewards</h4><p>Gift catalogue</p></div></button>
+<button class="home-action" onclick="go('order')"><span class="ico">🛒</span><div><h4>Order Hulas</h4><p>Get quotation</p></div></button>
+<button class="home-action" onclick="go('order')"><span class="ico">▥</span><div><h4>My Activity</h4><p>Scan history</p></div></button>
 </div>
 
-<div class="home-product">
-<div class="home-product-copy"><span class="ey">HULAS STAINLESS STEEL</span><h3>SS PIPES</h3><p>Premium quality · 202 &amp; 304 grade<br>Round · Square · Rectangle</p><span class="home-product-btn" onclick="openTools('calc')">EXPLORE PRODUCTS ›</span></div>
+<div class="home-products">
+<div class="home-product-tile" onclick="openTools('calc')"><img src="08_Round_Product_Tile.jpg" alt="Round pipes"><div class="ptxt">ROUND PIPES<small>HULAS STAINLESS STEEL 304</small></div></div>
+<div class="home-product-tile" onclick="openTools('calc')"><img src="09_Square_Product_Tile.jpg" alt="Square pipes"><div class="ptxt">SQUARE PIPES<small>HULAS STAINLESS STEEL 304</small></div></div>
+<div class="home-product-tile" onclick="openTools('calc')"><img src="10_Rectangle_Product_Tile.jpg" alt="Rectangle pipes"><div class="ptxt">RECTANGLE PIPES<small>HULAS STAINLESS STEEL 304</small></div></div>
 </div>
 
 <div class="home-reward" onclick="go('rewards')">
-<div class="home-reward-top"><div><small>Next Reward</small><h3 id="n-name"></h3></div><b id="n-pts"></b></div>
-<div class="bar"><i id="n-bar"></i></div>
-<div class="home-reward-foot"><span id="n-sub"></span><span>View Rewards ›</span></div>
+<div class="home-reward-inner">
+<img class="home-reward-img" src="06_Stand_Fan.jpg" alt="Stand fan reward">
+<div class="home-reward-top"><small>Next Reward</small><h3 id="n-name"></h3><b id="n-pts"></b></div>
+<div class="home-reward-right"><div>You have <b id="n-have">0</b> points</div><div class="bar"><i id="n-bar"></i></div><div class="home-reward-foot"><span id="n-sub"></span><span>View Rewards ›</span></div></div>
+</div>
 </div>
 </div>
 <div class="nav" data-nav="home"></div></section>
-
 <section id="tools" class="screen"><div class="head"><div class="back" onclick="go('home')">←</div><h2>Build &amp; Order</h2>
 <div class="tabs"><button data-t="calc" onclick="switchTool('calc')">Calculate</button><button data-t="est" onclick="switchTool('est')">Estimate</button><button data-t="cut" onclick="switchTool('cut')">Cutting</button></div></div>
 <div id="p-calc"><div class="card"><div id="pk-calc"></div><div class="fl">QUANTITY (6m pipes)</div><div class="qty"><button onclick="calcQty(-1)">−</button><div id="c-qty">1</div><button onclick="calcQty(1)">+</button></div></div>
