@@ -502,7 +502,7 @@ function redeem(i){
  alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.');
 }
 function renderHome(){if(!ME)return;const hg=$('h-greet'),hi=$('h-id'),hp=$('h-pts');if(hg)hg.textContent='Namaste, '+ME.name+'!';if(hi)hi.textContent='Mobile: '+ME.mobile;if(hp)hp.textContent=fp(POINTS);
- const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1];$('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' pts';$('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
+ const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1];$('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' pts';if($('n-have'))$('n-have').textContent=POINTS.toLocaleString('en-IN');$('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
  $('n-sub').textContent=POINTS>=nx[1]?'All rewards unlocked!':Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more points to unlock — 1 kg = 1 point.'}
 function renderAll(){renderHome();renderRewards();renderOrder();if($("scan-history"))renderScanHistory();if(ME){$('p-pts').textContent=fp(POINTS);$('p-name').textContent=ME.name;$('p-mob').textContent=ME.mobile;$('p-firm').textContent=ME.firm||'-'}}
 let deferredInstallPrompt=null;
