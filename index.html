@@ -364,7 +364,9 @@ async function doLogin(){
  try{
    const a=await loadAccount(m);
    if(!a)return err('l-err','No account was found for this mobile number. If you registered it on another phone/browser, this offline version cannot see that account.');
-   const good=await pwHash(a.salt,p)===a.hash;
+   const modern=await pwHash(a.salt,p);
+   const legacy=hash(a.salt+p)+hash(p+a.salt);
+   const good=modern===a.hash||legacy===a.hash;
    if(!good)return err('l-err','Wrong password. Please use the exact password created during registration.');
    ACC=await loadAllAccounts();
    $('l-pw').value='';
