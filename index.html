@@ -749,24 +749,65 @@ function hmcRepairHero(){
  const home=document.getElementById('home');if(!home)return;
  const stage=home.querySelector('.hero-stage');if(!stage)return;
  const w=window.innerWidth||390;
- stage.style.height=(w<=360?'276px':w<=430?'294px':'310px');
+ const phone=w<=430;
+ stage.style.height=(w<=360?'276px':w<=430?'292px':'310px');
  stage.style.overflow='hidden';
- const logo=stage.querySelector('.hero-logo');if(logo)logo.style.display='none';
- const slogan=stage.querySelector('.hero-slogan');if(slogan)slogan.style.display='none';
+ const logo=stage.querySelector('.hero-logo');
+ if(logo){
+  logo.style.display='block';
+  logo.style.left='50%';
+  logo.style.top='12px';
+  logo.style.width=w<=360?'150px':'174px';
+  logo.style.maxWidth='45%';
+  logo.style.transform='translateX(-50%)';
+  logo.style.zIndex='8';
+ }
+ const slogan=stage.querySelector('.hero-slogan');
+ if(slogan){
+  slogan.style.display='block';
+  slogan.style.right='4%';
+  slogan.style.top='18px';
+  slogan.style.width=w<=360?'19%':'21%';
+  slogan.style.fontSize=w<=360?'10px':'12px';
+  slogan.style.zIndex='8';
+ }
  const copy=stage.querySelector('.hero-copy');
- if(copy){copy.style.left='50%';copy.style.top='18px';copy.style.width='92%';copy.style.transform='translateX(-50%)';copy.style.zIndex='7'}
- const title=copy&&copy.querySelector('h1');if(title){title.style.fontSize=w<=360?'15px':'17px';title.style.letterSpacing='-.2px'}
- const sub=copy&&copy.querySelector('p');if(sub){sub.style.fontSize=w<=360?'9px':'10px'}
+ if(copy){
+  copy.style.left='50%';
+  copy.style.top=w<=360?'64px':'70px';
+  copy.style.width='72%';
+  copy.style.transform='translateX(-50%)';
+  copy.style.zIndex='7';
+ }
+ const title=copy&&copy.querySelector('h1');if(title){
+  title.style.fontSize=w<=360?'15px':'17px';
+  title.style.letterSpacing='-.2px';
+ }
+ const sub=copy&&copy.querySelector('p');if(sub){sub.style.fontSize=w<=360?'8.5px':'9.5px'}
  const worker=stage.querySelector('.hero-worker');
- if(worker){worker.style.left='-5%';worker.style.bottom='55px';worker.style.width='52%';worker.style.height='78%';worker.style.objectFit='cover';worker.style.objectPosition='top center';worker.style.zIndex='2'}
+ if(worker){
+  worker.style.left='-8%';worker.style.bottom='0';worker.style.width=w<=360?'52%':'50%';worker.style.height='82%';
+  worker.style.objectFit='cover';worker.style.objectPosition='top center';worker.style.zIndex='2';
+ }
  const pipes=stage.querySelector('.hero-pipes');
- if(pipes){pipes.style.right='-7%';pipes.style.bottom='58px';pipes.style.width='68%';pipes.style.height='54%';pipes.style.objectFit='cover';pipes.style.objectPosition='center';pipes.style.zIndex='1'}
+ if(pipes){
+  pipes.style.right='-8%';pipes.style.bottom='4px';pipes.style.width=w<=360?'68%':'70%';pipes.style.height='62%';
+  pipes.style.objectFit='cover';pipes.style.objectPosition='center';pipes.style.zIndex='1';
+ }
  const qr=stage.querySelector('.qr-chip');
- if(qr){qr.style.zIndex='9';qr.style.right=w<=360?'10px':'14px';qr.style.top='76px';qr.style.transform='none'}
+ if(qr){
+  qr.style.zIndex='9';qr.style.right=w<=360?'8px':'12px';qr.style.top=w<=360?'112px':'116px';qr.style.transform='rotate(-3deg)';
+ }
  const perks=stage.querySelector('.perks');
- if(perks){perks.style.left='4%';perks.style.right='4%';perks.style.bottom='68px';perks.style.height='46px';perks.style.zIndex='10'}
- const band=stage.querySelector('.hero-bottom-band');
- if(band){band.style.left='0';band.style.right='0';band.style.bottom='0';band.style.minHeight=w<=360?'62px':'66px';band.style.zIndex='12';band.style.boxSizing='border-box'}
+ if(perks){
+  perks.style.left='4%';perks.style.right='4%';perks.style.bottom='10px';perks.style.height='48px';perks.style.zIndex='10';
+ }
+ const band=home.querySelector('.hero-bottom-band');
+ if(band){
+  band.style.position='relative';
+  band.style.left='auto';band.style.right='auto';band.style.bottom='auto';
+  band.style.minHeight=w<=360?'62px':'68px';band.style.zIndex='12';band.style.boxSizing='border-box';
+ }
 }
 function hmcFinalLayout(){
  const home=document.getElementById('home');if(!home)return;
