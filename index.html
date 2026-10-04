@@ -63,11 +63,10 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .rem{display:flex;align-items:center;gap:9px;margin:14px 0;font-size:13.5px;color:var(--muted);font-weight:500}.rem input{width:auto}
 .link{color:var(--red);font-weight:700;text-decoration:none}
 /* home */
-#home{background:var(--bg)}
-.top{background:#fff;padding:calc(8px + env(safe-area-inset-top,0px)) 14px 6px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;position:sticky;top:0;z-index:30}
-.icobtn{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--st);color:var(--ink)}
-.top .logo-img{height:44px;max-width:82%;object-fit:contain;justify-self:center}
-.top .wordmark{justify-self:center}
+#home{background:var(--bg);position:relative}
+.top{position:absolute;left:0;right:0;top:0;background:transparent;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 6px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;z-index:30;pointer-events:none}
+.icobtn{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.78);color:#111;box-shadow:0 2px 8px rgba(0,0,0,.08);pointer-events:auto}
+.top .logo-img,.top .wordmark{display:none}
 .hero{position:relative;background:#fff;overflow:hidden}
 .hero-copy{position:absolute;left:50%;top:70px;transform:translateX(-50%);z-index:5;text-align:center;width:62%;pointer-events:none}
 .hero-copy h1{font-size:22px;font-weight:900;letter-spacing:-.4px;color:var(--navy);line-height:1.05;text-transform:uppercase}
