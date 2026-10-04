@@ -317,11 +317,23 @@ const est={grade:'304',rail:{grade:'304',shape:'round',size:'1"',cls:'light'},po
 function estStale(){est.last=null;$('e-res').style.display=$('e-note').style.display='none'}
 function estGrade(){$('e-grade').innerHTML=['202','304'].map(g=>`<span class="chip ${g===est.grade?'on':''}" data-g="${g}">${g}</span>`).join('');est.rail.grade=est.post.grade=est.grade}
 $('e-grade').onclick=e=>{const g=e.target.dataset.g;if(g){est.grade=g;estGrade();estStale()}};
-function runEst(){const L=+$('e-len').value,H=+$('e-hgt').value,n=+$('e-rails').value,sp=+$('e-sp').value,w=1+(+$('e-waste').value||0)/100;
- if(!(L>0&&H>0&&n>0&&sp>0)){estStale();$('e-warn').innerHTML='<div class="warn">Enter valid Length, Height, Rails and Post spacing (all above 0).</div>';return}$('e-warn').innerHTML='';
- const posts=Math.ceil(L/sp)+1,rp=Math.ceil(L*n*w/R.len),pp=Math.ceil(posts*H*w/R.len),rl=line(est.rail,rp),pl=line(est.post,pp),b=rl.amount+pl.amount,v=vatOf(b),wt=rl.weight+pl.weight;
- est.last={rl,pl};$('e-res').style.display=$('e-note').style.display='block';
- $('e-res').innerHTML=`<div><span>Posts (${posts} @ ≤${sp} m)</span><span></span></div><div><span>Rail pipes</span><span>${rp} × 6m</span></div><div><span>Post pipes</span><span>${pp} × 6m</span></div><div><span>Total weight</span><span>${kg(wt)}</span></div><div><span>Basic amount</span><span>${money(b)}</span></div><div><span>VAT (${R.vat}%)</span><span>${money(v)}</span></div><div class="t"><span>Total</span><span>${money(b+v)}</span></div><div><span>Points earned</span><span class="p">${wt.toFixed(3)} pts</span></div>`}
+function packCuts(lengths){const bins=[];lengths.slice().sort((a,b)=>b-a).forEach(x=>{const b=bins.find(v=>v.rem+1e-9>=x);if(b){b.cuts.push(x);b.rem-=x}else bins.push({cuts:[x],rem:R.len-x})});return bins}
+function runEst(){
+ const L=+$('e-len').value,H=+$('e-hgt').value,n=+$('e-rails').value,sp=+$('e-sp').value,waste=Math.max(0,Math.min(50,+$('e-waste').value||0))/100;
+ if(!(L>0&&H>0&&n>0&&sp>0)){estStale();$('e-warn').innerHTML='<div class="warn">Enter valid Length, Height, Rails and Post spacing (all above 0).</div>';return}
+ $('e-warn').innerHTML='';
+ const posts=Math.ceil(L/sp)+1;
+ const railCuts=Array(n).fill(L),postCuts=Array(posts).fill(H);
+ if(railCuts.some(x=>x>R.len)||postCuts.some(x=>x>R.len)){estStale();$('e-warn').innerHTML='<div class="warn">A required rail or post is longer than the standard 6m pipe. Split the design or use a different construction method.</div>';return}
+ const railBins=packCuts(railCuts),postBins=packCuts(postCuts);
+ const rp=Math.ceil(railBins.length*(1+waste)),pp=Math.ceil(postBins.length*(1+waste));
+ const rl=line(est.rail,rp),pl=line(est.post,pp),b=rl.amount+pl.amount,v=vatOf(b),wt=rl.weight+pl.weight;
+ const railOff=railBins.reduce((a,x)=>a+x.rem,0),postOff=postBins.reduce((a,x)=>a+x.rem,0);
+ const offWt=railOff*(rl.weight/rp/R.len)+postOff*(pl.weight/pp/R.len);
+ est.last={rl,pl,railBins,postBins,posts};
+ $('e-res').style.display=$('e-note').style.display='block';
+ $('e-res').innerHTML='<div><span>Posts ('+posts+' @ ≤'+sp+' m)</span><span>'+posts+' cuts</span></div><div><span>Rails</span><span>'+railBins.length+' pipes for cutting</span></div><div><span>Posts</span><span>'+postBins.length+' pipes for cutting</span></div><div><span>Recommended purchase</span><span>'+rp+' rail + '+pp+' post pipes</span></div><div><span>Off-cut after packing</span><span>'+kg(offWt)+'</span></div><div><span>Total purchase weight</span><span>'+kg(wt)+'</span></div><div><span>Basic amount</span><span>'+money(b)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(v)+'</span></div><div class="t"><span>Total</span><span>'+money(b+v)+'</span></div>';
+}
 function addEst(){if(!est.last){alert('Tap Calculate Estimate first.');return}addLine(est.last.rl);addLine(est.last.pl);go('order')}
 /* ===== cutting plan (first-fit decreasing) ===== */
 const cu={grade:'304',shape:'round',size:'1"',cls:'light'};let cunit='ft',crows=[{len:3,qty:12},{len:2.5,qty:8}],clast=null;const FT=3.28084;
