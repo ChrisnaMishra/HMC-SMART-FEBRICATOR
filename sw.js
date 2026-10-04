@@ -1,5 +1,5 @@
 /* Hulas Smart Fabricator service worker. Bump V whenever index.html changes. */
-const V = 'hmc-v17';
+const V = 'hmc-v18';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
