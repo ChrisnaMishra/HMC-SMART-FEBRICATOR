@@ -662,5 +662,5 @@ migrateAccountsToIDB().then(all=>{ACC={...ACC,...all}}).catch(()=>{});
 Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
 estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');
 {const m=ld('hmc_mobile','');if(m){$('l-mob').value=m;$('l-rem').checked=true}}
-if('serviceWorker' in navigator)addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=16',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{})});
+if('serviceWorker' in navigator)addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=17',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{})});
 </script></body></html>
