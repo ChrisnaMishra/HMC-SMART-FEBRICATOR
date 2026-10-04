@@ -18,11 +18,23 @@ h1,h2,h3,h4{margin:0}button{font:inherit;cursor:pointer;border:none;max-width:10
 .cta.outline{background:none;border:1.5px solid rgba(255,255,255,.5)}.cta.ghost{background:var(--card);color:var(--nt);border:1.5px solid var(--line)}.cta.navy{background:var(--navy)}
 #splash{background:linear-gradient(160deg,#12203D,#1B2C52 55%,#0d1730);color:#fff;align-items:center;justify-content:center;text-align:center;padding:40px 28px}
 .badge{background:#fff;border-radius:20px;padding:18px 26px;margin-bottom:22px}.badge b{display:block;font-size:34px;font-weight:800;color:var(--red)}.badge span{font-size:13px;font-weight:700;color:var(--navy);letter-spacing:2px}
-#welcome{height:100svh;min-height:0;max-height:100svh;overflow:hidden;padding:18px 20px 14px;justify-content:space-between}\n#welcome .stack{position:absolute;left:20px;right:20px;bottom:10px;margin:0;gap:7px}
+#welcome{height:100svh;min-height:0;max-height:100svh;overflow:hidden;padding:18px 20px 14px;justify-content:space-between}
+#welcome .stack{position:absolute;left:20px;right:20px;bottom:10px;margin:0;gap:7px}
 .val{background:var(--st);border-radius:16px;padding:13px 15px;margin-bottom:9px}.val h3{font-size:14px;line-height:1.2}.val p{margin:3px 0 0;font-size:12px;line-height:1.25;color:var(--muted)}
 .stack{display:flex;flex-direction:column;gap:8px}.stack .cta{padding:13px 0;border-radius:12px}
 .form{padding:18px 24px 24px;overflow-y:auto;overflow-x:hidden;justify-content:flex-start}.form .back{width:34px;height:34px;border-radius:10px;background:var(--st);display:flex;align-items:center;justify-content:center;margin-bottom:10px;cursor:pointer;flex:0 0 auto}.form h2{font-size:21px;line-height:1.2}.form p{margin-top:6px;margin-bottom:10px}
-.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}\n#login{height:100svh;min-height:0;max-height:100svh;overflow:hidden!important;padding:14px 22px 12px;justify-content:center!important}\n#login .back{width:30px;height:30px;margin-bottom:7px}\n#login h2{font-size:21px}\n#login p{margin:4px 0 7px;font-size:12px;line-height:1.25}\n#login label{margin:8px 0 4px;font-size:11px}\n#login input{padding:10px 12px;font-size:13.5px}\n#login .rem{margin:8px 0;font-size:11.5px}\n#login .cta{padding:11px 0;border-radius:11px}\n#login .err{margin-top:7px;padding:8px 10px;font-size:12px}\n#login p[style*="text-align:center"]{margin-top:7px!important;margin-bottom:0}\n@media(max-height:700px){#login{padding-top:8px;padding-bottom:8px}#login .back{margin-bottom:4px}#login p{margin:2px 0 5px}#login label{margin:6px 0 3px}#login .rem{margin:6px 0}#login .cta{padding:10px 0}#login p[style*="text-align:center"]{margin-top:5px!important}}
+.form h2{font-size:23px}.form p{color:var(--muted);font-size:13.5px}
+#login{min-height:100dvh;height:auto;max-height:none;overflow-y:auto!important;overflow-x:hidden!important;padding:14px 22px calc(20px + env(safe-area-inset-bottom,0px));justify-content:flex-start!important}
+#login .back{width:30px;height:30px;margin-bottom:7px}
+#login h2{font-size:21px}
+#login p{margin:4px 0 7px;font-size:12px;line-height:1.25}
+#login label{margin:8px 0 4px;font-size:11px}
+#login input{padding:10px 12px;font-size:13.5px}
+#login .rem{margin:8px 0;font-size:11.5px}
+#login .cta{padding:11px 0;border-radius:11px}
+#login .err{margin-top:7px;padding:8px 10px;font-size:12px}
+#login p[style*="text-align:center"]{margin-top:7px!important;margin-bottom:0}
+@media(max-height:700px){#login{min-height:100dvh;padding-top:8px;padding-bottom:12px}#login .back{margin-bottom:4px}#login p{margin:2px 0 5px}#login label{margin:6px 0 3px}#login .rem{margin:6px 0}#login .cta{padding:10px 0}#login p[style*="text-align:center"]{margin-top:5px!important}}
 label,.fl{font-size:12px;font-weight:600;display:block;margin:14px 0 6px;color:var(--muted)}
 input,select{width:100%;max-width:100%;min-width:0;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--st);font:inherit;font-size:14.5px;color:var(--ink)}
 input:focus,select:focus{outline:2px solid var(--red)}
@@ -344,19 +356,31 @@ async function doRegister(){
 }
 async function doLogin(){
  const m=cm($('l-mob').value),p=$('l-pw').value;
+ err('l-err','');
  if(!/^9[678]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
- const a=await loadAccount(m);
- if(!a)return err('l-err','No account was found for this mobile number. If you registered it on another phone/browser, this offline version cannot see that account.');
- const good=await pwHash(a.salt,p)===a.hash;
- if(!good)return err('l-err','Wrong password. Please use the exact password created during registration.');
- ACC=await loadAllAccounts();
- err('l-err','');$('l-pw').value='';
- if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
- ME={mobile:m,...a};POINTS=a.points||0;renderAll();go('home')
+ const btn=document.querySelector('#login .cta');
+ if(btn){btn.disabled=true;btn.style.opacity='.7'}
+ try{
+   const a=await loadAccount(m);
+   if(!a)return err('l-err','No account was found for this mobile number. If you registered it on another phone/browser, this offline version cannot see that account.');
+   const good=await pwHash(a.salt,p)===a.hash;
+   if(!good)return err('l-err','Wrong password. Please use the exact password created during registration.');
+   ACC=await loadAllAccounts();
+   $('l-pw').value='';
+   if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
+   ME={mobile:m,...a};POINTS=Number(a.points)||0;
+   renderAll();go('home');
+ }catch(e){
+   console.error(e);
+   err('l-err','Login could not be completed on this device. Please refresh the app and try again.');
+ }finally{
+   if(btn){btn.disabled=false;btn.style.opacity='1'}
+ }
 }
 function forgot(){alert('For security, this offline version cannot reset a password without a Hulas server. Please contact Hulas with your registered mobile number; do not share your password.')}
 function sendRegistration(){if(!ME)return;const m='*HULAS FABRICATOR REGISTRATION*\\n\\nName: '+ME.name+'\\nFirm: '+(ME.firm||'-')+'\\nMobile: '+ME.mobile+'\\nDistrict: '+(ME.district||'-')+'\\nPAN/VAT: '+(ME.pan||'-')+'\\nAddress: '+(ME.address||'-')+'\\n\\nPlease verify/activate this fabricator.';if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))alert('Please allow pop-ups so WhatsApp can open.');}function logout(){ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
+document.addEventListener('input',e=>{if(e.target&&e.target.closest('#login'))err('l-err','')});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login').classList.contains('active'))doLogin()});
 /* ===== navigation (every app screen needs a logged-in session) ===== */
 const PROT=['home','tools','order','scan','rewards','profile'];
