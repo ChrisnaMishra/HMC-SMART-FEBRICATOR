@@ -72,7 +72,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <section id="splash" class="screen active"><div class="badge"><b>HULAS</b><span>METAL CRAFTS LTD.</span></div>
 <div style="font-size:13px;letter-spacing:3px;color:#B9C2DA">STAINLESS STEEL PIPES &amp; TUBES</div>
 <div style="font-size:14px;color:#DCE2F0;margin:22px 0 34px">Measure • Estimate • Quote • Build • Order</div>
-<button class="cta" onclick="go('welcome')">GET STARTED</button></section>
+<button class="cta" onclick="if(typeof go==='function'){go('welcome')}else{document.getElementById('splash').classList.remove('active');document.getElementById('welcome').classList.add('active')}">GET STARTED</button></section>
 
 <section id="welcome" class="screen"><div><h2 style="color:var(--red);margin-bottom:14px;font-size:22px">HULAS <small style="font-size:11px;color:var(--muted);font-weight:400">Smart Fabricator</small></h2>
 <div class="val"><h3>Calculate instantly</h3><p>Official Hulas weight chart — pipe weight, price &amp; VAT in seconds.</p></div>
