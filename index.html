@@ -224,7 +224,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 
 <section id="profile" class="screen"><div style="flex:1"><div class="pts"><b id="p-pts">0</b><small>MY HULAS POINTS</small></div>
 <div class="card"><div class="fl">NAME</div><b id="p-name"></b><div class="fl">MOBILE</div><b id="p-mob"></b><div class="fl">FIRM</div><b id="p-firm"></b></div>
-<div class="btns"><button class="cta ghost" onclick="logout()">LOG OUT</button></div></div><div class="nav" data-nav="profile"></div></section>
+<div class="btns"><button class="cta" onclick="sendRegistration()">SEND PROFILE TO HULAS</button></div><div class="btns"><button class="cta ghost" onclick="logout()">LOG OUT</button></div></div><div class="nav" data-nav="profile"></div></section>
 </div>
 <script>
 const $=id=>document.getElementById(id);
@@ -296,7 +296,7 @@ async function doLogin(){
  ME={mobile:m,...a};POINTS=a.points||0;renderAll();go('home')
 }
 function forgot(){alert('For security, this offline version cannot reset a password without a Hulas server. Please contact Hulas with your registered mobile number; do not share your password.')}
-function logout(){ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
+function sendRegistration(){if(!ME)return;const m='*HULAS FABRICATOR REGISTRATION*\\n\\nName: '+ME.name+'\\nFirm: '+(ME.firm||'-')+'\\nMobile: '+ME.mobile+'\\nDistrict: '+(ME.district||'-')+'\\nPAN/VAT: '+(ME.pan||'-')+'\\nAddress: '+(ME.address||'-')+'\\n\\nPlease verify/activate this fabricator.';if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))alert('Please allow pop-ups so WhatsApp can open.');}function logout(){ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login').classList.contains('active'))doLogin()});
 /* ===== navigation (every app screen needs a logged-in session) ===== */
 const PROT=['home','tools','order','scan','rewards','profile'];
