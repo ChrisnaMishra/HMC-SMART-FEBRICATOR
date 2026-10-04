@@ -138,7 +138,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div class="row2"><div><label>District</label><input id="r-dist"></div><div><label>PAN/VAT (optional)</label><input id="r-pan"></div></div>
 <label>Address</label><input id="r-addr">
 <div class="sec">ACCOUNT</div><label>Password (min 6)</label><input id="r-pw" type="password" autocomplete="new-password"><label>Confirm Password</label><input id="r-pw2" type="password" autocomplete="new-password">
-<div id="r-err" class="err"></div><button class="cta" style="margin-top:20px" onclick="doRegister()">CREATE ACCOUNT</button></section>
+<div id="r-err" class="err"></div><button class="cta" style="margin-top:10px;background:var(--navy)" onclick="showLoginFor(cm($('r-mob').value))">LOG IN WITH THIS NUMBER</button><button class="cta" style="margin-top:10px" onclick="doRegister()">CREATE ACCOUNT</button></section>
 
 <section id="pending" class="screen form" style="align-items:center;justify-content:center;text-align:center"><div style="font-size:44px">✅</div><h2>Registration complete</h2>
 <p>Now log in with your <b>mobile number</b> and <b>password</b>.</p><button class="cta navy" style="margin-top:20px" onclick="go('login')">GO TO LOGIN</button></section>
@@ -256,7 +256,7 @@ function showLoginFor(m){$('l-mob').value=m;err('r-err','');err('l-err','');go('
 async function doRegister(){const g=i=>$(i).value.trim(),m=cm($('r-mob').value),p=$('r-pw').value;
  if(!g('r-name'))return err('r-err','Please enter your full name.');if(!/^9[78]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 98XXXXXXXX.');
  if(p.length<6)return err('r-err','Password must be at least 6 characters.');if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
- if(ACC[m]){return err('r-err','This number is already registered. Please use LOG IN below. <a href="#" onclick="showLoginFor(\''+m+'\');return false" style="color:var(--red);text-decoration:underline">LOG IN</a>')}
+ if(ACC[m])return err('r-err','This number is already registered. Please use the LOG IN button below.')
  const salt=Math.random().toString(36).slice(2)+Date.now();ACC[m]={name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};st('hmc_accounts',ACC);err('r-err','');$('l-mob').value=m;go('pending')}
 async function doLogin(){const m=cm($('l-mob').value),p=$('l-pw').value;if(!/^9[78]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
