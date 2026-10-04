@@ -1,38 +1,46 @@
-/* Hulas Smart Fabricator — v14, force fresh app shell */
-const CACHE = 'hulas-v14';
-const ASSETS = ['./', './index.html', './manifest.json', './icon-192.svg', './icon-512.svg'];
+/* Hulas Smart Fabricator service worker. Bump V whenever index.html changes. */
+const V = 'hmc-v15';
+const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(()=>self.skipWaiting()));
+  e.waitUntil(
+    caches.open(V)
+      .then(c => Promise.all(CORE.map(u => c.add(u).catch(() => {}))))
+      .then(() => self.skipWaiting())
+  );
 });
+
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(()=>self.clients.claim())
+      .then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
+
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  const url = new URL(e.request.url);
-  if (e.request.mode === 'navigate' || url.pathname.endsWith('/index.html')) {
+  const r = e.request;
+  if (r.method !== 'GET') return;
+  const u = new URL(r.url);
+  if (u.origin !== location.origin) return;
+
+  /* Pages: network first so updates show up, cache as offline fallback */
+  if (r.mode === 'navigate' || u.pathname.endsWith('.html') || u.pathname.endsWith('/')) {
     e.respondWith(
-      fetch(e.request, {cache:'no-store'})
-        .then(r => {
-          const copy=r.clone();
-          caches.open(CACHE).then(c=>c.put('./index.html',copy)).catch(()=>{});
-          return r;
-        })
-        .catch(() => caches.match('./index.html'))
+      fetch(r)
+        .then(res => { if (res.ok) { const cp = res.clone(); caches.open(V).then(c => c.put(r, cp)); } return res; })
+        .catch(() => caches.match(r).then(m => m || caches.match('./index.html')))
     );
     return;
   }
+
+  /* Images, icons, manifest: serve cached copy fast, refresh in the background */
   e.respondWith(
-    fetch(e.request, {cache:'no-store'})
-      .then(r => {
-        const copy=r.clone();
-        caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});
-        return r;
-      })
-      .catch(() => caches.match(e.request))
+    caches.match(r).then(m => {
+      const net = fetch(r)
+        .then(res => { if (res.ok) { const cp = res.clone(); caches.open(V).then(c => c.put(r, cp)); } return res; })
+        .catch(() => m);
+      return m || net;
+    })
   );
 });
