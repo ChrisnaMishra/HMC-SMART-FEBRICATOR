@@ -253,43 +253,72 @@ const ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}ca
 st=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
 function canonicalMobile(v){let m=(v||'').replace(/\D/g,'');if(m.startsWith('977')&&m.length===13)m=m.slice(3);return m}
 function storageReady(){
- try{
-   const k='hmc_storage_test',v='ok-'+Date.now();
-   localStorage.setItem(k,v);const good=localStorage.getItem(k)===v;localStorage.removeItem(k);return good;
- }catch(e){return false}
+ try{const k='hmc_storage_test',v='ok-'+Date.now();localStorage.setItem(k,v);const good=localStorage.getItem(k)===v;localStorage.removeItem(k);return good}catch(e){return false}
 }
-function saveAccounts(){
- const payload=JSON.stringify(ACC);
- try{
-   localStorage.setItem('hmc_accounts_v2',payload);
-   localStorage.setItem('hmc_accounts',payload);
-   Object.entries(ACC).forEach(([m,a])=>localStorage.setItem('hmc_account_'+m,JSON.stringify(a)));
-   const check=JSON.parse(localStorage.getItem('hmc_accounts_v2')||'{}');
-   const keys=Object.keys(ACC);
-   return !!check && keys.length>0 && keys.every(k=>!!check[k] && check[k].mobile===k);
- }catch(e){return false}
+/* Primary account store: IndexedDB. localStorage remains a migration/fallback layer. */
+let HMC_DB=null;
+function openAccountDB(){
+ return new Promise((resolve,reject)=>{
+   if(!('indexedDB' in window))return reject(new Error('indexeddb_unavailable'));
+   if(HMC_DB)return resolve(HMC_DB);
+   const req=indexedDB.open('HMC_SMART_FABRICATOR',1);
+   req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('accounts'))db.createObjectStore('accounts',{keyPath:'mobile'})};
+   req.onsuccess=()=>{HMC_DB=req.result;resolve(HMC_DB)};
+   req.onerror=()=>reject(req.error||new Error('indexeddb_open_failed'));
+ });
+}
+async function idbGetAccount(m){
+ try{const db=await openAccountDB();return await new Promise((resolve,reject)=>{const q=db.transaction('accounts','readonly').objectStore('accounts').get(m);q.onsuccess=()=>resolve(q.result||null);q.onerror=()=>reject(q.error)})}catch(e){return null}
+}
+async function idbPutAccount(a){
+ try{const db=await openAccountDB();return await new Promise((resolve,reject)=>{const q=db.transaction('accounts','readwrite').objectStore('accounts').put(a);q.onsuccess=()=>resolve(true);q.onerror=()=>reject(q.error)})}catch(e){return false}
+}
+async function idbGetAll(){
+ try{const db=await openAccountDB();return await new Promise((resolve,reject)=>{const q=db.transaction('accounts','readonly').objectStore('accounts').getAll();q.onsuccess=()=>resolve(q.result||[]);q.onerror=()=>reject(q.error)})}catch(e){return []}
 }
 function loadAccounts(){
  const out={};
  try{
-   const raw=localStorage.getItem('hmc_accounts');
-   const old=raw?JSON.parse(raw):{};
-   Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+   const raw=localStorage.getItem('hmc_accounts');const old=raw?JSON.parse(raw):{};
+   Object.entries(old||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}})
  }catch(e){}
  try{
-   const raw=localStorage.getItem('hmc_accounts_v2');
-   const v2=raw?JSON.parse(raw):{};
-   Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+   const raw=localStorage.getItem('hmc_accounts_v2');const v2=raw?JSON.parse(raw):{};
+   Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}})
  }catch(e){}
  try{
-   for(let i=0;i<localStorage.length;i++){
-     const key=localStorage.key(i)||'';
-     if(!key.startsWith('hmc_account_'))continue;
-     const m=canonicalMobile(key.slice(12)), a=JSON.parse(localStorage.getItem(key)||'null');
-     if(/^9[678]\d{8}$/.test(m)&&a&&a.hash&&a.salt)out[m]={...a,mobile:m};
-   }
+   for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i)||'';if(!key.startsWith('hmc_account_'))continue;const m=canonicalMobile(key.slice(12)),a=JSON.parse(localStorage.getItem(key)||'null');if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}}
  }catch(e){}
  return out
+}
+async function loadAllAccounts(){
+ const out=loadAccounts();
+ for(const a of await idbGetAll()){const m=canonicalMobile(a?.mobile);if(/^9[678]\d{8}$/.test(m)&&a?.hash&&a?.salt)out[m]={...a,mobile:m}}
+ return out
+}
+async function loadAccount(m){
+ const n=canonicalMobile(m);
+ const db=await idbGetAccount(n);if(db?.hash&&db?.salt)return {...db,mobile:n};
+ return loadAccounts()[n]||null;
+}
+async function saveAccount(a){
+ const m=canonicalMobile(a.mobile);a={...a,mobile:m};
+ const idb=await idbPutAccount(a);
+ let ls=false;
+ try{
+   const all=loadAccounts();all[m]=a;
+   const payload=JSON.stringify(all);
+   localStorage.setItem('hmc_accounts_v2',payload);
+   localStorage.setItem('hmc_accounts',payload);
+   localStorage.setItem('hmc_account_'+m,JSON.stringify(a));
+   ls=JSON.parse(localStorage.getItem('hmc_account_'+m)||'null')?.hash===a.hash;
+ }catch(e){}
+ return idb||ls;
+}
+async function migrateAccountsToIDB(){
+ const all=await loadAllAccounts();
+ for(const m of Object.keys(all))await idbPutAccount(all[m]);
+ return all;
 }
 let ACC=loadAccounts(),ME=null,POINTS=0,ORDER=[],CD=3;const WA='9779845656595';
 function hash(t){let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^a>>>16,2246822507)^Math.imul(b^b>>>13,3266489909);b=Math.imul(b^b>>>16,2246822507)^Math.imul(a^a>>>13,3266489909);return(4294967296*(2097151&b)+(a>>>0)).toString(36)}
@@ -302,24 +331,26 @@ async function doRegister(){
  if(!/^9[678]\d{8}$/.test(m))return err('r-err','Enter a valid 10-digit mobile number like 96XXXXXXXX, 97XXXXXXXX or 98XXXXXXXX.');
  if(p.length<6)return err('r-err','Password must be at least 6 characters.');
  if(p!==$('r-pw2').value)return err('r-err','The two passwords do not match.');
- if(!storageReady())return err('r-err','This browser is blocking app storage. Please use normal Chrome/Safari mode, not private/incognito mode.');
- ACC=loadAccounts();
- if(ACC[m])return err('r-err','This number is already registered on this device. Please use LOG IN.');
- const salt=Math.random().toString(36).slice(2)+Date.now();
- ACC[m]={mobile:m,name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};
- if(!saveAccounts() || !loadAccounts()[m])return err('r-err','Account could not be saved on this device. Please turn off private browsing/site-data blocking and try again.');
- err('r-err',''); $('l-mob').value=m; ME={mobile:m,...ACC[m]}; POINTS=0; renderAll(); go('home')
+ if(!storageReady() && !('indexedDB' in window))return err('r-err','This browser is blocking app storage. Please use normal Chrome/Safari mode.');
+ const existing=await loadAccount(m);
+ if(existing)return err('r-err','This mobile number is already registered on this device. Please use LOG IN.');
+ const salt=crypto.getRandomValues(new Uint32Array(4)).join('')+Date.now();
+ const account={mobile:m,name:g('r-name'),firm:g('r-firm'),district:g('r-dist'),pan:g('r-pan'),address:g('r-addr'),salt,hash:await pwHash(salt,p),points:0};
+ if(!await saveAccount(account))return err('r-err','Account could not be saved. Please use normal Chrome/Safari mode and try again.');
+ const verified=await loadAccount(m);
+ if(!verified)return err('r-err','Account was not saved correctly. Please try registration again.');
+ ACC=await loadAllAccounts();
+ err('r-err','');$('l-mob').value=m;ME={mobile:m,...verified};POINTS=0;renderAll();go('home')
 }
 async function doLogin(){
  const m=cm($('l-mob').value),p=$('l-pw').value;
  if(!/^9[678]\d{8}$/.test(m))return err('l-err','Enter a valid 10-digit mobile number.');
  if(!p)return err('l-err','Enter your password.');
- if(!storageReady())return err('l-err','Browser storage is unavailable. Use normal Chrome/Safari mode and allow site data.');
- ACC=loadAccounts();
- const a=ACC[m] || loadAccounts()[m];
- if(!a)return err('l-err','No account for this number is stored on this device. If you just registered, please register once more after refreshing the app.');
+ const a=await loadAccount(m);
+ if(!a)return err('l-err','No account was found for this mobile number. If you registered it on another phone/browser, this offline version cannot see that account.');
  const good=await pwHash(a.salt,p)===a.hash;
- if(!good)return err('l-err','Wrong password. Use the exact password you created during registration.');
+ if(!good)return err('l-err','Wrong password. Please use the exact password created during registration.');
+ ACC=await loadAllAccounts();
  err('l-err','');$('l-pw').value='';
  if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
  ME={mobile:m,...a};POINTS=a.points||0;renderAll();go('home')
@@ -428,7 +459,7 @@ async function installApp(){
   alert('If your browser does not show the install prompt, open this link in Chrome and use the browser menu → Install app / Add to Home screen.');
 }
 /* ===== init: nobody is ever logged in on load — mobile + password are required every time ===== */
-Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
+migrateAccountsToIDB().then(all=>{ACC=all}).catch(()=>{});Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
 estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');if($("scan-history"))renderScanHistory();
 {const m=ld('hmc_mobile','');if(m){$('l-mob').value=m;$('l-rem').checked=true}}
 if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
