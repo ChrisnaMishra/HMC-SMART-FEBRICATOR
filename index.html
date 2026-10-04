@@ -352,7 +352,7 @@ async function doRegister(){
  const verified=await loadAccount(m);
  if(!verified)return err('r-err','Account was not saved correctly. Please try registration again.');
  ACC=await loadAllAccounts();
- err('r-err','');$('l-mob').value=m;ME={mobile:m,...verified};POINTS=0;renderAll();go('home')
+ err('r-err','');$('l-mob').value=m;ME={mobile:m,...verified};POINTS=0;go('home')
 }
 async function doLogin(){
  const m=cm($('l-mob').value),p=$('l-pw').value;
@@ -370,7 +370,7 @@ async function doLogin(){
    $('l-pw').value='';
    if($('l-rem').checked)st('hmc_mobile',m);else try{localStorage.removeItem('hmc_mobile')}catch(e){}
    ME={mobile:m,...a};POINTS=Number(a.points)||0;
-   renderAll();go('home');
+   go('home');
  }catch(e){
    console.error(e);
    err('l-err','Login could not be completed on this device. Please refresh the app and try again.');
@@ -469,7 +469,7 @@ function redeem(i){
  if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank'))return alert('Please allow pop-ups, then try again.');
  alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.');
 }
-function renderHome(){if(!ME)return;$('h-greet').textContent='Namaste, '+ME.name+'!';$('h-id').textContent='Mobile: '+ME.mobile;$('h-pts').textContent=fp(POINTS);
+function renderHome(){if(!ME)return;const hg=$('h-greet'),hi=$('h-id'),hp=$('h-pts');if(hg)hg.textContent='Namaste, '+ME.name+'!';if(hi)hi.textContent='Mobile: '+ME.mobile;if(hp)hp.textContent=fp(POINTS);
  const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1];$('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' pts';$('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
  $('n-sub').textContent=POINTS>=nx[1]?'All rewards unlocked!':Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more points to unlock — 1 kg = 1 point.'}
 function renderAll(){renderHome();renderRewards();renderOrder();if($("scan-history"))renderScanHistory();if(ME){$('p-pts').textContent=fp(POINTS);$('p-name').textContent=ME.name;$('p-mob').textContent=ME.mobile;$('p-firm').textContent=ME.firm||'-'}}
