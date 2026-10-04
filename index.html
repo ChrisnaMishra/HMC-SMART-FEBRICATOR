@@ -172,6 +172,11 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .home-products-section .tile{height:126px;border-radius:13px}.home-products-section .tile .pt{left:8px;bottom:8px;font-size:10.5px}.home-products-section .tile .pt small{font-size:8px}
 .home-reward-section{padding-bottom:4px}.home-reward-section .nr{margin-bottom:18px}
 @media(max-width:360px){.home-profile{padding:0 12px}.home-actions-section{padding:0 12px}.home-products-section{padding:0 12px}.home-actions-section .qa-card{min-height:66px}.home-products-section .tile{height:116px}.home-actions-section .qa-t h4{font-size:12px}}
+/* Step 4: JS-controlled reward/footer/navigation presentation */
+.home-reward-section{padding:0 16px 4px}.home-reward-section .nr{margin:0 0 18px;width:100%;box-sizing:border-box;padding:8px;border-radius:18px}.home-reward-section .nr-in{grid-template-columns:68px 1fr;gap:10px;padding:10px;border-radius:13px}.home-reward-section .nr-img{width:68px;height:68px;border-radius:10px}.home-reward-section .nr h3{font-size:15px}.home-reward-section .nr .np{font-size:12px}.home-reward-section .bar{height:7px;margin:7px 0 5px}.home-reward-section .nr .foot{font-size:10px}
+.home-main>.foot-strip{margin-top:0;padding:14px 14px calc(76px + env(safe-area-inset-bottom,0px));border-radius:0;grid-template-columns:1fr;gap:9px}.home-main>.foot-strip .tag{grid-column:auto}.home-main>.foot-strip .wa{justify-self:stretch;justify-content:center}
+.home-main+.nav{z-index:50;box-shadow:0 -4px 16px rgba(15,27,51,.08)}
+@media(max-width:360px){.home-reward-section{padding:0 12px 4px}.home-reward-section .nr-in{grid-template-columns:60px 1fr}.home-reward-section .nr-img{width:60px;height:60px}.home-main>.foot-strip{padding-left:12px;padding-right:12px}}
 /* Step 1: homepage structural foundation */
 .home-main{display:flex;flex-direction:column;min-height:100%;background:var(--bg)}
 .home-header{position:relative;left:auto;right:auto;top:auto;flex:0 0 62px;width:100%;box-sizing:border-box;background:#fff;padding:8px 12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;border-bottom:1px solid var(--line);pointer-events:auto;z-index:30}
@@ -707,6 +712,17 @@ function syncHomeSections(){
  tiles.forEach(el=>el.style.height=(compact?'116px':'126px'));
 }
 window.addEventListener('resize',syncHomeSections,{passive:true});
+function syncHomeRewardFooter(){
+ const home=document.getElementById('home'); if(!home)return;
+ const w=Math.min(window.innerWidth||390,430), compact=w<=360;
+ const reward=home.querySelector('.home-reward-section .nr-in');
+ if(reward){
+  reward.style.gridTemplateColumns=compact?'60px 1fr':'68px 1fr';
+  const img=reward.querySelector('.nr-img'); if(img){img.style.width=compact?'60px':'68px';img.style.height=compact?'60px':'68px'}
+ }
+ const nav=home.querySelector('.nav');
+ if(nav){nav.style.height='';nav.style.paddingBottom='calc(7px + env(safe-area-inset-bottom,0px))'}
+}
 function syncHomeHero(){
  const home=document.getElementById('home');
  if(!home)return;
