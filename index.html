@@ -68,6 +68,13 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .icobtn{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.78);color:#111;box-shadow:0 2px 8px rgba(0,0,0,.08);pointer-events:auto}
 .top .logo-img,.top .wordmark{display:none}
 .hero{position:relative;background:#fff;overflow:hidden}
+
+/* STEP 1 — structural fix: close hero-stage before the product band */
+.hero{display:block;position:relative;width:100%;overflow:visible}
+.hero-stage{position:relative;overflow:hidden;width:100%;box-sizing:border-box}
+.hero-bottom-band{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;width:100%;box-sizing:border-box}
+.home-profile{position:relative;z-index:2}
+.home-profile .wcard{position:relative;z-index:2}
 .hero-stage{--hero-h:290px;position:relative;height:var(--hero-h);margin-top:0;background:linear-gradient(180deg,#fff 0%,#EEF2F6 100%);overflow:hidden}
 .hero-copy{position:absolute;left:51%;top:88px;transform:translateX(-50%);z-index:5;text-align:center;width:45%;pointer-events:none}
 .hero-copy h1{font-size:18px;font-weight:900;letter-spacing:-.35px;color:var(--navy);line-height:1.05;text-transform:uppercase}
@@ -119,7 +126,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .chip4{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;font-weight:700;text-align:center}
 .chip4 i{width:46px;height:46px;border-radius:16px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-style:normal}
 .chip4 .ic{width:23px;height:23px;color:#fff}
-.wcard{margin:-34px 16px 16px;background:#fff;border-radius:22px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 14px 34px rgba(15,27,51,.14);position:relative;z-index:2}
+.wcard{margin:12px 16px 16px;background:#fff;border-radius:22px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 14px 34px rgba(15,27,51,.14);position:relative;z-index:2}
 .ava{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex:0 0 auto}
 .wmain{flex:1;min-width:0}.wmain h3{font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wmain p{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wpts{display:flex;align-items:center;gap:8px;padding:6px 4px 6px 12px;border-left:1px solid var(--line);flex:0 0 auto}
@@ -158,7 +165,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .wa small{display:block;font-size:10px;color:var(--muted);font-weight:600}.wa b{display:block;font-size:13px;font-weight:800}
 /* Step 3: JavaScript-driven profile, actions and product layout */
 .home-profile{padding:0 16px}
-.home-profile .wcard{margin:12px 0 18px;border-radius:18px;padding:12px;gap:10px;box-shadow:0 6px 18px rgba(15,27,51,.10)}
+.home-profile .wcard{margin:0 0 18px;border-radius:18px;padding:12px;gap:10px;box-shadow:0 6px 18px rgba(15,27,51,.10)}
 .home-profile .ava{width:44px;height:44px;font-size:16px}
 .home-profile .wmain h3{font-size:15px}.home-profile .wmain p{font-size:10.5px}
 .home-profile .wpts{gap:6px;padding-left:8px}.home-profile .coin{width:28px;height:28px}.home-profile .wpts b{font-size:17px}.home-profile .wpts small{font-size:9px}.home-profile .wpts>.ic{display:none}
@@ -330,7 +337,8 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
     <div class="perk"><svg class="ic"><use href="#i-gem"/></svg>Premium<br>finish</div>
     <div class="perk"><svg class="ic"><use href="#i-loop"/></svg>Long<br>life</div>
    </div>
-   <div class="hero-bottom-band">
+  </div>
+  <div class="hero-bottom-band">
     <div class="hero-bottom-copy"><h3>HULAS® SS PIPES &amp; TUBES</h3><p>ROUND | SQUARE | RECTANGLE &nbsp; · &nbsp; 202 &amp; 304 GRADE</p></div>
     <div class="hero-industries">
      <span><svg class="ic"><use href="#i-build"/></svg>RESIDENTIAL</span>
