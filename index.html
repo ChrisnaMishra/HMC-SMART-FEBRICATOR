@@ -733,7 +733,53 @@ function syncHomeHero(){
  stage.style.setProperty('--hero-h',h+'px');
 }
 window.addEventListener('resize',syncHomeHero,{passive:true});
+/* ===== STEPS 5-10: JavaScript-only homepage finalizer ===== */
+const HMC_HOME={compact:360,phone:430};
+function hmcHomeEl(sel){return document.querySelector('#home '+sel)}
+function hmcSetStyle(el,styles){if(!el)return;Object.keys(styles).forEach(k=>el.style[k]=styles[k])}
+function hmcFinalLayout(){
+ const home=document.getElementById('home');if(!home)return;
+ const w=window.innerWidth||390,small=w<=HMC_HOME.compact;
+ const main=home.querySelector('.home-main'),content=home.querySelector('.home-content');
+ hmcSetStyle(main,{display:'flex',flexDirection:'column',minHeight:'100%',width:'100%',boxSizing:'border-box'});
+ hmcSetStyle(content,{display:'block',width:'100%',boxSizing:'border-box',overflow:'visible'});
+ /* Step 5: products */
+ const productSec=home.querySelector('.home-products-section'),tiles=home.querySelectorAll('.home-products-section .tile');
+ hmcSetStyle(productSec,{padding:small?'0 12px':'0 16px',boxSizing:'border-box'});
+ tiles.forEach((t,i)=>{
+  hmcSetStyle(t,{height:small?'116px':'126px',minWidth:'0',borderRadius:'13px',overflow:'hidden',position:'relative',boxSizing:'border-box'});
+  const img=t.querySelector('img');if(img)hmcSetStyle(img,{width:'100%',height:'100%',objectFit:'cover',display:'block'});
+  const pt=t.querySelector('.pt');if(pt)hmcSetStyle(pt,{fontSize:small?'10px':'10.5px',lineHeight:'1.15',bottom:'8px',left:'8px',right:'6px'});
+ });
+ /* Step 6: rewards */
+ const reward=home.querySelector('.home-reward-section'),nr=home.querySelector('.home-reward-section .nr'),ri=home.querySelector('.home-reward-section .nr-in');
+ hmcSetStyle(reward,{padding:small?'0 12px 4px':'0 16px 4px',boxSizing:'border-box'});
+ hmcSetStyle(nr,{width:'100%',margin:'0 0 18px',boxSizing:'border-box',borderRadius:'18px'});
+ hmcSetStyle(ri,{display:'grid',gridTemplateColumns:small?'60px minmax(0,1fr)':'68px minmax(0,1fr)',gap:'10px',alignItems:'center'});
+ const rim=ri&&ri.querySelector('.nr-img');if(rim)hmcSetStyle(rim,{width:small?'60px':'68px',height:small?'60px':'68px'});
+ /* Step 7: footer + navigation */
+ const footer=home.querySelector('.foot-strip'),nav=home.querySelector('.nav');
+ hmcSetStyle(footer,{margin:'0',padding:'14px 14px calc(78px + env(safe-area-inset-bottom,0px))',boxSizing:'border-box',width:'100%'});
+ hmcSetStyle(nav,{position:'fixed',left:'0',right:'0',bottom:'0',zIndex:'100',boxSizing:'border-box',paddingBottom:'calc(7px + env(safe-area-inset-bottom,0px))'});
+ /* Step 8: prevent horizontal overflow */
+ hmcSetStyle(home,{width:'100%',maxWidth:'100vw',overflowX:'hidden'});
+ [main,content,productSec,reward,footer].forEach(x=>hmcSetStyle(x,{maxWidth:'100%',overflowX:'hidden'}));
+ /* Step 9: accessibility + touch targets */
+ home.querySelectorAll('button').forEach(b=>{if(!b.getAttribute('aria-label')&&!b.textContent.trim())b.setAttribute('aria-label','Hulas action');hmcSetStyle(b,{touchAction:'manipulation'})});
+ /* Step 10: final runtime state */
+ syncHomeHero();syncHomeSections();syncHomeRewardFooter();
+}
+function hmcBindHomeLayout(){
+ hmcFinalLayout();
+ if(!window.__hmcHomeBound){
+  window.__hmcHomeBound=true;
+  window.addEventListener('resize',hmcFinalLayout,{passive:true});
+  window.addEventListener('orientationchange',()=>setTimeout(hmcFinalLayout,80),{passive:true});
+  window.addEventListener('load',()=>setTimeout(hmcFinalLayout,50),{passive:true});
+ }
+}
 function renderHome(){if(!ME)return;
+ hmcBindHomeLayout();
  $('h-ava').textContent=initials(ME.name);$('h-greet').textContent='Namaste, '+((ME.name||'').trim().split(/\s+/)[0]||'Fabricator')+'!';
  $('h-sub').textContent=ME.firm||"Let's build a stronger Nepal with Hulas.";$('h-pts').textContent=fp(POINTS);
  const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1],done=POINTS>=nx[1];
