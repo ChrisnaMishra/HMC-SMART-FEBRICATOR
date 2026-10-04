@@ -168,7 +168,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .rb{width:100%;padding:9px 0;border-radius:10px;font-size:12px;font-weight:800;background:var(--red);color:#fff}.rb.lk{background:var(--st);color:var(--muted)}
 .empty{text-align:center;padding:44px 28px;color:var(--muted);font-size:14px;line-height:1.5}
 .scan-status{background:var(--st);border-radius:13px;padding:12px;font-size:12.5px;color:var(--muted);margin-bottom:10px;line-height:1.4}.scan-status.ok{background:#EAF7EE;color:#216B38}.scan-status.bad{background:#FDECEC;color:#A81F1F}
-#qr-video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:#111;display:none}
+#qr-video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:#111;display:none}#qr-canvas{display:none}
 .list{display:flex;flex-direction:column;gap:8px}.list .item{display:flex;justify-content:space-between;gap:10px;padding:11px 12px;background:var(--st);border-radius:12px;font-size:12.5px;align-items:center}.list small{display:block;color:var(--muted);margin-top:2px;font-size:11px}
 .pj{background:#fff;border-radius:16px;padding:14px;margin:0 16px 12px;box-shadow:0 3px 12px rgba(15,27,51,.08)}.pj h4{font-size:15px;font-weight:800;overflow-wrap:anywhere}.pj p{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}.pj .btns{padding:12px 0 0}
 .prof-row{padding:2px 0}.prof-row b{display:block;font-size:15px;overflow-wrap:anywhere}
@@ -351,7 +351,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 <div class="btns"><button class="cta ghost" onclick="ORDER=[];renderOrder()">Clear order</button><button class="cta" onclick="sendOrder()">Send to Hulas</button></div><div class="nav" data-nav="order"></div></section>
 
 <section id="scan" class="screen hasnav"><div class="head"><button class="back" aria-label="Back" onclick="go('home')"><svg class="ic"><use href="#i-back"/></svg></button><h2>Scan Hulas QR</h2><p class="sub">Scan the unique QR on Hulas pipe or packaging to record points.</p></div>
-<div class="card"><div id="scan-status" class="scan-status">Camera is off. Tap Start scanner.</div><video id="qr-video" playsinline muted></video><div class="btns" style="padding:12px 0 4px"><button class="cta" onclick="startScanner()">Start scanner</button><button class="cta ghost" onclick="stopScanner()">Stop</button></div>
+<div class="card"><div id="scan-status" class="scan-status">Camera is off. Tap Start scanner.</div><video id="qr-video" playsinline muted></video><canvas id="qr-canvas" aria-hidden="true"></canvas><input id="qr-image" type="file" accept="image/*" capture="environment" style="display:none" onchange="scanQrImage(event)"><div class="btns" style="padding:12px 0 4px"><button class="cta" onclick="startScanner()">Start scanner</button><button class="cta ghost" onclick="stopScanner()">Stop</button></div><button class="cta ghost" type="button" onclick="$('qr-image').click()">Scan QR from photo</button>
 <div class="sec">No camera? Use the printed code</div><label for="scan-code">Hulas QR code</label><input id="scan-code" inputmode="text" autocomplete="off" autocapitalize="off" placeholder="HULAS|PIPE|ID|KG"><button class="cta navy" style="margin-top:10px" onclick="verifyManualScan()">Verify code</button>
 <div class="warn" style="margin:12px 0 0">This build checks QR codes on this device only. It cannot prove a purchase, so Hulas verifies points before any reward is released.</div></div>
 <div class="card"><div class="fl" style="margin-top:0">Recent scans</div><div id="scan-history" class="list"></div></div>
@@ -380,6 +380,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 </div></div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -569,7 +570,7 @@ function sendOrder(){if(!ORDER.length)return alert('Add at least one item first.
 /* ===== points ===== */
 async function addPts(n){POINTS=Math.max(0,Math.round((POINTS+n)*1000)/1000);if(ME){ME.points=POINTS;await saveAccount({...ME});ACC[ME.mobile]={...ME}}}
 /* ===== QR scanner: device-local verification until Hulas backend signing is connected ===== */
-let qrStream=null,qrTimer=null;
+let qrStream=null,qrTimer=null,qrBusy=false;
 function scanStore(){return ld('hmc_qr_scans',{})}
 function setScanStatus(msg,kind){const e=$('scan-status');if(e){e.textContent=msg;e.className='scan-status '+(kind||'')}}
 function renderScanHistory(){if(!ME)return;const rows=Object.values(scanStore()).filter(x=>x.by===ME.mobile).sort((a,b)=>b.at-a.at).slice(0,8);
@@ -584,16 +585,34 @@ async function verifyScan(raw){
  h[id]={id:id,kg:kgv,at:Date.now(),by:ME.mobile};if(!st('hmc_qr_scans',h))return setScanStatus('Could not save the scan on this device. Please try again.','bad');
  await addPts(kgv);setScanStatus('Recorded on this device: +'+fp(kgv)+' points added.','ok');$('scan-code').value='';renderAll()}
 function verifyManualScan(){verifyScan($('scan-code').value)}
-async function startScanner(){if(qrStream)return;
- if(!('BarcodeDetector' in window))return setScanStatus('This browser has no built-in QR scanner. Use the printed code below.','bad');
- if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return setScanStatus('Camera access is not available. Use the printed code below.','bad');
- try{const supported=await BarcodeDetector.getSupportedFormats();if(!supported.includes('qr_code'))throw new Error('qr');
-  qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
-  const video=$('qr-video');video.srcObject=qrStream;video.style.display='block';await video.play();setScanStatus('Point the camera at the Hulas QR code.');
-  const detector=new BarcodeDetector({formats:['qr_code']});
-  qrTimer=setInterval(async()=>{if(!qrStream)return;try{const codes=await detector.detect(video);if(codes[0]&&codes[0].rawValue){const val=codes[0].rawValue;stopScanner();await verifyScan(val)}}catch(e){}},450)
- }catch(e){stopScanner();setScanStatus('Camera could not start. Check camera permission or use the printed code field.','bad')}}
-function stopScanner(){if(qrTimer){clearInterval(qrTimer);qrTimer=null}if(qrStream){qrStream.getTracks().forEach(t=>t.stop());qrStream=null}
+async function startScanner(){
+ if(qrStream)return;
+ if(!window.isSecureContext)return setScanStatus('Camera needs HTTPS. Open the Hulas app from its secure web address.','bad');
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return setScanStatus('This browser cannot access the camera. Try Chrome or Safari.','bad');
+ try{
+  qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
+  const video=$('qr-video');video.srcObject=qrStream;video.style.display='block';await video.play();
+  setScanStatus('Point the camera at the Hulas QR code.');
+  if('BarcodeDetector' in window){
+   try{const supported=await BarcodeDetector.getSupportedFormats();if(supported.includes('qr_code')){const detector=new BarcodeDetector({formats:['qr_code']});qrTimer=setInterval(async()=>{if(!qrStream||qrBusy||video.readyState<2)return;qrBusy=true;try{const codes=await detector.detect(video);if(codes[0]?.rawValue){const val=codes[0].rawValue;stopScanner();await verifyScan(val)}}catch(e){}finally{qrBusy=false}},350);return}}catch(e){}
+  }
+  if(window.jsQR){
+   const canvas=$('qr-canvas'),ctx=canvas.getContext('2d',{willReadFrequently:true});
+   qrTimer=setInterval(async()=>{if(!qrStream||qrBusy||video.readyState<2)return;qrBusy=true;try{
+    const w=video.videoWidth,h=video.videoHeight;if(!w||!h)return;canvas.width=w;canvas.height=h;ctx.drawImage(video,0,0,w,h);
+    const code=window.jsQR(ctx.getImageData(0,0,w,h).data,w,h,{inversionAttempts:'attemptBoth'});
+    if(code?.data){const val=code.data;stopScanner();await verifyScan(val)}
+   }catch(e){}finally{qrBusy=false}},250);return;
+  }
+  setScanStatus('Camera is working, but QR decoding is unavailable in this browser. Use Chrome or Safari.','bad');
+ }catch(e){stopScanner();setScanStatus(e&&e.name==='NotAllowedError'?'Camera permission was denied. Allow camera access and try again.':'Camera could not start. Check permission and make sure no other app is using the camera.','bad')}}
+function scanQrImage(ev){
+ const file=ev.target.files&&ev.target.files[0];if(!file)return;
+ if(!window.jsQR)return setScanStatus('Photo QR scanning is unavailable right now.','bad');
+ const img=new Image(),url=URL.createObjectURL(file);
+ img.onload=()=>{try{const canvas=$('qr-canvas'),ctx=canvas.getContext('2d',{willReadFrequently:true});const max=1800,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));ctx.drawImage(img,0,0,canvas.width,canvas.height);const code=window.jsQR(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height,{inversionAttempts:'attemptBoth'});URL.revokeObjectURL(url);if(code?.data)verifyScan(code.data);else setScanStatus('No QR code was detected in that photo. Try a clearer image.','bad')}catch(e){URL.revokeObjectURL(url);setScanStatus('Could not read that image. Please try another photo.','bad')}};
+ img.onerror=()=>{URL.revokeObjectURL(url);setScanStatus('Could not open that image.','bad')};img.src=url;ev.target.value=''}
+function stopScanner(){if(qrTimer){clearInterval(qrTimer);qrTimer=null}qrBusy=false;if(qrStream){qrStream.getTracks().forEach(t=>t.stop());qrStream=null}
  const v=$('qr-video');if(v){if(v.srcObject)v.pause();v.srcObject=null;v.style.display='none'}
  const s=$('scan-status');if(s&&!s.classList.contains('ok')&&!s.classList.contains('bad'))setScanStatus('Camera is off. Tap Start scanner.')}
 /* ===== rewards ===== */
