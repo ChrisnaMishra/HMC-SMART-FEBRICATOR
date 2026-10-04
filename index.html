@@ -130,6 +130,19 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .wa{display:flex;align-items:center;gap:9px;background:#fff;color:var(--ink);text-decoration:none;border-radius:14px;padding:8px 12px 8px 9px}
 .wa .ic{width:26px;height:26px;color:#1FA855}
 .wa small{display:block;font-size:10px;color:var(--muted);font-weight:600}.wa b{display:block;font-size:13px;font-weight:800}
+/* Step 1: homepage structural foundation */
+.home-main{display:flex;flex-direction:column;min-height:100%;background:var(--bg)}
+.home-header{position:relative;left:auto;right:auto;top:auto;flex:0 0 62px;width:100%;box-sizing:border-box;background:#fff;padding:8px 12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;border-bottom:1px solid var(--line);pointer-events:auto;z-index:30}
+.home-header .logo-img{display:block;justify-self:center;width:min(180px,58vw);height:48px;object-fit:contain}
+.home-header .wordmark{display:none}
+.home-header .icobtn{position:relative}
+.home-notify-dot{position:absolute;right:-2px;top:-3px;min-width:18px;height:18px;padding:0 4px;border-radius:10px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.home-content{display:block;min-width:0;overflow:visible}
+.home-content>.hero{margin:0}
+.home-profile,.home-actions-section,.home-products-section,.home-reward-section{display:block;min-width:0}
+.home-profile .wcard{margin-top:14px}
+.home-actions-section .stitle{margin-top:2px}
+@media(max-width:360px){.home-header{flex-basis:58px;padding:6px 10px}.home-header .logo-img{height:44px;width:min(165px,56vw)}}
 /* nav */
 .nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 2px calc(7px + env(safe-area-inset-bottom,0px));z-index:40}
 .nav button{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10.5px;font-weight:600;min-width:52px;padding:3px 2px}
@@ -249,13 +262,14 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 <p style="text-align:center;margin-top:16px">Already registered? <a class="link" href="#" onclick="showLoginFor(cm($('r-mob').value));return false">Log in</a></p></section>
 
 <section id="home" class="screen hasnav">
-<div style="flex:1">
- <div class="top">
+<div class="home-main">
+ <header class="top home-header">
   <button class="icobtn" aria-label="Menu" onclick="openMenu()"><svg class="ic"><use href="#i-menu"/></svg></button>
   <img class="logo-img" src="assets/07_Hulas_Logo.jpg" alt="Hulas Metal Crafts" onerror="logoFail(this)"><div class="wordmark" style="display:none">HULAS<small>METAL CRAFTS LTD.</small></div>
-  <span></span>
- </div>
- <div class="hero">
+  <button class="icobtn" aria-label="Notifications" onclick="alert('No new notifications.')"><svg class="ic"><use href="#i-gift"/></svg><span class="home-notify-dot">3</span></button>
+ </header>
+ <main class="home-content">
+ <section class="hero" aria-label="Hulas Smart Fabricator hero">
   <div class="hero-stage">
    <img class="hero-logo" src="assets/07_Hulas_Logo.jpg" alt="Hulas Metal Crafts Ltd." onerror="this.style.display='none'">
    <div class="hero-slogan">Stronger<br>Smarter<br>Together</div>
@@ -278,9 +292,9 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
      <span><svg class="ic"><use href="#i-tool"/></svg>FABRICATION</span>
     </div>
    </div>
-  </div>
- </div>
+  </section>
 
+ <section class="home-profile" aria-label="Fabricator profile">
  <div class="wcard">
   <div class="ava" id="h-ava">H</div>
   <div class="wmain"><h3 id="h-greet">Namaste!</h3><p id="h-sub">Let's build a stronger Nepal with Hulas.</p></div>
@@ -290,7 +304,9 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
    <svg class="ic"><use href="#i-chev"/></svg>
   </button>
  </div>
+ </section>
 
+ <section class="home-actions-section" aria-label="Quick actions">
  <div class="stitle">Quick actions</div>
  <div class="qa">
   <button class="qa-card primary wide" onclick="go('scan')"><span class="qa-ico"><svg class="ic"><use href="#i-scan"/></svg></span><div class="qa-t"><h4>Scan Hulas QR</h4><p>Earn 1 point per kg</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
@@ -300,13 +316,17 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
   <button class="qa-card" onclick="go('order')"><span class="qa-ico"><svg class="ic"><use href="#i-cart"/></svg></span><div class="qa-t"><h4>Order Hulas</h4><p>Get quotation</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
   <button class="qa-card wide" onclick="go('activity')"><span class="qa-ico"><svg class="ic"><use href="#i-chart"/></svg></span><div class="qa-t"><h4>My activity</h4><p>Scan history and order requests</p></div><svg class="ic"><use href="#i-chev"/></svg></button>
  </div>
+ </section>
 
+ <section class="home-products-section" aria-label="Products">
  <div class="tiles">
   <button class="tile" onclick="openTools('calc')"><img src="assets/08_Round_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">ROUND PIPES<small>Hulas stainless steel</small></div></button>
   <button class="tile" onclick="openTools('calc')"><img src="assets/09_Square_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">SQUARE PIPES<small>Hulas stainless steel</small></div></button>
   <button class="tile" onclick="openTools('calc')"><img src="assets/10_Rectangle_Product_Tile.jpg" alt="" onerror="this.remove()"><div class="pt">RECTANGLE PIPES<small>Hulas stainless steel</small></div></button>
  </div>
+ </section>
 
+ <section class="home-reward-section" aria-label="Next reward">
  <button class="nr" onclick="go('rewards')"><div class="nr-in">
   <div class="nr-img" id="n-img"></div>
   <div><small>Next reward</small><h3 id="n-name"></h3><div class="np" id="n-pts"></div>
@@ -318,6 +338,8 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
   <a class="wa" href="https://wa.me/9779845656595" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><div><small>Order on WhatsApp</small><b>+977 9845656595</b></div></a>
   <div class="tag">Nepali for Generations</div>
  </div>
+ </footer>
+ </main>
 </div>
 <div class="nav" data-nav="home"></div></section>
 
