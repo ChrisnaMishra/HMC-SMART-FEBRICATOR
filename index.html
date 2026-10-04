@@ -263,8 +263,10 @@ function saveAccounts(){
  try{
    localStorage.setItem('hmc_accounts_v2',payload);
    localStorage.setItem('hmc_accounts',payload);
+   Object.entries(ACC).forEach(([m,a])=>localStorage.setItem('hmc_account_'+m,JSON.stringify(a)));
    const check=JSON.parse(localStorage.getItem('hmc_accounts_v2')||'{}');
-   return !!check && !!check[Object.keys(ACC).find(k=>check[k]?.mobile===k)];
+   const keys=Object.keys(ACC);
+   return !!check && keys.length>0 && keys.every(k=>!!check[k] && check[k].mobile===k);
  }catch(e){return false}
 }
 function loadAccounts(){
@@ -278,6 +280,14 @@ function loadAccounts(){
    const raw=localStorage.getItem('hmc_accounts_v2');
    const v2=raw?JSON.parse(raw):{};
    Object.entries(v2||{}).forEach(([k,a])=>{const m=canonicalMobile(a?.mobile||k);if(/^9[678]\d{8}$/.test(m))out[m]={...a,mobile:m}})
+ }catch(e){}
+ try{
+   for(let i=0;i<localStorage.length;i++){
+     const key=localStorage.key(i)||'';
+     if(!key.startsWith('hmc_account_'))continue;
+     const m=canonicalMobile(key.slice(12)), a=JSON.parse(localStorage.getItem(key)||'null');
+     if(/^9[678]\d{8}$/.test(m)&&a&&a.hash&&a.salt)out[m]={...a,mobile:m};
+   }
  }catch(e){}
  return out
 }
@@ -306,8 +316,8 @@ async function doLogin(){
  if(!p)return err('l-err','Enter your password.');
  if(!storageReady())return err('l-err','Browser storage is unavailable. Use normal Chrome/Safari mode and allow site data.');
  ACC=loadAccounts();
- const a=ACC[m];
- if(!a)return err('l-err','No account for this number is stored on this device. If you created it on another phone/browser, register on this device or connect the Hulas server login.');
+ const a=ACC[m] || loadAccounts()[m];
+ if(!a)return err('l-err','No account for this number is stored on this device. If you just registered, please register once more after refreshing the app.');
  const good=await pwHash(a.salt,p)===a.hash;
  if(!good)return err('l-err','Wrong password. Use the exact password you created during registration.');
  err('l-err','');$('l-pw').value='';
