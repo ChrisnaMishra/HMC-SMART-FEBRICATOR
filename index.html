@@ -78,7 +78,7 @@ input:focus,select:focus{outline:2px solid var(--red)}
 <div class="val"><h3>Calculate instantly</h3><p>Official Hulas weight chart — pipe weight, price &amp; VAT in seconds.</p></div>
 <div class="val"><h3>Order in one tap</h3><p>Build your material list and send it to Hulas on WhatsApp.</p></div>
 <div class="val"><h3>Earn as you build</h3><p>1 kg = 1 point. Redeem for real rewards.</p></div></div>
-<div class="stack"><button class="cta" onclick="go('register')">CREATE ACCOUNT</button><button class="cta ghost" onclick="go('login')">LOG IN</button></div></section>
+<div class="stack"><button class="cta" onclick="go('register')">CREATE ACCOUNT</button><button class="cta ghost" onclick="go('login')">LOG IN</button><button id="install-btn" class="cta navy" style="display:none" onclick="installApp()">INSTALL APP</button></div></section>
 
 <section id="login" class="screen form"><div class="back" onclick="go('welcome')">←</div>
 <h2>Welcome back</h2><p>Log in with your registered mobile number and password.</p>
@@ -254,6 +254,15 @@ function renderHome(){if(!ME)return;$('h-greet').textContent='Namaste, '+ME.name
  const nx=RW.find(r=>r[1]>POINTS)||RW[RW.length-1];$('n-name').textContent=nx[0];$('n-pts').textContent=nx[1].toLocaleString('en-IN')+' pts';$('n-bar').style.width=Math.min(100,POINTS/nx[1]*100)+'%';
  $('n-sub').textContent=POINTS>=nx[1]?'All rewards unlocked!':Math.ceil(nx[1]-POINTS).toLocaleString('en-IN')+' more points to unlock — 1 kg = 1 point.'}
 function renderAll(){renderHome();renderRewards();renderOrder();if(ME){$('p-pts').textContent=fp(POINTS);$('p-name').textContent=ME.name;$('p-mob').textContent=ME.mobile;$('p-firm').textContent=ME.firm||'-'}}
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;const b=$('install-btn');if(b)b.style.display='block'});
+window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;const b=$('install-btn');if(b)b.style.display='none'});
+async function installApp(){
+  if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;const b=$('install-btn');if(b)b.style.display='none';return}
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(ios)return alert('To install Hulas Smart Fabricator on iPhone: tap Share in Safari, then choose Add to Home Screen.');
+  alert('If your browser does not show the install prompt, open this link in Chrome and use the browser menu → Install app / Add to Home screen.');
+}
 /* ===== init: nobody is ever logged in on load — mobile + password are required every time ===== */
 Picker('pk-calc',cs,{cb:runCalc});Picker('pk-rail',est.rail,{grade:false,cb:estStale});Picker('pk-post',est.post,{grade:false,cb:estStale});Picker('pk-cut',cu,{cb:()=>{clast=null}});
 estGrade();cutUnitDraw();cutRows();runCalc();switchTool('calc');
