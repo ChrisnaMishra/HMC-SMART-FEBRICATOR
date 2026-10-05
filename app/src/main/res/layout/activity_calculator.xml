@@ -1,9 +1,27 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:padding="22dp" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent"><LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
-<TextView android:text="Metal Calculator" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/hulas_dark" android:layout_marginBottom="18dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-<TextView android:text="Grade" android:layout_width="wrap_content" android:layout_height="wrap_content"/><Spinner android:id="@+id/grade" android:layout_width="match_parent" android:layout_height="52dp"/>
-<TextView android:text="Round size" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/><Spinner android:id="@+id/size" android:layout_width="match_parent" android:layout_height="52dp"/>
-<Switch android:id="@+id/heavy" android:text="Heavy" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="52dp"/>
-<EditText android:id="@+id/qty" android:hint="Number of 6m pipes" android:inputType="numberDecimal" android:layout_width="match_parent" android:layout_height="55dp"/>
-<Button android:id="@+id/calculate" android:text="CALCULATE" android:textColor="@color/white" android:backgroundTint="@color/hulas_red" android:layout_marginTop="18dp" android:layout_width="match_parent" android:layout_height="52dp"/>
-<TextView android:id="@+id/result" android:text="Enter quantity to calculate" android:textSize="18sp" android:textColor="@color/hulas_dark" android:padding="18dp" android:layout_marginTop="18dp" android:background="@color/surface" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-</LinearLayout></ScrollView>
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/surface" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Metal Calculator" android:textColor="@color/hulas_dark" android:textSize="28sp" android:textStyle="bold"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Official HULAS pipe weight and price calculation" android:textColor="@color/hulas_gray" android:textSize="12sp"/>
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="18dp" app:cardElevation="0dp" app:strokeColor="#E7E7E7" app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRADE" android:textColor="@color/hulas_gray" android:textSize="10sp" android:textStyle="bold"/>
+                <Spinner android:id="@+id/grade" android:layout_width="match_parent" android:layout_height="50dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="PRODUCT TYPE" android:textColor="@color/hulas_gray" android:textSize="10sp" android:textStyle="bold"/>
+                <Spinner android:id="@+id/type" android:layout_width="match_parent" android:layout_height="50dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="SIZE" android:textColor="@color/hulas_gray" android:textSize="10sp" android:textStyle="bold"/>
+                <Spinner android:id="@+id/size" android:layout_width="match_parent" android:layout_height="50dp"/>
+                <Switch android:id="@+id/heavy" android:layout_width="match_parent" android:layout_height="50dp" android:text="Heavy pipe" android:textColor="@color/hulas_dark"/>
+                <EditText android:id="@+id/qty" android:layout_width="match_parent" android:layout_height="54dp" android:hint="Number of 6m pipes" android:inputType="numberDecimal"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <Button android:id="@+id/calculate" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="14dp" android:backgroundTint="@color/hulas_red" android:text="CALCULATE" android:textColor="@color/white" android:textStyle="bold"/>
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="18dp" app:cardElevation="0dp" app:strokeColor="#E7E7E7" app:strokeWidth="1dp">
+            <TextView android:id="@+id/result" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="18dp" android:text="Enter quantity to calculate" android:textColor="@color/hulas_dark" android:textSize="15sp"/>
+        </com.google.android.material.card.MaterialCardView>
+        <Button android:id="@+id/order" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="12dp" android:layout_marginBottom="24dp" android:text="SEND ORDER ON WHATSAPP" android:textColor="@color/hulas_red"/>
+    </LinearLayout>
+</ScrollView>
