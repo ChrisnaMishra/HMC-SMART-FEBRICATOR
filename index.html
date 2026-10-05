@@ -310,6 +310,12 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .app-topbar .app-nav-btn .ic{width:20px;height:20px}
 .app-topbar .app-title{min-width:0;text-align:center;font-size:16px;font-weight:850;letter-spacing:-.15px;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .app-topbar .app-home{color:var(--red);background:#FFF1F3}
+.hmc-app-page>.head{padding:0;background:#fff}
+.hmc-app-page>.head>.app-topbar{margin:0}
+.hmc-app-page>.head>h2,.hmc-app-page>.head>.sub{display:none}
+.hmc-app-page>.head>.tabs{margin:10px 18px 12px}
+.hmc-app-page>.head>.back{display:none!important}
+
 @media(max-width:360px){.app-topbar{height:54px;min-height:54px;padding:6px 10px}.app-topbar .app-nav-btn{width:38px;height:38px}.app-topbar .app-title{font-size:15px}}
 /* app screens */
 .head{padding:calc(14px + env(safe-area-inset-top,0px)) 18px 12px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
@@ -782,6 +788,7 @@ function hmcNavigate(id,push=true){
  if(push&&cur&&cur!==id&&!HMC_ROUTE_LOCK){
   HMC_ROUTE_STACK.push(cur);
   if(HMC_ROUTE_STACK.length>30)HMC_ROUTE_STACK.shift();
+  try{history.pushState({hmc:id},'', '#'+id)}catch(e){}
  }
  if(id!=='scan')stopScanner();
  closeMenu();
@@ -791,15 +798,17 @@ function hmcNavigate(id,push=true){
 }
 function go(id){hmcNavigate(id,true)}
 function goBack(){
- const cur=hmcCurrentScreen();
- while(HMC_ROUTE_STACK.length){
-  const prev=HMC_ROUTE_STACK.pop();
-  if(prev!==cur){HMC_ROUTE_LOCK=true;hmcNavigate(prev,false);HMC_ROUTE_LOCK=false;return}
+ if(HMC_ROUTE_STACK.length){
+  try{history.back();return}catch(e){}
  }
+ const cur=hmcCurrentScreen();
  if(cur!=='home'&&ME){HMC_ROUTE_LOCK=true;hmcNavigate('home',false);HMC_ROUTE_LOCK=false;return}
- if(cur==='login'||cur==='register'){hmcNavigate('welcome',false)}
+ if(cur==='login'||cur==='register')hmcNavigate('welcome',false);
 }
-window.addEventListener('popstate',()=>goBack())
+window.addEventListener('popstate',()=>{
+ const prev=HMC_ROUTE_STACK.pop();
+ if(prev){HMC_ROUTE_LOCK=true;hmcNavigate(prev,false);HMC_ROUTE_LOCK=false}
+});
 const NAV=[['home','Home','i-home'],['scan','Scan','i-scan'],['tools','Calculate','i-calc'],['rewards','Rewards','i-gift'],['order','Orders','i-cart'],['profile','Profile','i-user']];
 document.querySelectorAll('.nav').forEach(n=>{const cur=n.dataset.nav;n.innerHTML=NAV.map(([k,l,i])=>'<button class="'+(k===cur?'on':'')+'" onclick="go(\''+k+'\')"'+(k===cur?' aria-current="page"':'')+'><svg class="ic"><use href="#'+i+'"/></svg><span>'+l+'</span></button>').join('')});
 function hmcSetupPageNavigation(){
