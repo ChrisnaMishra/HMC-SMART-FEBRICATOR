@@ -931,7 +931,28 @@ function hmcNormalizeDom(){
   el.id=next;
  });
 }
+function hmcRefineActionIcons(){
+ const home=document.getElementById('home');if(!home)return;
+ home.querySelectorAll('.qa-card').forEach(card=>{
+  const h=(card.querySelector('h4')?.textContent||'').trim();
+  const use=card.querySelector('.qa-ico use');
+  if(!use)return;
+  if(h==='Rewards')use.setAttribute('href','#i-gem');
+  if(h==='Order Hulas')use.setAttribute('href','#i-shop');
+ });
+ const nav=home.querySelector('.nav');
+ if(nav){
+  nav.querySelectorAll('button').forEach(b=>{
+   const label=(b.textContent||'').trim();
+   const use=b.querySelector('use');
+   if(!use)return;
+   if(label==='Rewards')use.setAttribute('href','#i-gem');
+   if(label==='Orders')use.setAttribute('href','#i-shop');
+  });
+ }
+}
 function hmcPremiumHome(){
+ hmcRefineActionIcons();
  const home=document.getElementById('home');if(!home)return;
  const root=home.querySelector('.home-main');if(root){
   root.style.background='#F7F8FA';
