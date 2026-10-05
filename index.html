@@ -951,7 +951,34 @@ function hmcRefineActionIcons(){
   });
  }
 }
+function hmcFixBottomNav(){
+ const home=document.getElementById('home');if(!home)return;
+ const nav=home.querySelector('.nav');if(!nav)return;
+ nav.style.position='fixed';
+ nav.style.left='0';
+ nav.style.right='0';
+ nav.style.bottom='0';
+ nav.style.width='100%';
+ nav.style.maxWidth='430px';
+ nav.style.margin='0 auto';
+ nav.style.transform='none';
+ nav.style.zIndex='999';
+ nav.style.display='flex';
+ nav.style.justifyContent='space-around';
+ nav.style.boxSizing='border-box';
+ nav.querySelectorAll('button').forEach(b=>{
+  b.style.flex='1 1 0';
+  b.style.minWidth='0';
+  b.style.maxWidth='none';
+  b.style.transform='none';
+  b.style.display='flex';
+  b.style.flexDirection='column';
+  b.style.alignItems='center';
+  b.style.justifyContent='center';
+ });
+}
 function hmcPremiumHome(){
+ hmcFixBottomNav();
  hmcRefineActionIcons();
  const home=document.getElementById('home');if(!home)return;
  const root=home.querySelector('.home-main');if(root){
