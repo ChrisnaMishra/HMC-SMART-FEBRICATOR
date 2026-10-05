@@ -5,6 +5,7 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hulas.hmc.data.OrderDraft;
 import com.hulas.hmc.data.PipeWeightData;
+import com.hulas.hmc.utils.OrderHistory;
 import com.hulas.hmc.utils.WhatsAppOrder;
 import java.util.Locale;
 
@@ -13,18 +14,13 @@ public class EstimatorActivity extends AppCompatActivity {
     private Switch heavy;
     private EditText qty;
     private TextView result;
-    private OrderDraft draft = new OrderDraft();
+    private final OrderDraft draft = new OrderDraft();
 
     @Override protected void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.activity_estimator);
-
-        grade=findViewById(R.id.grade);
-        type=findViewById(R.id.type);
-        size=findViewById(R.id.size);
-        heavy=findViewById(R.id.heavy);
-        qty=findViewById(R.id.qty);
-        result=findViewById(R.id.result);
+        grade=findViewById(R.id.grade); type=findViewById(R.id.type); size=findViewById(R.id.size);
+        heavy=findViewById(R.id.heavy); qty=findViewById(R.id.qty); result=findViewById(R.id.result);
 
         grade.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"202","304"}));
         type.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"Round","Square","Rectangle"}));
@@ -37,7 +33,9 @@ public class EstimatorActivity extends AppCompatActivity {
 
         findViewById(R.id.calculate).setOnClickListener(v -> calculate());
         findViewById(R.id.order).setOnClickListener(v -> {
-            calculate();
+            if (!calculate()) return;
+            OrderHistory.add(this, draft.grade, draft.type, draft.size, draft.heavy,
+                    draft.quantity, draft.totalKg, draft.totalWithVat);
             String msg=String.format(Locale.US,
                     "HMC Order Request\nGrade: %s\nType: %s\nSize: %s\n%s\nQty: %.0f pipes\nWeight: %.3f kg\nTotal incl. VAT: Rs %.2f",
                     draft.grade,draft.type,draft.size,draft.heavy?"Heavy":"Light",draft.quantity,draft.totalKg,draft.totalWithVat);
@@ -46,12 +44,12 @@ public class EstimatorActivity extends AppCompatActivity {
     }
 
     private void updateSizes() {
-        if(type==null || size==null || type.getSelectedItem()==null) return;
-        String[] values=PipeWeightData.sizes(type.getSelectedItem().toString());
-        size.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,values));
+        if(type.getSelectedItem()==null) return;
+        size.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,
+                PipeWeightData.sizes(type.getSelectedItem().toString())));
     }
 
-    private void calculate() {
+    private boolean calculate() {
         try {
             draft.grade=grade.getSelectedItem().toString();
             draft.type=type.getSelectedItem().toString();
@@ -68,8 +66,10 @@ public class EstimatorActivity extends AppCompatActivity {
                     draft.totalBeforeVat,
                     draft.totalBeforeVat*PipeWeightData.VAT,
                     draft.totalWithVat));
+            return true;
         } catch(Exception e) {
             result.setText("Enter a valid quantity.");
+            return false;
         }
     }
 }
