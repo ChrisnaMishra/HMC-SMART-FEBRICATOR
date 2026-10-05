@@ -806,21 +806,25 @@ window.addEventListener('popstate',()=>{
 const NAV=[['home','Home','i-home'],['scan','Scan','i-scan'],['tools','Calculate','i-calc'],['rewards','Rewards','i-gift'],['order','Orders','i-cart'],['profile','Profile','i-user']];
 document.querySelectorAll('.nav').forEach(n=>{const cur=n.dataset.nav;n.innerHTML=NAV.map(([k,l,i])=>'<button class="'+(k===cur?'on':'')+'" onclick="go(\''+k+'\')"'+(k===cur?' aria-current="page"':'')+'><svg class="ic"><use href="#'+i+'"/></svg><span>'+l+'</span></button>').join('')});
 function hmcSetupPageNavigation(){
- const titles={tools:'Build & Order',order:'My Order',scan:'Scan Hulas QR',rewards:'Rewards',profile:'My Account',projects:'My Projects',activity:'My Activity'};
+ const titles={tools:'Build & order',order:'My order',scan:'Scan Hulas QR',rewards:'Rewards',profile:'My account',projects:'My projects',activity:'My activity'};
  Object.entries(titles).forEach(([id,title])=>{
   const s=document.getElementById(id);if(!s)return;
-  let bar=s.querySelector(':scope>.app-topbar');
-  if(!bar){
-   const oldHead=s.querySelector(':scope>.head');
-   if(oldHead){
-    const h2=oldHead.querySelector('h2');if(h2)title=h2.textContent.trim()||title;
-    const oldBack=oldHead.querySelector(':scope>.back');if(oldBack)oldBack.style.display='none';
+  const bars=[...s.querySelectorAll('.app-topbar')];
+  let bar=bars[0]||null;
+  bars.slice(1).forEach(x=>x.remove());
+  const oldHead=s.querySelector(':scope>.head');
+  if(oldHead){
+   const h2=oldHead.querySelector('h2');if(h2)title=h2.textContent.trim()||title;
+   const oldBack=oldHead.querySelector(':scope>.back');if(oldBack)oldBack.style.display='none';
+   if(!bar){
     bar=document.createElement('div');bar.className='app-topbar';oldHead.insertBefore(bar,oldHead.firstChild);
-   }else{
-    bar=document.createElement('div');bar.className='app-topbar';s.insertBefore(bar,s.firstChild);
+   }else if(bar.parentElement!==oldHead){
+    oldHead.insertBefore(bar,oldHead.firstChild);
    }
+  }else if(!bar){
+   bar=document.createElement('div');bar.className='app-topbar';s.insertBefore(bar,s.firstChild);
   }
-  bar.innerHTML='<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">'+esc(title)+'</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go(\'home\')"><svg class="ic"><use href="#i-home"/></svg></button>';
+  bar.innerHTML='<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">'+esc(title)+'</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go(\\'home\\')"><svg class="ic"><use href="#i-home"/></svg></button>';
   s.classList.add('hmc-app-page');
  });
 }
