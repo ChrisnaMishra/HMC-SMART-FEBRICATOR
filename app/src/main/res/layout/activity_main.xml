@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/surface">
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+                <ImageView android:layout_width="82dp" android:layout_height="48dp" android:contentDescription="HULAS" android:scaleType="fitCenter" android:src="@drawable/hulas_logo"/>
+                <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+                <TextView android:id="@+id/header_points" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_points" android:paddingStart="13dp" android:paddingEnd="13dp" android:paddingTop="8dp" android:paddingBottom="8dp" android:text="0 PTS" android:textColor="@color/hulas_red" android:textSize="12sp" android:textStyle="bold"/>
+            </LinearLayout>
+            <TextView android:id="@+id/greeting" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:textColor="@color/hulas_dark" android:textSize="27sp" android:textStyle="bold"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:text="Everything you need to measure, estimate and order." android:textColor="@color/hulas_gray" android:textSize="13sp"/>
+            <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="152dp" android:layout_marginTop="18dp" app:cardBackgroundColor="@color/hulas_red" app:cardCornerRadius="22dp" app:cardElevation="0dp" app:strokeWidth="0dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:padding="18dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center_vertical" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="HULAS STAINLESS STEEL" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Measure • Estimate • Order" android:textColor="#FFE5EA" android:textSize="12sp"/>
+                        <Button android:id="@+id/hero_estimator" android:layout_width="wrap_content" android:layout_height="42dp" android:layout_marginTop="12dp" android:backgroundTint="@color/white" android:minWidth="0dp" android:paddingStart="16dp" android:paddingEnd="16dp" android:text="OPEN ESTIMATOR" android:textColor="@color/hulas_red" android:textSize="11sp" android:textStyle="bold"/>
+                    </LinearLayout>
+                    <ImageView android:layout_width="112dp" android:layout_height="match_parent" android:contentDescription="HULAS stainless steel pipes" android:scaleType="centerInside" android:src="@drawable/pipes"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="Quick actions" android:textColor="@color/hulas_dark" android:textSize="17sp" android:textStyle="bold"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView android:id="@+id/calculator" android:layout_width="0dp" android:layout_height="92dp" android:layout_marginEnd="6dp" android:layout_weight="1" android:clickable="true" android:foreground="?attr/selectableItemBackground" app:cardBackgroundColor="@color/white" app:cardCornerRadius="17dp" app:cardElevation="0dp" app:strokeColor="#E7E7E7" app:strokeWidth="1dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CALCULATOR" android:textColor="@color/hulas_dark" android:textSize="11sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Weight &amp; price" android:textColor="@color/hulas_gray" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView android:id="@+id/scan" android:layout_width="0dp" android:layout_height="92dp" android:layout_marginStart="6dp" android:layout_weight="1" android:clickable="true" android:foreground="?attr/selectableItemBackground" app:cardBackgroundColor="@color/hulas_red" app:cardCornerRadius="17dp" app:cardElevation="0dp" app:strokeWidth="0dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SCAN QR" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Earn points" android:textColor="#FFE5EA" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="HULAS products" android:textColor="@color/hulas_dark" android:textSize="17sp" android:textStyle="bold"/>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/estimator" android:layout_width="match_parent" android:layout_height="78dp" android:layout_marginTop="10dp" android:clickable="true" android:foreground="?attr/selectableItemBackground" app:cardBackgroundColor="@color/white" app:cardCornerRadius="17dp" app:cardElevation="0dp" app:strokeColor="#E7E7E7" app:strokeWidth="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:paddingStart="16dp" android:paddingEnd="16dp">
+                    <ImageView android:layout_width="58dp" android:layout_height="58dp" android:contentDescription="Stainless steel pipes" android:scaleType="centerCrop" android:src="@drawable/pipes"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Stainless Steel Pipes" android:textColor="@color/hulas_dark" android:textSize="14sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:text="202 • 304  |  Round • Square • Rectangle" android:textColor="@color/hulas_gray" android:textSize="10sp"/>
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/hulas_red" android:textSize="27sp" android:textStyle="bold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/reward_card" android:layout_width="match_parent" android:layout_height="112dp" android:layout_marginTop="18dp" android:layout_marginBottom="20dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="18dp" app:cardElevation="0dp" app:strokeColor="#E7E7E7" app:strokeWidth="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:padding="15dp">
+                    <TextView android:layout_width="52dp" android:layout_height="52dp" android:gravity="center" android:text="🎁" android:textSize="25sp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="NEXT REWARD" android:textColor="@color/hulas_gray" android:textSize="10sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:text="Electric Jug" android:textColor="@color/hulas_dark" android:textSize="15sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1,500 points" android:textColor="@color/hulas_red" android:textSize="11sp" android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="68dp" android:background="@color/white" android:elevation="8dp" android:gravity="center" android:orientation="horizontal" android:paddingStart="8dp" android:paddingEnd="8dp">
+        <TextView android:id="@+id/nav_home" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="HOME" android:textColor="@color/hulas_red" android:textSize="10sp" android:textStyle="bold"/>
+        <TextView android:id="@+id/nav_orders" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="ORDERS" android:textColor="@color/hulas_gray" android:textSize="10sp"/>
+        <TextView android:id="@+id/nav_rewards" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="REWARDS" android:textColor="@color/hulas_gray" android:textSize="10sp"/>
+        <TextView android:id="@+id/nav_profile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:text="PROFILE" android:textColor="@color/hulas_gray" android:textSize="10sp"/>
+    </LinearLayout>
+</LinearLayout>

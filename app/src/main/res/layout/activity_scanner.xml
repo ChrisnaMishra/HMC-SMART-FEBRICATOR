@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:padding="18dp" android:background="@color/surface"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Scan QR" android:textColor="@color/hulas_dark" android:textSize="27sp" android:textStyle="bold"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" android:text="Scan the QR printed on a genuine HULAS pipe to submit it for verification."
+        android:textColor="@color/hulas_gray" android:textSize="12sp"/>
+
+    <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="190dp"
+        android:layout_marginTop="18dp" app:cardBackgroundColor="@color/white" app:cardCornerRadius="22dp"
+        app:cardElevation="0dp" app:strokeColor="#E7E7E7" app:strokeWidth="1dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:gravity="center" android:orientation="vertical" android:padding="20dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="▣" android:textColor="@color/hulas_red" android:textSize="52sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" android:text="HULAS AUTHENTICITY QR"
+                android:textColor="@color/hulas_dark" android:textSize="13sp" android:textStyle="bold"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" android:text="1 kg = 1 point after verification"
+                android:textColor="@color/hulas_gray" android:textSize="11sp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button android:id="@+id/start" android:layout_width="match_parent" android:layout_height="52dp"
+        android:layout_marginTop="14dp" android:text="START SCANNER"
+        android:textColor="@color/white" android:backgroundTint="@color/hulas_red"/>
+
+    <TextView android:id="@+id/result" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="14dp" android:padding="16dp" android:textColor="@color/hulas_dark"
+        android:textSize="12sp"/>
+</LinearLayout>
