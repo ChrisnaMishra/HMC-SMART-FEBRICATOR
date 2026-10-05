@@ -1002,7 +1002,26 @@ function hmcPremiumHome(){
   nav.querySelectorAll('button').forEach(b=>{b.style.fontSize='10px'});
  }
 }
-function hmcPolishHome(){
+function hmcPremiumHomeUI(){
+ const home=document.getElementById('home');if(!home)return;
+ const nav=home.querySelector('.nav');
+ if(nav){
+  nav.style.display='grid';nav.style.gridTemplateColumns='repeat(6,minmax(0,1fr))';nav.style.justifyContent='stretch';nav.style.alignItems='stretch';
+  nav.style.width='100%';nav.style.maxWidth='430px';nav.style.height='72px';
+  nav.style.padding='6px 6px calc(6px + env(safe-area-inset-bottom,0px))';
+  nav.style.background='rgba(255,255,255,.98)';nav.style.backdropFilter='blur(14px)';nav.style.webkitBackdropFilter='blur(14px)';
+  nav.style.borderTop='1px solid #E7E9EE';nav.style.boxShadow='0 -5px 22px rgba(15,27,51,.08)';
+  nav.querySelectorAll('button').forEach(b=>{
+   b.style.minWidth='0';b.style.width='100%';b.style.height='100%';b.style.padding='4px 1px';b.style.gap='3px';b.style.justifyContent='center';
+   b.style.fontFamily='system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';b.style.fontSize='10px';b.style.lineHeight='1.1';
+  });
+  nav.querySelectorAll('.ic').forEach(i=>{i.style.width='22px';i.style.height='22px';i.style.flex='0 0 auto'});
+ }
+ const content=home.querySelector('.home-content');if(content)content.style.paddingBottom='0';
+ const footer=home.querySelector('.home-footer');if(footer){footer.style.padding='16px 16px 18px';footer.style.minHeight='0';footer.style.background='linear-gradient(135deg,#B20D28,#D40024)'}
+ const reward=home.querySelector('.home-reward-section .nr');if(reward){reward.style.boxShadow='0 5px 18px rgba(15,27,51,.07)';reward.style.border='1px solid #ECEEF2'}
+}function hmcPolishHome(){
+ hmcPremiumHomeUI();
  hmcPremiumHome();
  hmcNormalizeDom();
  const home=document.getElementById('home');if(!home)return;
