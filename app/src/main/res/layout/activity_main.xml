@@ -4,8 +4,8 @@
 <TextView android:text="Smart tools for HULAS fabricators" android:textColor="@color/hulas_gray" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 <Button android:id="@+id/calculator" android:text="Metal Calculator" android:layout_marginTop="22dp" android:layout_width="match_parent" android:layout_height="58dp"/>
 <Button android:id="@+id/estimator" android:text="Project Estimator" android:layout_width="match_parent" android:layout_height="58dp"/>
-<Button android:id="@+id/scan" android:text="Scan QR & Earn Points" android:layout_width="match_parent" android:layout_height="58dp"/>
-<Button android:id="@+id/rewards" android:text="Rewards & Points" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/scan" android:text="Scan QR &amp; Earn Points" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/rewards" android:text="Rewards &amp; Points" android:layout_width="match_parent" android:layout_height="58dp"/>
 <Button android:id="@+id/orders" android:text="My Orders" android:layout_width="match_parent" android:layout_height="58dp"/>
 <Button android:id="@+id/profile" android:text="Profile" android:layout_width="match_parent" android:layout_height="58dp"/>
 </LinearLayout></ScrollView>
