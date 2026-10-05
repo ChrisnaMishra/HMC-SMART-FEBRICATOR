@@ -787,7 +787,6 @@ function hmcNavigate(id,push=true){
  if(id!=='scan')stopScanner();
  closeMenu();
  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
- hmcRefreshPageNav(id);
  renderAll();window.scrollTo(0,0);
 }
 function go(id){hmcNavigate(id,true)}
@@ -809,30 +808,23 @@ function hmcSetupPageNavigation(){
  const titles={tools:'Build & order',order:'My order',scan:'Scan Hulas QR',rewards:'Rewards',profile:'My account',projects:'My projects',activity:'My activity'};
  Object.entries(titles).forEach(([id,title])=>{
   const s=document.getElementById(id);if(!s)return;
-  const bars=[...s.querySelectorAll('.app-topbar')];
-  let bar=bars[0]||null;
-  bars.slice(1).forEach(x=>x.remove());
+  if(s.dataset.hmcNavReady==='1')return;
   const oldHead=s.querySelector(':scope>.head');
+  let bar=s.querySelector(':scope>.app-topbar');
   if(oldHead){
    const h2=oldHead.querySelector('h2');if(h2)title=h2.textContent.trim()||title;
    const oldBack=oldHead.querySelector(':scope>.back');if(oldBack)oldBack.style.display='none';
-   if(!bar){
-    bar=document.createElement('div');bar.className='app-topbar';oldHead.insertBefore(bar,oldHead.firstChild);
-   }else if(bar.parentElement!==oldHead){
-    oldHead.insertBefore(bar,oldHead.firstChild);
-   }
+   if(!bar){bar=document.createElement('div');bar.className='app-topbar';oldHead.insertBefore(bar,oldHead.firstChild)}
   }else if(!bar){
-   bar=document.createElement('div');bar.className='app-topbar';s.insertBefore(bar,s.firstChild);
+   bar=document.createElement('div');bar.className='app-topbar';s.insertBefore(bar,s.firstChild)
   }
-  bar.innerHTML='<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">'+esc(title)+'</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go(\\'home\\')"><svg class="ic"><use href="#i-home"/></svg></button>';
+  if(bar)bar.innerHTML='<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">'+esc(title)+'</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go(\\'home\\')"><svg class="ic"><use href="#i-home"/></svg></button>';
+  s.dataset.hmcNavReady='1';
   s.classList.add('hmc-app-page');
  });
 }
-function hmcRefreshPageNav(activeId){
- const navPages=new Set(['tools','order','scan','rewards','profile','projects','activity']);
- if(navPages.has(activeId))hmcSetupPageNavigation();
-}
 hmcSetupPageNavigation();
+function hmcRefreshPageNav(){/* navigation headers are initialized once */}
 function openMenu(){$('sheet').classList.add('open')}
 function closeMenu(){const s=$('sheet');if(s)s.classList.remove('open')}
 function orderWA(){closeMenu();if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Namaste Hulas, I am '+(ME?ME.name:'a fabricator')+'. I would like to place an order.'),'_blank'))alert('Please allow pop-ups so WhatsApp can open.')}
@@ -1129,7 +1121,6 @@ function hmcPremiumHomeUI(){
  const footer=home.querySelector('.home-footer');if(footer){footer.style.padding='16px 16px 18px';footer.style.minHeight='0';footer.style.background='linear-gradient(135deg,#B20D28,#D40024)'}
  const reward=home.querySelector('.home-reward-section .nr');if(reward){reward.style.boxShadow='0 5px 18px rgba(15,27,51,.07)';reward.style.border='1px solid #ECEEF2'}
 }function hmcPolishHome(){
- hmcSetupPageNavigation();
  hmcPremiumHomeUI();
  hmcPremiumHome();
  hmcNormalizeDom();
