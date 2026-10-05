@@ -1,0 +1,6 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:gravity="center" android:padding="24dp" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:text="HULAS QR Scanner" android:textSize="28sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<TextView android:text="Scan the QR printed on a genuine HULAS pipe." android:textColor="@color/hulas_gray" android:gravity="center" android:layout_marginTop="10dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+<Button android:id="@+id/start" android:text="START SCANNER" android:textColor="@color/white" android:backgroundTint="@color/hulas_red" android:layout_marginTop="25dp" android:layout_width="match_parent" android:layout_height="54dp"/>
+<TextView android:id="@+id/result" android:text="" android:padding="18dp" android:layout_marginTop="20dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>

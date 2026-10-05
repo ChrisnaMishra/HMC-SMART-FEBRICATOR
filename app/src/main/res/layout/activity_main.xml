@@ -1,0 +1,11 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/surface" android:layout_width="match_parent" android:layout_height="match_parent"><LinearLayout android:orientation="vertical" android:padding="20dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+<ImageView android:src="@drawable/hulas_logo" android:layout_width="100dp" android:layout_height="60dp" android:scaleType="fitCenter"/>
+<TextView android:id="@+id/greeting" android:textSize="26sp" android:textStyle="bold" android:textColor="@color/hulas_dark" android:layout_marginTop="12dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<TextView android:text="Smart tools for HULAS fabricators" android:textColor="@color/hulas_gray" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<Button android:id="@+id/calculator" android:text="Metal Calculator" android:layout_marginTop="22dp" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/estimator" android:text="Project Estimator" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/scan" android:text="Scan QR & Earn Points" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/rewards" android:text="Rewards & Points" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/orders" android:text="My Orders" android:layout_width="match_parent" android:layout_height="58dp"/>
+<Button android:id="@+id/profile" android:text="Profile" android:layout_width="match_parent" android:layout_height="58dp"/>
+</LinearLayout></ScrollView>

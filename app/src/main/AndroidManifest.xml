@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <application android:theme="@style/Theme.HMC" android:label="HMC" android:icon="@drawable/hulas_logo" android:allowBackup="true" android:supportsRtl="true">
+        <activity android:name=".ScannerActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".OrdersActivity" />
+        <activity android:name=".RewardsActivity" />
+        <activity android:name=".EstimatorActivity" />
+        <activity android:name=".CalculatorActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

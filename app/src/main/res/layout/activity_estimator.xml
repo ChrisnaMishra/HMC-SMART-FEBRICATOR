@@ -1,0 +1,7 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="22dp" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:text="Project Estimator" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/hulas_dark" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<EditText android:id="@+id/length" android:hint="Length per piece (metres)" android:inputType="numberDecimal" android:layout_marginTop="22dp" android:layout_width="match_parent" android:layout_height="55dp"/>
+<EditText android:id="@+id/qty" android:hint="Number of pieces" android:inputType="numberDecimal" android:layout_width="match_parent" android:layout_height="55dp"/>
+<Button android:id="@+id/calculate" android:text="ESTIMATE" android:backgroundTint="@color/hulas_red" android:textColor="@color/white" android:layout_marginTop="18dp" android:layout_width="match_parent" android:layout_height="52dp"/>
+<TextView android:id="@+id/result" android:text="Enter project dimensions" android:textSize="18sp" android:padding="18dp" android:layout_marginTop="18dp" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>

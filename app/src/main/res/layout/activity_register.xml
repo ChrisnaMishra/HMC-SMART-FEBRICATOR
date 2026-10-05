@@ -1,0 +1,7 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="26dp" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView android:text="Create Fabricator Account" android:textSize="26sp" android:textStyle="bold" android:textColor="@color/hulas_dark" android:layout_marginTop="40dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<EditText android:id="@+id/name" android:hint="Full name" android:layout_marginTop="25dp" android:layout_width="match_parent" android:layout_height="55dp"/>
+<EditText android:id="@+id/phone" android:hint="Mobile number" android:inputType="phone" android:layout_width="match_parent" android:layout_height="55dp"/>
+<EditText android:id="@+id/password" android:hint="Password" android:inputType="textPassword" android:layout_width="match_parent" android:layout_height="55dp"/>
+<Button android:id="@+id/create" android:text="CREATE ACCOUNT" android:textColor="@color/white" android:backgroundTint="@color/hulas_red" android:layout_marginTop="22dp" android:layout_width="match_parent" android:layout_height="52dp"/>
+</LinearLayout>

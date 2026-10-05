@@ -1,0 +1,9 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="28dp" android:gravity="center_horizontal" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+<ImageView android:src="@drawable/hulas_logo" android:layout_width="150dp" android:layout_height="90dp" android:scaleType="fitCenter" android:layout_marginTop="55dp"/>
+<TextView android:text="HMC" android:textSize="30sp" android:textStyle="bold" android:textColor="@color/hulas_dark" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<TextView android:text="Hulas Smart Fabricator" android:textSize="15sp" android:textColor="@color/hulas_gray" android:layout_marginBottom="30dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+<EditText android:id="@+id/phone" android:hint="Mobile number" android:inputType="phone" android:layout_width="match_parent" android:layout_height="55dp"/>
+<EditText android:id="@+id/password" android:hint="Password" android:inputType="textPassword" android:layout_marginTop="10dp" android:layout_width="match_parent" android:layout_height="55dp"/>
+<Button android:id="@+id/login" android:text="LOGIN" android:textColor="@color/white" android:backgroundTint="@color/hulas_red" android:layout_marginTop="22dp" android:layout_width="match_parent" android:layout_height="52dp"/>
+<TextView android:id="@+id/register" android:text="New fabricator? Create account" android:textColor="@color/hulas_red" android:padding="18dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>

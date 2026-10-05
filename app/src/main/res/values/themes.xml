@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.HMC" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">@color/hulas_red</item>
+        <item name="colorPrimary">@color/hulas_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
