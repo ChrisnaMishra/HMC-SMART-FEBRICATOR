@@ -303,6 +303,14 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .sheet-item{display:flex;align-items:center;gap:13px;width:100%;padding:13px 10px;border-radius:14px;text-align:left;font-size:15px;font-weight:600}
 .sheet-item:active{background:var(--st)}
 .sheet-item .ic{color:var(--red)}
+/* universal APK-style page navigation */
+.app-topbar{height:58px;min-height:58px;display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px;padding:7px 12px;background:rgba(255,255,255,.98);border-bottom:1px solid #E7E9EE;position:sticky;top:0;z-index:25;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.app-topbar .app-nav-btn{width:40px;height:40px;border-radius:12px;background:#F5F6F8;color:#172033;display:flex;align-items:center;justify-content:center}
+.app-topbar .app-nav-btn:active{transform:scale(.97)}
+.app-topbar .app-nav-btn .ic{width:20px;height:20px}
+.app-topbar .app-title{min-width:0;text-align:center;font-size:16px;font-weight:850;letter-spacing:-.15px;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-topbar .app-home{color:var(--red);background:#FFF1F3}
+@media(max-width:360px){.app-topbar{height:54px;min-height:54px;padding:6px 10px}.app-topbar .app-nav-btn{width:38px;height:38px}.app-topbar .app-title{font-size:15px}}
 /* app screens */
 .head{padding:calc(14px + env(safe-area-inset-top,0px)) 18px 12px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
 .head h2{font-size:22px;font-weight:800;letter-spacing:-.3px}
@@ -760,19 +768,64 @@ async function doLogin(){
  finally{if(btn)btn.disabled=false}}
 function forgot(){alert('For security, this offline version cannot reset a password without a Hulas server. Please contact Hulas with your registered mobile number. Never share your password.')}
 function sendRegistration(){if(!ME)return;const m='*HULAS FABRICATOR REGISTRATION*\n\nName: '+ME.name+'\nFirm: '+(ME.firm||'-')+'\nMobile: '+ME.mobile+'\nDistrict: '+(ME.district||'-')+'\nPAN/VAT: '+(ME.pan||'-')+'\nAddress: '+(ME.address||'-')+'\n\nPlease verify/activate this fabricator.';if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))alert('Please allow pop-ups so WhatsApp can open.')}
-function logout(){stopScanner();closeMenu();ME=null;POINTS=0;ORDER=[];$('l-pw').value='';go('welcome')}
+function logout(){stopScanner();closeMenu();ME=null;POINTS=0;ORDER=[];HMC_ROUTE_STACK=[];$('l-pw').value='';go('welcome')}
 document.addEventListener('input',e=>{if(e.target&&e.target.closest&&e.target.closest('#login'))err('l-err','')});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('login').classList.contains('active'))doLogin()});
 /* ===== navigation ===== */
 const PROT=['home','tools','order','scan','rewards','profile','projects','activity'];
-function go(id){
+let HMC_ROUTE_STACK=[];
+let HMC_ROUTE_LOCK=false;
+function hmcCurrentScreen(){return document.querySelector('.screen.active')?.id||''}
+function hmcNavigate(id,push=true){
  if(PROT.includes(id)&&!ME)id='login';
+ const cur=hmcCurrentScreen();
+ if(push&&cur&&cur!==id&&!HMC_ROUTE_LOCK){
+  HMC_ROUTE_STACK.push(cur);
+  if(HMC_ROUTE_STACK.length>30)HMC_ROUTE_STACK.shift();
+ }
  if(id!=='scan')stopScanner();
  closeMenu();
  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
- renderAll();window.scrollTo(0,0)}
+ hmcRefreshPageNav(id);
+ renderAll();window.scrollTo(0,0);
+}
+function go(id){hmcNavigate(id,true)}
+function goBack(){
+ const cur=hmcCurrentScreen();
+ while(HMC_ROUTE_STACK.length){
+  const prev=HMC_ROUTE_STACK.pop();
+  if(prev!==cur){HMC_ROUTE_LOCK=true;hmcNavigate(prev,false);HMC_ROUTE_LOCK=false;return}
+ }
+ if(cur!=='home'&&ME){HMC_ROUTE_LOCK=true;hmcNavigate('home',false);HMC_ROUTE_LOCK=false;return}
+ if(cur==='login'||cur==='register'){hmcNavigate('welcome',false)}
+}
+window.addEventListener('popstate',()=>goBack())
 const NAV=[['home','Home','i-home'],['scan','Scan','i-scan'],['tools','Calculate','i-calc'],['rewards','Rewards','i-gift'],['order','Orders','i-cart'],['profile','Profile','i-user']];
 document.querySelectorAll('.nav').forEach(n=>{const cur=n.dataset.nav;n.innerHTML=NAV.map(([k,l,i])=>'<button class="'+(k===cur?'on':'')+'" onclick="go(\''+k+'\')"'+(k===cur?' aria-current="page"':'')+'><svg class="ic"><use href="#'+i+'"/></svg><span>'+l+'</span></button>').join('')});
+function hmcSetupPageNavigation(){
+ const titles={tools:'Build & Order',order:'My Order',scan:'Scan Hulas QR',rewards:'Rewards',profile:'My Account',projects:'My Projects',activity:'My Activity'};
+ Object.entries(titles).forEach(([id,title])=>{
+  const s=document.getElementById(id);if(!s)return;
+  let bar=s.querySelector(':scope>.app-topbar');
+  if(!bar){
+   const oldHead=s.querySelector(':scope>.head');
+   if(oldHead){
+    const h2=oldHead.querySelector('h2');if(h2)title=h2.textContent.trim()||title;
+    const oldBack=oldHead.querySelector(':scope>.back');if(oldBack)oldBack.style.display='none';
+    bar=document.createElement('div');bar.className='app-topbar';oldHead.insertBefore(bar,oldHead.firstChild);
+   }else{
+    bar=document.createElement('div');bar.className='app-topbar';s.insertBefore(bar,s.firstChild);
+   }
+  }
+  bar.innerHTML='<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">'+esc(title)+'</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go(\'home\')"><svg class="ic"><use href="#i-home"/></svg></button>';
+  s.classList.add('hmc-app-page');
+ });
+}
+function hmcRefreshPageNav(activeId){
+ const navPages=new Set(['tools','order','scan','rewards','profile','projects','activity']);
+ if(navPages.has(activeId))hmcSetupPageNavigation();
+}
+hmcSetupPageNavigation();
 function openMenu(){$('sheet').classList.add('open')}
 function closeMenu(){const s=$('sheet');if(s)s.classList.remove('open')}
 function orderWA(){closeMenu();if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Namaste Hulas, I am '+(ME?ME.name:'a fabricator')+'. I would like to place an order.'),'_blank'))alert('Please allow pop-ups so WhatsApp can open.')}
@@ -1069,6 +1122,7 @@ function hmcPremiumHomeUI(){
  const footer=home.querySelector('.home-footer');if(footer){footer.style.padding='16px 16px 18px';footer.style.minHeight='0';footer.style.background='linear-gradient(135deg,#B20D28,#D40024)'}
  const reward=home.querySelector('.home-reward-section .nr');if(reward){reward.style.boxShadow='0 5px 18px rgba(15,27,51,.07)';reward.style.border='1px solid #ECEEF2'}
 }function hmcPolishHome(){
+ hmcSetupPageNavigation();
  hmcPremiumHomeUI();
  hmcPremiumHome();
  hmcNormalizeDom();
