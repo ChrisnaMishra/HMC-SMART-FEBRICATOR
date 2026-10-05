@@ -5,6 +5,7 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hulas.hmc.data.OrderDraft;
 import com.hulas.hmc.data.PipeWeightData;
+import com.hulas.hmc.utils.OrderHistory;
 import com.hulas.hmc.utils.WhatsAppOrder;
 import java.util.Locale;
 
@@ -30,6 +31,8 @@ public class CalculatorActivity extends AppCompatActivity {
         findViewById(R.id.calculate).setOnClickListener(v -> calculate());
         findViewById(R.id.order).setOnClickListener(v -> {
             if (calculate()) {
+                OrderHistory.add(this, draft.grade, draft.type, draft.size, draft.heavy,
+                        draft.quantity, draft.totalKg, draft.totalWithVat);
                 String msg=String.format(Locale.US,
                     "HMC Order Request\nGrade: %s\nType: %s\nSize: %s\n%s\nQty: %.0f pipes\nWeight: %.3f kg\nTotal incl. VAT: Rs %.2f",
                     draft.grade,draft.type,draft.size,draft.heavy?"Heavy":"Light",draft.quantity,draft.totalKg,draft.totalWithVat);
