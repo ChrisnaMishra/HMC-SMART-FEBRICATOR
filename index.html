@@ -919,7 +919,7 @@ const initials=n=>(n||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').t
 /* ===== FINAL HOMEPAGE POLISH: footer, spacing, navigation safety ===== */
 function hmcPolishHome(){
  const home=document.getElementById('home');if(!home)return;
- const footer=home.querySelector('.home-main>.foot-strip'); 
+ const footer=home.querySelector('.home-footer');
  if(footer){
   const wa=footer.querySelector('.wa');
   if(wa)wa.remove();
@@ -927,7 +927,7 @@ function hmcPolishHome(){
   footer.style.width='100%';
   footer.style.boxSizing='border-box';
   footer.style.minHeight='0';
-  footer.style.padding='16px 16px calc(22px + env(safe-area-inset-bottom,0px))';
+  footer.style.padding='16px 16px 20px';
   footer.style.margin='0';
   const title=footer.querySelector('h4');
   if(title){title.style.margin='0';title.style.fontSize='14px';title.style.lineHeight='1.2'}
@@ -941,6 +941,13 @@ function hmcPolishHome(){
    tag.style.fontSize='11px';
   }
  }
+ const content=home.querySelector('.home-content');
+ if(content){
+  content.style.paddingBottom='78px';
+  content.style.overflowX='hidden';
+  content.style.maxWidth='100%';
+  content.style.boxSizing='border-box';
+ }
  const nav=home.querySelector('.nav');
  if(nav){
   nav.style.position='fixed';
@@ -949,12 +956,6 @@ function hmcPolishHome(){
   nav.style.bottom='0';
   nav.style.zIndex='999';
   nav.style.boxSizing='border-box';
- }
- const content=home.querySelector('.home-content');
- if(content){
-  content.style.overflowX='hidden';
-  content.style.maxWidth='100%';
-  content.style.boxSizing='border-box';
  }
 }
 function renderHome(){if(!ME)return;
