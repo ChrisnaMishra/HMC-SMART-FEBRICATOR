@@ -252,17 +252,7 @@ input:focus,select:focus{outline:2px solid var(--red);outline-offset:0;backgroun
 .home-reward-section .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:6px;width:0}
 .home-reward-section .nr .foot{font-size:10px;color:var(--muted);line-height:1.25}
 
-/* Footer */
-.home-footer{background:linear-gradient(135deg,#A30D25,#C8102E);color:#fff;padding:16px 16px calc(82px + env(safe-area-inset-bottom,0px));display:grid;gap:10px}
-.home-footer h4{font-size:13.5px;font-weight:800}
-.home-footer .loc{display:flex;align-items:center;gap:5px;font-size:11px;margin-top:3px;color:#FFE3E7}
-.home-footer .loc .ic{width:15px;height:15px}
-.home-footer .tag{text-align:center;border-top:1px solid rgba(255,255,255,.22);padding-top:10px;font-size:12px;font-style:italic;color:#FFE3E7}
-.home-footer .wa{display:flex;align-items:center;justify-content:center;gap:9px;background:#fff;color:var(--ink);text-decoration:none;border-radius:13px;padding:9px}
-.home-footer .wa .ic{width:25px;height:25px;color:#1FA855}
-.home-footer .wa small{display:block;font-size:9px;color:var(--muted);font-weight:600}
-.home-footer .wa b{display:block;font-size:12px;font-weight:800}
-
+/* Footer intentionally omitted from the home screen. Company details live in Profile/About surfaces. */
 /* Responsive */
 @media(max-width:360px){
  .home-header{height:58px;flex-basis:58px;padding:6px 10px}
@@ -583,14 +573,7 @@ label,.fl{font-size:13px;font-weight:700;color:var(--navy2);letter-spacing:.02em
     <div class="nr-img" id="n-img"></div>
     <div><small>Next reward</small><h3 id="n-name"></h3><div class="np" id="n-pts"></div><div class="bar"><i id="n-bar"></i></div><div class="foot" id="n-sub"></div></div>
    </div></button>
-  </section>
-
-  <footer class="home-footer">
-   <div><h4>HULAS METAL CRAFTS LTD.</h4><div class="loc"><svg class="ic"><use href="#i-pin"/></svg>Biratnagar, Nepal</div></div>
-   <a class="wa" href="https://wa.me/9779845656595" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><div><small>Order on WhatsApp</small><b>+977 9845656595</b></div></a>
-   <div class="tag">Nepali for Generations</div>
-  </footer>
- </main>
+  </section></main>
 </div>
 <div class="nav" data-nav="home"></div>
 
@@ -934,28 +917,6 @@ function hmcNormalizeDom(){
 function hmcPolishHome(){
  hmcNormalizeDom();
  const home=document.getElementById('home');if(!home)return;
- const footer=home.querySelector('.home-footer');
- if(footer){
-  const wa=footer.querySelector('.wa');
-  if(wa)wa.remove();
-  footer.style.display='block';
-  footer.style.width='100%';
-  footer.style.boxSizing='border-box';
-  footer.style.minHeight='0';
-  footer.style.padding='16px 16px 20px';
-  footer.style.margin='0';
-  const title=footer.querySelector('h4');
-  if(title){title.style.margin='0';title.style.fontSize='14px';title.style.lineHeight='1.2'}
-  const loc=footer.querySelector('.loc');
-  if(loc){loc.style.marginTop='5px';loc.style.fontSize='11px'}
-  const tag=footer.querySelector('.tag');
-  if(tag){
-   tag.style.marginTop='12px';
-   tag.style.paddingTop='9px';
-   tag.style.borderTop='1px solid rgba(255,255,255,.22)';
-   tag.style.fontSize='11px';
-  }
- }
  const content=home.querySelector('.home-content');
  if(content){
   content.style.paddingBottom='78px';
