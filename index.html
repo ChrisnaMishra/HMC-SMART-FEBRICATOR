@@ -818,7 +818,7 @@ function hmcSetupPageNavigation(){
   }else if(!bar){
    bar=document.createElement('div');bar.className='app-topbar';s.insertBefore(bar,s.firstChild)
   }
-  if(bar)bar.innerHTML='<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">'+esc(title)+'</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go(\\'home\\')"><svg class="ic"><use href="#i-home"/></svg></button>';
+  if(bar)bar.innerHTML=`<button class="app-nav-btn" aria-label="Back" onclick="goBack()"><svg class="ic"><use href="#i-back"/></svg></button><div class="app-title">${esc(title)}</div><button class="app-nav-btn app-home" aria-label="Home" onclick="go('home')"><svg class="ic"><use href="#i-home"/></svg></button>`;
   s.dataset.hmcNavReady='1';
   s.classList.add('hmc-app-page');
  });
