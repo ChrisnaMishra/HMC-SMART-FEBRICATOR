@@ -931,7 +931,79 @@ function hmcNormalizeDom(){
   el.id=next;
  });
 }
+function hmcPremiumHome(){
+ const home=document.getElementById('home');if(!home)return;
+ const root=home.querySelector('.home-main');if(root){
+  root.style.background='#F7F8FA';
+  root.style.color='#151923';
+ }
+ const actions=home.querySelector('.home-actions-section');
+ if(actions){
+  actions.style.padding='0 16px';
+  const title=actions.querySelector('.stitle');
+  if(title){title.style.fontSize='15px';title.style.fontWeight='800';title.style.letterSpacing='-.2px';title.style.padding='0 2px 10px'}
+  const grid=actions.querySelector('.qa');
+  if(grid){grid.style.gap='10px';grid.style.paddingBottom='18px'}
+  actions.querySelectorAll('.qa-card').forEach((card,index)=>{
+   card.style.background='#FFFFFF';
+   card.style.border='1px solid #E8EBF0';
+   card.style.borderRadius='15px';
+   card.style.boxShadow='0 2px 10px rgba(15,27,51,.045)';
+   card.style.minHeight=index===0?'72px':'68px';
+   card.style.padding='10px 11px';
+   card.style.gap='9px';
+   card.style.color='#151923';
+   card.style.backgroundImage='none';
+   const ico=card.querySelector('.qa-ico');
+   if(ico){
+    ico.style.width='36px';ico.style.height='36px';ico.style.borderRadius='10px';
+    ico.style.background='#FFF1F3';ico.style.color='#C8102E';
+    ico.style.boxShadow='inset 0 0 0 1px rgba(200,16,46,.06)';
+   }
+   const text=card.querySelector('.qa-t');
+   if(text){
+    const h=text.querySelector('h4'),p=text.querySelector('p');
+    if(h){h.style.fontSize='13px';h.style.fontWeight='800';h.style.letterSpacing='-.1px'}
+    if(p){p.style.fontSize='10px';p.style.color='#737B8C';p.style.marginTop='3px'}
+   }
+   const chev=card.querySelector(':scope>.ic');
+   if(chev){chev.style.width='16px';chev.style.height='16px';chev.style.color='#9AA1AE'}
+  });
+  const scan=actions.querySelector('.qa-card.primary');
+  if(scan){
+   scan.style.background='#FFFFFF';
+   scan.style.color='#151923';
+   scan.style.border='1px solid #E8EBF0';
+   scan.style.boxShadow='0 3px 12px rgba(200,16,46,.07)';
+   const ico=scan.querySelector('.qa-ico');
+   if(ico){ico.style.background='#C8102E';ico.style.color='#FFFFFF';ico.style.boxShadow='none'}
+   const p=scan.querySelector('.qa-t p');if(p)p.style.color='#737B8C';
+  }
+ }
+ const products=home.querySelector('.home-products-section');
+ if(products){
+  const title=products.querySelector('.home-products-title');
+  if(title){title.style.fontSize='15px';title.style.fontWeight='800';title.style.letterSpacing='-.15px'}
+  const tiles=products.querySelectorAll('.tile');
+  tiles.forEach(t=>{t.style.borderRadius='14px';t.style.boxShadow='0 3px 10px rgba(15,27,51,.07)'});
+ }
+ const reward=home.querySelector('.home-reward-section .nr');
+ if(reward){
+  reward.style.background='#FFFFFF';
+  reward.style.border='1px solid #E8EBF0';
+  reward.style.boxShadow='0 3px 12px rgba(15,27,51,.05)';
+  reward.style.borderRadius='17px';
+ }
+ const nav=home.querySelector('.nav');
+ if(nav){
+  nav.style.background='rgba(255,255,255,.98)';
+  nav.style.borderTop='1px solid #E7E9EE';
+  nav.style.boxShadow='0 -4px 18px rgba(15,27,51,.055)';
+  nav.querySelectorAll('button').forEach(b=>{b.style.fontSize='10px'});
+ }
+}
 function hmcPolishHome(){
+ hmcPremiumHome();
  hmcNormalizeDom();
  const home=document.getElementById('home');if(!home)return;
  const footer=home.querySelector('.home-footer');
