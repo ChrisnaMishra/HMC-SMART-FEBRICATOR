@@ -916,7 +916,49 @@ function redeem(i){const [n,p]=RW[i];
  alert('Redemption request opened in WhatsApp. Your points stay unchanged until Hulas verifies and approves the request.')}
 /* ===== home / activity / profile renderers ===== */
 const initials=n=>(n||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'H';
+/* ===== FINAL HOMEPAGE POLISH: footer, spacing, navigation safety ===== */
+function hmcPolishHome(){
+ const home=document.getElementById('home');if(!home)return;
+ const footer=home.querySelector('.home-main>.foot-strip'); 
+ if(footer){
+  const wa=footer.querySelector('.wa');
+  if(wa)wa.remove();
+  footer.style.display='block';
+  footer.style.width='100%';
+  footer.style.boxSizing='border-box';
+  footer.style.minHeight='0';
+  footer.style.padding='16px 16px calc(22px + env(safe-area-inset-bottom,0px))';
+  footer.style.margin='0';
+  const title=footer.querySelector('h4');
+  if(title){title.style.margin='0';title.style.fontSize='14px';title.style.lineHeight='1.2'}
+  const loc=footer.querySelector('.loc');
+  if(loc){loc.style.marginTop='5px';loc.style.fontSize='11px'}
+  const tag=footer.querySelector('.tag');
+  if(tag){
+   tag.style.marginTop='12px';
+   tag.style.paddingTop='9px';
+   tag.style.borderTop='1px solid rgba(255,255,255,.22)';
+   tag.style.fontSize='11px';
+  }
+ }
+ const nav=home.querySelector('.nav');
+ if(nav){
+  nav.style.position='fixed';
+  nav.style.left='0';
+  nav.style.right='0';
+  nav.style.bottom='0';
+  nav.style.zIndex='999';
+  nav.style.boxSizing='border-box';
+ }
+ const content=home.querySelector('.home-content');
+ if(content){
+  content.style.overflowX='hidden';
+  content.style.maxWidth='100%';
+  content.style.boxSizing='border-box';
+ }
+}
 function renderHome(){if(!ME)return;
+ hmcPolishHome();
  $('h-ava').textContent=initials(ME.name);
  $('h-greet').textContent='Namaste, '+((ME.name||'').trim().split(/\s+/)[0]||'Fabricator')+'!';
  $('h-sub').textContent=ME.firm||"Let's build a stronger Nepal with Hulas.";
