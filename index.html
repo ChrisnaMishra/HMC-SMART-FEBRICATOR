@@ -917,7 +917,22 @@ function redeem(i){const [n,p]=RW[i];
 /* ===== home / activity / profile renderers ===== */
 const initials=n=>(n||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'H';
 /* ===== FINAL HOMEPAGE POLISH: footer, spacing, navigation safety ===== */
+function hmcNormalizeDom(){
+ const seen=new Set();
+ document.querySelectorAll('[id]').forEach(el=>{
+  const id=el.id;
+  if(!id||!seen.has(id)){seen.add(id);return}
+  if(id==='sheet'){
+   el.remove();
+   return;
+  }
+  let n=2,next=id+'-duplicate-'+n;
+  while(document.getElementById(next))next=id+'-duplicate-'+(++n);
+  el.id=next;
+ });
+}
 function hmcPolishHome(){
+ hmcNormalizeDom();
  const home=document.getElementById('home');if(!home)return;
  const footer=home.querySelector('.home-footer');
  if(footer){
