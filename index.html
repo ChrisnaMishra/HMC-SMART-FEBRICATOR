@@ -689,6 +689,17 @@ const R={'202':290,'304':475,sq:30,q34:10,vat:13,len:6};
 const rateFor=s=>R[s.grade]+(s.shape!=='round'?R.sq:0)+(s.size.startsWith('3/4"')?R.q34:0);
 const money=n=>'Rs. '+Math.round(n).toLocaleString('en-IN'),kg=n=>n.toLocaleString('en-IN',{maximumFractionDigits:3})+' kg',fp=n=>n.toLocaleString('en-IN',{maximumFractionDigits:1});
 const vatOf=b=>b*R.vat/100;
+function calcBill(basic,discountPct,vatPct=R.vat){
+ basic=Number(basic)||0;discountPct=Number(discountPct)||0;vatPct=Number(vatPct)||0;
+ const discount=basic*discountPct/100;
+ const taxable=basic-discount;
+ const vat=taxable*vatPct/100;
+ const payable=taxable+vat;
+ const taxableDisplay=Math.round(taxable);
+ const payableDisplay=Math.round(payable);
+ const vatDisplay=payableDisplay-taxableDisplay;
+ return {basic,discount,taxable,vat,payable,taxableDisplay,vatDisplay,payableDisplay};
+}
 function line(s,qty){const w=W[s.shape][s.size][s.cls]*qty,rate=rateFor(s);return{spec:s.grade+' '+s.shape+' '+s.size+' ('+CL[s.cls]+')',qty,len:R.len,rate,weight:w,amount:w*rate,key:[s.grade,s.shape,s.size,s.cls].join('|')}}
 /* ===== picker: grade / shape / size / class ===== */
 function Picker(id,s,o={}){const el=$(id),grade=o.grade!==false;
@@ -887,13 +898,17 @@ function runCut(){const toM=v=>cunit==='ft'?v/FT:v,disp=m=>(cunit==='ft'?m*FT:m)
  $('cut-pat').style.display='block';$('cut-pat').innerHTML='<div class="fl" style="margin-top:0">Cutting pattern</div>'+bins.map((b,i)=>'<div class="pat">Pipe #'+(i+1)+': '+(R.len-b.rem).toFixed(2)+' m used, '+b.rem.toFixed(2)+' m off-cut<br>'+b.cuts.map(c=>'<span>'+disp(c)+'</span>').join('')+(b.rem>.01?'<span class="w">waste '+disp(b.rem)+'</span>':'')+'</div>').join('');
  $('cut-res').style.display='block';$('cut-res').innerHTML='<div><span>6 m pipes required</span><span>'+bins.length+'</span></div><div><span>Total cut length</span><span>'+disp(tot)+'</span></div><div><span>Off-cut / waste</span><span>'+disp(proc-tot)+'</span></div><div><span>Total weight</span><span>'+kg(l.weight)+'</span></div><div><span>Basic amount</span><span>'+money(l.amount)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(v)+'</span></div><div class="t"><span>Total</span><span>'+money(l.amount+v)+'</span></div><div><span>Points if scanned from QR</span><span class="p">'+l.weight.toFixed(3)+' pts</span></div>'}
 function addCut(){if(!clast){alert('Tap Optimize cutting plan first.');return}addLine({...clast,spec:clast.spec+' (cutting plan)',key:clast.key+'|cut'});go('order')}
-/* ===== order: cash discount applied last, on bill total (basic + VAT) ===== */
-function orderTotals(){const wt=ORDER.reduce((s,l)=>s+l.weight,0),b=ORDER.reduce((s,l)=>s+l.amount,0),cd=b*CD/100,net=b-cd,v=vatOf(net),bill=net+v;return{wt,b,v,bill,cd,pay:bill,net}}
+/* ===== order billing: discount reduces taxable value before VAT ===== */
+function orderTotals(){
+ const wt=ORDER.reduce((s,l)=>s+l.weight,0),b=ORDER.reduce((s,l)=>s+l.amount,0);
+ const bill=calcBill(b,CD,R.vat);
+ return {wt,...bill};
+}
 function renderOrder(){const t=orderTotals();
  $('o-body').innerHTML=ORDER.length?ORDER.map((l,i)=>'<div class="ol"><div style="flex:1"><b style="font-size:13px">'+esc(l.spec)+'</b>'+(l.manual?'<span class="tag-m">manual entry</span>':'')+'<small>'+l.qty+' × '+(l.len||6)+' m · '+kg(l.weight)+'</small><small>Rate '+money(l.rate||0)+'/kg · Amount '+money(l.amount)+'</small></div><div style="text-align:right"><b>'+money(l.amount)+'</b><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:5px"><span class="rm" role="button" onclick="editPipe('+i+')">Edit</span><span class="rm" role="button" onclick="ORDER.splice('+i+',1);renderOrder()">Remove</span></div></div></div>').join(''):'<div class="empty">No items yet.<br>Add a Calculate, Estimate or Cutting result, or enter a pipe manually below.</div>';
  $('o-tot').style.display=ORDER.length?'block':'none';if(!ORDER.length)return;
  if(document.activeElement&&document.activeElement.id==='cd')return;
- $('o-tot').innerHTML='<div><span>Total weight</span><span>'+kg(t.wt)+'</span></div><div><span>Basic amount</span><span>'+money(t.b)+'</span></div><div><span>Cash discount (%)</span><span><input id="cd" type="number" min="0" max="100" step="0.5" value="'+CD+'" onchange="CD=Math.min(100,Math.max(0,+this.value||0));renderOrder()"></span></div><div><span>Discount amount</span><span>− '+money(t.cd)+'</span></div><div><span>Taxable amount</span><span>'+money(t.net)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(t.v)+'</span></div><div class="g"><span>Payable</span><span>'+money(t.pay)+'</span></div>'}
+ $('o-tot').innerHTML='<div><span>Total weight</span><span>'+kg(t.wt)+'</span></div><div><span>Basic amount</span><span>'+money(t.basic)+'</span></div><div><span>Cash discount (%)</span><span><input id="cd" type="number" min="0" max="100" step="0.5" value="'+CD+'" onchange="CD=Math.min(100,Math.max(0,+this.value||0));renderOrder()"></span></div><div><span>Discount amount</span><span>− '+money(t.discount)+'</span></div><div><span>Taxable amount</span><span>'+money(t.taxableDisplay)+'</span></div><div><span>VAT ('+R.vat+'%)</span><span>'+money(t.vatDisplay)+'</span></div><div class="g"><span>Payable</span><span>'+money(t.payableDisplay)+'</span></div>'}
 function clearPipeEditor(){['op-spec','op-wt','op-rate'].forEach(id=>$(id).value='');$('op-qty').value=1;$('op-len').value=6;$('op-spec').focus()}
 function addManualPipe(){const spec=$('op-spec').value.trim(),qty=Math.max(1,Math.floor(+$('op-qty').value||0)),len=Math.max(.1,+$('op-len').value||0),wt=Math.max(0,+$('op-wt').value||0),rate=Math.max(0,+$('op-rate').value||0);
  if(!spec)return alert('Enter the pipe specification.');if(!wt)return alert('Enter weight per pipe in kg.');if(!rate)return alert('Enter the rate per kg.');
@@ -902,7 +917,7 @@ function editPipe(i){const l=ORDER[i];$('op-spec').value=l.spec||'';$('op-qty').
 function sendOrder(){if(!ORDER.length)return alert('Add at least one item first.');const t=orderTotals();
  let m='*HULAS ORDER REQUEST*\n\nFabricator: '+ME.name+'\nFirm: '+(ME.firm||'-')+'\nMobile: '+ME.mobile+'\n\n';
  ORDER.forEach(l=>{m+='• '+l.spec+(l.manual?' (manual entry)':'')+' — '+l.qty+' pcs × '+(l.len||6)+' m — '+kg(l.weight)+' — Rate '+money(l.rate||0)+'/kg — '+money(l.amount)+'\n'});
- m+='\nTotal weight: '+kg(t.wt)+'\nBasic amount: '+money(t.b)+'\nVAT ('+R.vat+'%): '+money(t.v)+'\nBill total: '+money(t.bill)+'\nCash discount ('+CD+'%): -'+money(t.cd)+'\n*Payable: '+money(t.pay)+'*';
+ m+='\nTotal weight: '+kg(t.wt)+'\nBasic amount: '+money(t.basic)+'\nCash discount ('+CD+'%): -'+money(t.discount)+'\nTaxable amount: '+money(t.taxableDisplay)+'\nVAT ('+R.vat+'%): '+money(t.vatDisplay)+'\n*Payable: '+money(t.payableDisplay)+'*';
  if(!window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(m),'_blank'))return alert('Please allow pop-ups so WhatsApp can open, then press Send again.');
  const lg=ld('hmc_log_'+ME.mobile,[]);lg.unshift({at:Date.now(),weight:t.wt,pay:t.pay,items:ORDER.length});st('hmc_log_'+ME.mobile,lg.slice(0,50));
  alert('WhatsApp opened. Review the order and tap Send in WhatsApp. Points are earned only through the Hulas QR scan.');go('order')}
